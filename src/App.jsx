@@ -10,6 +10,8 @@ import BirthDatePage from "./Pages/BirthDatePage";
 import GenderSelectionPage from "./Pages/GenderSelectionPage";
 import JobInputPage from "./Pages/JobInputPage";
 import AboutPage from "./Pages/AboutPage";
+import DailyAdvicePage from "./Pages/DailyAdvicePage";
+import NumerologyDetailPage from "./Pages/NumerologyDetailPage";
 
 function App() {
   const [showMenu, setShowMenu] = useState(false);
@@ -28,6 +30,8 @@ function App() {
             <Route path="/gender-selection" element={<GenderSelectionPage />} />
             <Route path="/job-input" element={<JobInputPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/daily-advice" element={<DailyAdvicePage />} />
+            <Route path="/numerology-detail" element={<NumerologyDetailPage />} />
               <Route path="/detail-number" element={<Numerlogy />} />
             </Routes>
           </BrowserRouter>

@@ -5,7 +5,7 @@ export default function AboutPage() {
   const navigate = useNavigate();
 
   const handleContinue = () => {
-    navigate("/detail-number");
+    navigate("/daily-advice");
   };
 
   return (
