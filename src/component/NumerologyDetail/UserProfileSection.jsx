@@ -57,77 +57,220 @@ export default function UserProfileSection() {
   const firstName = userFullName.split(' ').pop() || userFullName;
 
   return (
-    <div className="mb-4">
+    <div>
       <div className="row align-items-center">
-        {/* Left: Avatar */}
-        <div className="col-12 col-md-4 text-center mb-3 mb-md-0">
+        {/* Left: Enhanced Avatar with gradient */}
+        <div className="col-12 col-md-4 text-center mb-4 mb-md-0">
           <div 
             className="mx-auto rounded-circle d-flex align-items-center justify-content-center position-relative"
             style={{
-              width: '150px',
-              height: '150px',
-              backgroundColor: '#FCF8F0',
-              border: '3px solid #E8C78C',
-              boxShadow: '0 4px 12px rgba(232, 199, 140, 0.2)'
+              width: '160px',
+              height: '160px',
+              background: 'linear-gradient(135deg, #FCF8F0 0%, #FFF5E8 100%)',
+              border: '4px solid transparent',
+              backgroundClip: 'padding-box',
+              boxShadow: '0 8px 24px rgba(232, 199, 140, 0.3), inset 0 2px 8px rgba(232, 199, 140, 0.1)',
+              position: 'relative'
             }}
           >
+            {/* Outer ring gradient */}
             <div 
-              className="text-center"
+              className="position-absolute rounded-circle"
               style={{
-                fontSize: '64px',
-                color: '#A07A4A',
-                fontWeight: 'bold'
+                inset: '-4px',
+                background: 'linear-gradient(135deg, #E8C78C 0%, #B8860B 50%, #E8C78C 100%)',
+                borderRadius: '50%',
+                zIndex: -1
+              }}
+            />
+            
+            {/* Inner glow effect */}
+            <div 
+              className="position-absolute rounded-circle"
+              style={{
+                inset: '10px',
+                background: 'radial-gradient(circle, rgba(232, 199, 140, 0.2) 0%, transparent 70%)',
+                borderRadius: '50%',
+                zIndex: 0,
+                animation: 'pulse 2s ease-in-out infinite'
+              }}
+            />
+            
+            <div 
+              className="text-center position-relative"
+              style={{
+                fontSize: '72px',
+                fontWeight: 'bold',
+                background: 'linear-gradient(135deg, #B8860B 0%, #E8C78C 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                zIndex: 1,
+                textShadow: '0 2px 10px rgba(184, 134, 11, 0.2)'
               }}
             >
               {mainNumber || '?'}
             </div>
             
-            {/* Life Path Badge */}
+            {/* Enhanced Life Path Badge */}
             <div 
-              className="position-absolute rounded-pill px-3 py-2"
+              className="position-absolute rounded-pill px-4 py-2"
               style={{
-                bottom: '-10px',
+                bottom: '-12px',
                 left: '50%',
                 transform: 'translateX(-50%)',
-                backgroundColor: '#fff',
-                border: '2px solid #E8C78C',
-                fontSize: '14px',
-                fontWeight: 'bold',
-                color: '#A07A4A',
-                whiteSpace: 'nowrap'
+                background: 'linear-gradient(135deg, #B8860B 0%, #A07A4A 100%)',
+                border: '2px solid rgba(255, 255, 255, 0.5)',
+                fontSize: '13px',
+                fontWeight: '700',
+                color: '#fff',
+                whiteSpace: 'nowrap',
+                boxShadow: '0 4px 12px rgba(184, 134, 11, 0.3)',
+                letterSpacing: '0.5px'
               }}
             >
-              Đường đời {mainNumber || '?'}
+              ✨ Đường đời {mainNumber || '?'}
             </div>
           </div>
+          
+          {/* Add pulse animation */}
+          <style>
+            {`
+              @keyframes pulse {
+                0%, 100% { transform: scale(1); opacity: 0.5; }
+                50% { transform: scale(1.1); opacity: 0.8; }
+              }
+            `}
+          </style>
         </div>
 
-        {/* Right: Personal Info */}
+        {/* Right: Enhanced Personal Info */}
         <div className="col-12 col-md-8">
           <div className="ps-md-4">
-            {ageInfo && (
-              <p className="mb-2" style={{ color: '#332211', fontSize: '15px' }}>
-                <strong>{firstName}</strong> được {ageInfo.years} tuổi {ageInfo.months} tháng {ageInfo.days} ngày
-              </p>
-            )}
+            {/* Name display */}
+            <div className="mb-4">
+              <h4 
+                className="mb-1"
+                style={{
+                  fontSize: '1.5rem',
+                  fontWeight: '700',
+                  background: 'linear-gradient(135deg, #B8860B 0%, #332211 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}
+              >
+                {userFullName}
+              </h4>
+              {ageInfo && (
+                <p 
+                  className="mb-0"
+                  style={{ 
+                    color: '#6e645b', 
+                    fontSize: '0.95rem',
+                    fontStyle: 'italic'
+                  }}
+                >
+                  🎂 {ageInfo.years} tuổi {ageInfo.months} tháng {ageInfo.days} ngày
+                </p>
+              )}
+            </div>
             
-            {zodiacSign && (
-              <p className="mb-2" style={{ color: '#332211', fontSize: '15px' }}>
-                Cung Hoàng Đạo của Bạn là: <strong>{zodiacSign}</strong>
-              </p>
-            )}
-            
-            {lunarDate && (
-              <p className="mb-2" style={{ color: '#332211', fontSize: '15px' }}>
-                Ngày sinh Âm lịch của Bạn là: <strong>{lunarDate}</strong>
-              </p>
-            )}
-            
-            {chineseZodiac && (
-              <p className="mb-0" style={{ color: '#332211', fontSize: '15px' }}>
-                Năm con giáp của Bạn là: <strong>{chineseZodiac}</strong>
-              </p>
-            )}
+            {/* Info cards grid */}
+            <div className="row g-3">
+              {zodiacSign && (
+                <div className="col-12 col-sm-6">
+                  <div 
+                    className="p-3 rounded-3"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(232, 199, 140, 0.15) 0%, rgba(255, 255, 255, 0.8) 100%)',
+                      border: '1px solid rgba(232, 199, 140, 0.3)',
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    <div className="d-flex align-items-center gap-2">
+                      <span style={{ fontSize: '24px' }}>♈</span>
+                      <div>
+                        <p className="mb-0" style={{ fontSize: '0.75rem', color: '#6e645b' }}>
+                          Cung Hoàng Đạo
+                        </p>
+                        <p 
+                          className="mb-0 fw-bold"
+                          style={{ 
+                            fontSize: '1rem', 
+                            color: '#332211' 
+                          }}
+                        >
+                          {zodiacSign}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {chineseZodiac && (
+                <div className="col-12 col-sm-6">
+                  <div 
+                    className="p-3 rounded-3"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(184, 134, 11, 0.15) 0%, rgba(255, 255, 255, 0.8) 100%)',
+                      border: '1px solid rgba(184, 134, 11, 0.3)',
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    <div className="d-flex align-items-center gap-2">
+                      <span style={{ fontSize: '24px' }}>🐉</span>
+                      <div>
+                        <p className="mb-0" style={{ fontSize: '0.75rem', color: '#6e645b' }}>
+                          Năm Con Giáp
+                        </p>
+                        <p 
+                          className="mb-0 fw-bold"
+                          style={{ 
+                            fontSize: '1rem', 
+                            color: '#332211' 
+                          }}
+                        >
+                          {chineseZodiac}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {lunarDate && (
+                <div className="col-12">
+                  <div 
+                    className="p-3 rounded-3"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(232, 199, 140, 0.1) 0%, rgba(184, 134, 11, 0.05) 50%, rgba(255, 255, 255, 0.8) 100%)',
+                      border: '1px solid rgba(232, 199, 140, 0.25)',
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    <div className="d-flex align-items-center gap-2">
+                      <span style={{ fontSize: '24px' }}>🌙</span>
+                      <div>
+                        <p className="mb-0" style={{ fontSize: '0.75rem', color: '#6e645b' }}>
+                          Ngày Sinh Âm Lịch
+                        </p>
+                        <p 
+                          className="mb-0 fw-bold"
+                          style={{ 
+                            fontSize: '1rem', 
+                            color: '#332211' 
+                          }}
+                        >
+                          {lunarDate}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

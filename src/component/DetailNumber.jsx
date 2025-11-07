@@ -74,16 +74,77 @@ function DetailNumber() {
               />
             </div>
 
-            <div class="border rounded p-3 m-3 d-flex justify-content-center">
+            <div className="mb-4 mx-3">
               {combine_numb_birth_name && (
-                <Fragment>
-                  <ChartCombineEnergy
-                    color="blue"
-                    buttonText="TÓM TẮT VỀ BẠN"
-                    buttonColor="#3cbc9b"
-                    id_link="summary_all"
+                <div 
+                  className="p-4 rounded-4 position-relative card-hover"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(232, 199, 140, 0.1) 0%, rgba(255, 248, 240, 0.8) 100%)',
+                    border: '2px solid rgba(232, 199, 140, 0.3)',
+                    boxShadow: '0 8px 24px rgba(184, 134, 11, 0.15)',
+                    overflow: 'hidden'
+                  }}
+                >
+                  {/* Header with Icon */}
+                  <div className="text-center mb-4">
+                    <div 
+                      className="d-inline-flex align-items-center justify-content-center mb-3"
+                      style={{
+                        width: '64px',
+                        height: '64px',
+                        background: 'linear-gradient(135deg, #E8C78C 0%, #B8860B 100%)',
+                        borderRadius: '16px',
+                        boxShadow: '0 6px 16px rgba(232, 199, 140, 0.4)',
+                        animation: 'pulse 2s ease-in-out infinite'
+                      }}
+                    >
+                      <span style={{ fontSize: '32px' }}>🌟</span>
+                    </div>
+                    
+                    <h4 
+                      className="fw-bold mb-2"
+                      style={{
+                        background: 'linear-gradient(135deg, #B8860B 0%, #E8C78C 50%, #B8860B 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                        fontSize: '1.4rem',
+                        letterSpacing: '1.5px'
+                      }}
+                    >
+                      NĂNG LƯỢNG TỔNG HỢP
+                    </h4>
+                    <p 
+                      className="mb-0"
+                      style={{
+                        color: '#6e645b',
+                        fontSize: '0.9rem',
+                        fontStyle: 'italic'
+                      }}
+                    >
+                      ⚡ Phân tích độ mạnh yếu của các con số trong cuộc đời bạn
+                    </p>
+                  </div>
+                  
+                  {/* Decorative divider */}
+                  <div 
+                    style={{
+                      height: '2px',
+                      background: 'linear-gradient(90deg, transparent, #E8C78C, transparent)',
+                      margin: '0 auto 1.5rem',
+                      width: '60%'
+                    }}
                   />
-                </Fragment>
+                  
+                  <div className="d-flex justify-content-center">
+                    <ChartCombineEnergy
+                      color="#B8860B"
+                      buttonText="TÓM TẮT VỀ BẠN"
+                      buttonColor="#B8860B"
+                      id_link="summary_all"
+                    />
+                  </div>
+                </div>
               )}
             </div>
 

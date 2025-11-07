@@ -24,14 +24,14 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<AuthPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/name-input" element={<NameInputPage />} />
-            <Route path="/birth-date" element={<BirthDatePage />} />
-            <Route path="/gender-selection" element={<GenderSelectionPage />} />
-            <Route path="/job-input" element={<JobInputPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/daily-advice" element={<DailyAdvicePage />} />
-            <Route path="/numerology-detail" element={<NumerologyDetailPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/name-input" element={<NameInputPage />} />
+              <Route path="/birth-date" element={<BirthDatePage />} />
+              <Route path="/gender-selection" element={<GenderSelectionPage />} />
+              <Route path="/job-input" element={<JobInputPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/daily-advice" element={<DailyAdvicePage />} />
+              <Route path="/numerology-detail" element={<NumerologyDetailPage />} />
               <Route path="/detail-number" element={<Numerlogy />} />
             </Routes>
           </BrowserRouter>

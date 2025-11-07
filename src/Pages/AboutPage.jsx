@@ -8,6 +8,10 @@ export default function AboutPage() {
     navigate("/daily-advice");
   };
 
+  const handleViewResults = () => {
+    navigate("/numerology-detail");
+  };
+
   return (
     <div 
       className="min-vh-100 p-4"
@@ -384,21 +388,36 @@ export default function AboutPage() {
                   </div>
                 </div>
 
-                {/* Continue Button */}
+                {/* Action Buttons */}
                 <div className="text-center">
-                  <button
-                    onClick={handleContinue}
-                    className="btn border-0 rounded-pill px-5 py-3"
-                    style={{
-                      backgroundColor: '#A07A4A',
-                      color: 'white',
-                      fontSize: '16px',
-                      fontWeight: 'bold',
-                      boxShadow: '0 4px 12px rgba(160, 122, 74, 0.3)'
-                    }}
-                  >
-                    Tiếp tục hành trình
-                  </button>
+                  <div className="d-flex justify-content-center gap-3 flex-wrap">
+                    <button
+                      onClick={handleViewResults}
+                      className="btn border-0 rounded-pill px-5 py-3"
+                      style={{
+                        backgroundColor: '#28a745',
+                        color: 'white',
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                        boxShadow: '0 4px 12px rgba(40, 167, 69, 0.3)'
+                      }}
+                    >
+                      Xem Kết Quả Thần Số
+                    </button>
+                    <button
+                      onClick={handleContinue}
+                      className="btn border-0 rounded-pill px-5 py-3"
+                      style={{
+                        backgroundColor: '#A07A4A',
+                        color: 'white',
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                        boxShadow: '0 4px 12px rgba(160, 122, 74, 0.3)'
+                      }}
+                    >
+                      Lời Khuyên Hàng Ngày
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
