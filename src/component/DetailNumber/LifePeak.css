@@ -1,0 +1,215 @@
+.lifepeak-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  padding: 2.25rem;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(248, 236, 210, 0.85) 100%);
+  border: 1px solid rgba(232, 199, 140, 0.32);
+  box-shadow: 0 22px 45px rgba(184, 134, 11, 0.16);
+}
+
+.lifepeak-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lifepeak-card__badge {
+  align-self: flex-start;
+  padding: 0.4rem 1.2rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(232, 199, 140, 0.22) 0%, rgba(255, 255, 255, 0.65) 100%);
+  border: 1px solid rgba(232, 199, 140, 0.45);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: #8b6b2a;
+  text-transform: uppercase;
+}
+
+.lifepeak-card__heading h4 {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #2f200c;
+  margin-bottom: 0.35rem;
+}
+
+.lifepeak-card__heading p {
+  margin: 0;
+  color: #6e645b;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.lifepeak-card__canvas {
+  position: relative;
+  padding: 1.25rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 247, 233, 0.88) 100%);
+  border: 1px solid rgba(232, 199, 140, 0.28);
+  box-shadow: inset 0 12px 32px rgba(232, 199, 140, 0.14);
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+}
+
+.lifepeak-card__canvas::-webkit-scrollbar {
+  height: 6px;
+}
+
+.lifepeak-card__canvas::-webkit-scrollbar-thumb {
+  background: rgba(184, 134, 11, 0.35);
+  border-radius: 999px;
+}
+
+.lifepeak-card__base {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1.15rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px dashed rgba(232, 199, 140, 0.5);
+}
+
+.lifepeak-card__base-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+}
+
+.lifepeak-card__base-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #8b6b2a;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.lifepeak-card__base-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2f200c;
+}
+
+.lifepeak-card__timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.lifepeak-card__timeline-item {
+  padding: 1.3rem 1.1rem;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(254, 246, 230, 0.92) 100%);
+  border: 1px solid rgba(232, 199, 140, 0.28);
+  box-shadow: 0 18px 36px rgba(184, 134, 11, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.lifepeak-card__timeline-badge {
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(232, 199, 140, 0.2);
+  color: #8b6b2a;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.lifepeak-card__timeline-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #2f200c;
+  text-shadow: 0 4px 12px rgba(184, 134, 11, 0.2);
+}
+
+.lifepeak-card__timeline-meta {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: #6e645b;
+}
+
+.lifepeak-card__timeline-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.lifepeak-card__action {
+  display: flex;
+  justify-content: center;
+}
+
+.lifepeak-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.8rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  background: linear-gradient(135deg, #b8860b 0%, #e8c78c 60%, #b8860b 100%);
+  color: #fff;
+  box-shadow: 0 16px 26px rgba(184, 134, 11, 0.28);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.lifepeak-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 30px rgba(184, 134, 11, 0.35);
+}
+
+.lifepeak-button__icon {
+  font-size: 1rem;
+}
+
+.lifepeak-button__label {
+  font-size: 0.95rem;
+}
+
+@media (max-width: 991.98px) {
+  .lifepeak-card {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .lifepeak-card {
+    padding: 1.75rem;
+    gap: 1.5rem;
+  }
+
+  .lifepeak-card__heading h4 {
+    font-size: 1.3rem;
+  }
+
+  .lifepeak-card__timeline {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 575.98px) {
+  .lifepeak-card {
+    padding: 1.5rem;
+  }
+
+  .lifepeak-card__canvas {
+    padding: 1rem;
+  }
+
+  .lifepeak-card__timeline {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  }
+}
+

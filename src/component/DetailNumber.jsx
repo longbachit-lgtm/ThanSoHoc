@@ -152,24 +152,41 @@ function DetailNumber() {
               <Fragment>
                 <div
                   id="lifepeak"
-                  className="  border rounded  row d-flex  p-3 m-3 justify-content-center"
+                  className="border rounded-4 shadow-sm bg-white p-4 m-3 flex-column flex-md-row justify-content-center align-items-stretch gap-4"
+                  style={{
+                    background: 'linear-gradient(135deg, #fff8e7 0%, #f9f3ec 100%)',
+                    border: '2px solid #e8c78c44',
+                    boxShadow: '0 6px 32px 0 rgba(232, 199, 140, 0.12)'
+                  }}
                 >
-                  <LifePeak
-                    topFour={top4.top4_peak}
-                    btn={{
-                      class_name: "btn btn-danger",
-                      noi_dung: "4 ĐỈNH CỦA CUỘC ĐỜI",
-                    }}
-                    id_link="four_peak"
-                  />
-                  <LifePeak
-                    topFour={top4.top4_challenge}
-                    btn={{
-                      class_name: "btn jade-green",
-                      noi_dung: "BIỂU ĐỒ THỬ THÁCH",
-                    }}
-                    id_link="four_challenge"
-                  />
+                  <div className="flex-fill mb-4 d-flex justify-content-center align-items-center">
+                    <LifePeak
+                      topFour={top4.top4_peak}
+                      btn={{
+                        class_name: "btn px-4 py-2 fw-bold rounded-3",
+                        noi_dung: (
+                          <>
+                            <span style={{fontSize:18, marginRight:6}}>🏔️</span>4 ĐỈNH CỦA CUỘC ĐỜI
+                          </>
+                        )
+                      }}
+                      id_link="four_peak"
+                    />
+                  </div>
+                  <div className="flex-fill d-flex justify-content-center align-items-center">
+                    <LifePeak
+                      topFour={top4.top4_challenge}
+                      btn={{
+                        class_name: "btn px-4 py-2 fw-bold rounded-3",
+                        noi_dung: (
+                          <>
+                            <span style={{fontSize:18, marginRight:6}}>🌱</span>BIỂU ĐỒ THỬ THÁCH
+                          </>
+                        )
+                      }}
+                      id_link="four_challenge"
+                    />
+                  </div>
                 </div>
               </Fragment>
             )}

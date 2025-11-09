@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterRealNumber } from "../../service/numerlogy";
 import { numberKarmaActions } from "../../store/numberKarma";
@@ -26,85 +26,103 @@ const ChartCombineEnergy = function ({
   const nameNumber = useSelector((state) => state.numberName.name);
   const atitute = useSelector((state) => state.numberKarmaMain.atitute);
   const day_birth = useSelector((state) => state.numberKarmaMain.day_birth);
-  const top4 = useSelector((state) => state.numberKarmaMain.top4.top4_peak);
-  const strongBirthNumb = filterRealNumber(birthString, 2);
-  const strongNameNumb = filterRealNumber(full_name_number, 3);
+  const top4Data = useSelector((state) => state.numberKarmaMain.top4);
+  const top4Peaks = top4Data?.top4_peak ?? {};
+  const strongBirthNumb = filterRealNumber(birthString || "", 2) || "";
+  const strongNameNumb = filterRealNumber(full_name_number || "", 3) || "";
 
-  let listNumbCombine =
-    "" +
-    strongBirthNumb +
-    strongNameNumb +
-    atitute +
-    day_birth +
-    nameNumber +
-    soul +
-    express;
+  const { amountNumber, strongList, weakList } = useMemo(() => {
+    const amount = {};
 
-  const amountNumber = {};
-  for (let chr of listNumbCombine.replaceAll("0", "")) {
-    if (amountNumber[chr]) {
-      amountNumber[chr] += 1;
-    } else {
-      amountNumber[chr] = 1;
+    const listNumbCombine =
+      "" +
+      strongBirthNumb +
+      strongNameNumb +
+      (atitute || "") +
+      (day_birth || "") +
+      (nameNumber || "") +
+      (soul || "") +
+      (express || "");
+
+    for (let chr of listNumbCombine.replaceAll("0", "")) {
+      if (amount[chr]) {
+        amount[chr] += 1;
+      } else {
+        amount[chr] = 1;
+      }
     }
-  }
 
-  for (let top in top4) {
-    if (!top4[top].num) {
-      continue;
-    }
-    if (amountNumber[top4[top].num]) {
-      amountNumber[top4[top].num] += 2;
-    } else {
-      amountNumber[top4[top].num] = 2;
-    }
-  }
+    Object.values(top4Peaks || {}).forEach((peak) => {
+      if (!peak?.num) {
+        return;
+      }
+      amount[peak.num] = amount[peak.num] ? amount[peak.num] + 2 : 2;
+    });
 
-  amountNumber[main] = amountNumber[main] ? amountNumber[main] + 4 : 4;
-
-  amountNumber[destiny] = amountNumber[destiny] ? amountNumber[destiny] + 3 : 3;
-  amountNumber[mature] = amountNumber[mature] ? amountNumber[mature] + 3 : 3;
-
-  // start Kiem tra so manh va yeu
-
-  const stong_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 20, 22, 30, 33];
-  const strongNumber = stong_arr.filter((num) => amountNumber[num] >= 4);
-
-  const strong_arr_sort = strongNumber.sort(
-    (a, b) => amountNumber[b] - amountNumber[a]
-  );
-
-  dispatch(numberKarmaActions.setStrongListNumb(strong_arr_sort));
-
-  const weak_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const weakNumbers = weak_arr.filter(
-    (num) => !amountNumber.hasOwnProperty(num)
-  );
-  const arr_check_weak = Object.keys(amountNumber).map(Number);
-
-  const filteredWeakContents = weakNumbers.reduce((acc, numb) => {
-    const strongNumCheck = {
-      1: [11, 10],
-      2: [22, 11],
-      4: [22],
-      3: [33, 30],
-      6: [33],
+    const pushOrInit = (key, value) => {
+      if (!key && key !== 0) return;
+      amount[key] = amount[key] ? amount[key] + value : value;
     };
 
-    const hasStrongNum = strongNumCheck[numb]?.some((num) =>
-      arr_check_weak.includes(num)
-    );
+    pushOrInit(main, 4);
+    pushOrInit(destiny, 3);
+    pushOrInit(mature, 3);
 
-    if (!hasStrongNum) {
-      acc.push(numb);
-    }
+    const strongCandidates = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 20, 22, 30, 33];
+    const strongNumbers = strongCandidates
+      .filter((num) => amount[num] >= 4)
+      .sort((a, b) => amount[b] - amount[a]);
 
-    return acc;
-  }, []);
+    const weakCandidates = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const presentNumbers = Object.keys(amount).map(Number);
 
-  dispatch(numberKarmaActions.setWeakListNumb(filteredWeakContents));
+    const filteredWeak = weakCandidates.reduce((acc, numb) => {
+      const strongNumCheck = {
+        1: [11, 10],
+        2: [22, 11],
+        4: [22],
+        3: [33, 30],
+        6: [33],
+      };
 
-  // end
+      const hasStrongNum = strongNumCheck[numb]?.some((num) =>
+        presentNumbers.includes(num)
+      );
+
+      if (!hasStrongNum && !amount.hasOwnProperty(numb)) {
+        acc.push(numb);
+      }
+
+      return acc;
+    }, []);
+
+    return {
+      amountNumber: amount,
+      strongList: strongNumbers,
+      weakList: filteredWeak,
+    };
+  }, [
+    strongBirthNumb,
+    strongNameNumb,
+    atitute,
+    day_birth,
+    nameNumber,
+    soul,
+    express,
+    top4Peaks,
+    main,
+    destiny,
+    mature,
+  ]);
+
+  useEffect(() => {
+    dispatch(numberKarmaActions.setStrongListNumb(strongList));
+  }, [dispatch, strongList]);
+
+  useEffect(() => {
+    dispatch(numberKarmaActions.setWeakListNumb(weakList));
+  }, [dispatch, weakList]);
+
   const canvasEl = useRef(null);
 
   useEffect(() => {
@@ -121,8 +139,8 @@ const ChartCombineEnergy = function ({
     };
   }, []);
 
-  const wMatrix = wRightPanel * 0.5;
-  const hMatrix = (wMatrix / 3) * 3;
+  const wMatrix = wRightPanel ? wRightPanel * 0.5 : 0;
+  const hMatrix = wMatrix ? (wMatrix / 3) * 3 : 0;
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -170,7 +188,7 @@ const ChartCombineEnergy = function ({
         />
         
         {/* Chart Canvas */}
-        {wMatrix && (
+        {wMatrix > 0 && (
           <div style={{ position: 'relative', zIndex: 1 }}>
             <DrawCell
               wMatrix={wMatrix}
