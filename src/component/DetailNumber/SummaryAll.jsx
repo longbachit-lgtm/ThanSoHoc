@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import tomtat from "../../assets/img/tomtat.png";
 import {
@@ -11,172 +12,175 @@ import {
   SOLUTION_NUMB,
 } from "../../Data/numerology";
 import parse from "html-react-parser";
-import { Fragment } from "react";
+import "./SummaryAll.css";
 
 function SummaryAll() {
   const strongNumb = useSelector((state) => state.numberKarmaMain.strong_list);
-
-  const newStrongNumb = strongNumb
-    .map((numb, index) => (STRONG_NUMB[numb] ? STRONG_NUMB[numb] : null))
-    .reduce((acc, obj) => {
-      return { ...acc, ...obj };
-    }, {});
-
   const weakNumb = useSelector((state) => state.numberKarmaMain.weak_list);
   const arrow = useSelector((state) => state.numberKarmaMain.arrow);
-  const lack_arrow = useSelector((state) => state.numberKarmaMain.lack_arrow);
   const numberSoul = useSelector((state) => state.numberName.soul);
   const numberDestiny = useSelector((state) => state.numberName.destiny);
   const numberKarma = useSelector((state) => state.numberKarmaMain.number);
 
-  // DEM DE NHOM DONG
+  const newStrongNumb = useMemo(() => {
+    return strongNumb
+      .map((numb) => (STRONG_NUMB[numb] ? STRONG_NUMB[numb] : null))
+      .reduce((acc, obj) => {
+        return { ...acc, ...obj };
+      }, {});
+  }, [strongNumb]);
 
-  const keys = Object.keys(newStrongNumb);
-  const totalItems = keys.length;
+  const groups = useMemo(() => {
+    const keys = Object.keys(newStrongNumb);
+    const totalItems = keys.length;
+    const groupCount = 3;
+    const baseSize = Math.floor(totalItems / groupCount);
+    const remainder = totalItems % groupCount;
 
-  // ✅ Chia làm 3 nhóm gần bằng nhau
-  const groupCount = 3;
-  const baseSize = Math.floor(totalItems / groupCount);
-  const remainder = totalItems % groupCount;
+    const result = [];
+    let start = 0;
 
-  const groups = [];
-  let start = 0;
+    for (let i = 0; i < groupCount; i++) {
+      const size = baseSize + (i < remainder ? 1 : 0);
+      result.push(keys.slice(start, start + size));
+      start += size;
+    }
+    return result;
+  }, [newStrongNumb]);
 
-  for (let i = 0; i < groupCount; i++) {
-    const size = baseSize + (i < remainder ? 1 : 0); // thêm 1 cho các nhóm đầu nếu dư
-    groups.push(keys.slice(start, start + size));
-    start += size;
+  if (!strongNumb || strongNumb.length === 0) {
+    return (
+      <div id="summary_all" className="summary-all">
+        <div className="summary-all__container">
+          <div className="summary-all__empty">
+            <div className="summary-all__empty-icon">🔍</div>
+            <h3>Chưa có dữ liệu tóm tắt</h3>
+            <p>
+              Vui lòng nhập đầy đủ thông tin để hệ thống tạo bản tóm tắt về bạn.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div id="summary_all">
-      <div className="container">
-        <h1 className=" h1 my-5 px-2">
-          <b className="text-info"> &nbsp; &nbsp;Xu hướng nghề nghiệp </b> và{" "}
-          <b className="text-danger"> Tóm tắt </b>về bạn{" "}
-        </h1>
-        <img className=" my-1 w-100" style={{ scale: 1 }} src={tomtat} />
+    <div id="summary_all" className="summary-all">
+      <div className="summary-all__container">
+        <div className="summary-all__header">
+          <h1 className="summary-all__title">
+            <span className="summary-all__title-career">
+              Xu hướng nghề nghiệp
+            </span>{" "}
+            và <span className="summary-all__title-summary">Tóm tắt</span> về
+            bạn
+          </h1>
+          <div className="summary-all__image-wrapper">
+            <img
+              className="summary-all__image"
+              src={tomtat}
+              alt="Tóm tắt về bạn"
+            />
+          </div>
+        </div>
 
-        <div className="m-3  px-3 py-4    border border-dark-subtle rounded  ">
-          <h4 className=" mt-3 px-2">ĐIỂM MẠNH CỦA BẠN</h4>
-          <p class="text-danger mb-5">
+        <div className="summary-all__section">
+          <h4 className="summary-all__section-title">💪 ĐIỂM MẠNH CỦA BẠN</h4>
+          <p className="summary-all__section-subtitle">
             Là tài năng, năng lực, khả năng, đặc điểm chủ đạo của bạn
           </p>
-          {groups.map((group, index) => (
-            <div key={index}>
-              {group.map((key, subIndex) => (
-                <Fragment key={subIndex}>{parse(newStrongNumb[key])}</Fragment>
+          <div className="summary-all__content">
+            {groups.map((group, index) => (
+              <div key={index}>
+                {group.map((key, subIndex) => (
+                  <div key={subIndex}>{parse(newStrongNumb[key])}</div>
+                ))}
+                {index < groups.length - 1 && (
+                  <div className="summary-all__groups-divider" />
+                )}
+              </div>
+            ))}
+            {arrow.length > 0 &&
+              arrow.map((arr, iAr) => (
+                <div key={`arrow${iAr}`}>
+                  {ARROW[arr]?.[1]?.KET_LUAN &&
+                    parse(ARROW[arr][1].KET_LUAN)}
+                </div>
               ))}
-              {index < groups.length - 1 && <div className="mt-5" />}{" "}
-              {/* cách dòng giữa các nhóm */}
-            </div>
-          ))}
-          {arrow.length > 0 &&
-            arrow.map((arr, iAr) => {
-              return (
-                <Fragment key={`emp${iAr}`}>
-                  {parse(ARROW[arr][1].KET_LUAN)}
-                </Fragment>
-              );
-            })}
+          </div>
         </div>
 
-        <div className="m-3  px-3 py-4   border border-dark-subtle rounded  ">
-          <h4 className=" mt-3 px-2">ĐIỂM YẾU CỦA BẠN</h4>
-          <p class="text-primary">
+        <div className="summary-all__section">
+          <h4 className="summary-all__section-title">⚠️ ĐIỂM YẾU CỦA BẠN</h4>
+          <p className="summary-all__section-subtitle summary-all__section-subtitle-primary">
             Là nhược điểm, bài học, khuyết điểm của bạn
           </p>
-          <div>
-            {weakNumb.map((numb, index) => {
-              return (
-                <div className="mt-5" key={index}>
-                  {WEAK_NUMB[numb] && WEAK_NUMB[numb].noidung
-                    ? parse(WEAK_NUMB[numb].noidung)
-                    : null}
-                </div>
-              );
-            })}
+          <div className="summary-all__content">
+            {weakNumb.map((numb, index) => (
+              <div key={index} className="summary-all__solution-item">
+                {WEAK_NUMB[numb]?.noidung && parse(WEAK_NUMB[numb].noidung)}
+              </div>
+            ))}
           </div>
-          {/* <div className="">
-            {lack_arrow.length > 0 &&
-              lack_arrow.map((arr, iAr) => {
-                return (
-                  <Fragment key={`emp${iAr}`}>
-                    {parse(ARROW[arr][0].KET_LUAN)}
-                  </Fragment>
-                );
-              })}
-          </div> */}
         </div>
 
-        <div className="m-3  p-3    border border-dark-subtle rounded  ">
-          <h4 className=" mt-3 px-2">ĐỘNG LỰC THỎA MÃN</h4>
-          <p class="text-danger">Là khao khát nội tâm, mong muốn, sứ mệnh</p>
-          <p>
-            {NUMEROLOGY_LIFE_PATH[numberDestiny] &&
-            NUMEROLOGY_LIFE_PATH[numberDestiny].tomtat
-              ? parse(NUMEROLOGY_LIFE_PATH[numberDestiny].tomtat)
-              : ""}
+        <div className="summary-all__section">
+          <h4 className="summary-all__section-title">🎯 ĐỘNG LỰC THỎA MÃN</h4>
+          <p className="summary-all__section-subtitle">
+            Là khao khát nội tâm, mong muốn, sứ mệnh
           </p>
-          <p>
-            {NUMEROLOGY_SOUL_NUMBER[numberSoul] &&
-            NUMEROLOGY_SOUL_NUMBER[numberSoul].tomtat
-              ? parse(NUMEROLOGY_SOUL_NUMBER[numberSoul].tomtat)
-              : ""}
-          </p>
-          <p>
-            {NUMEROLOGY_SOUL_NUMBER[numberKarma] &&
-            NUMEROLOGY_SOUL_NUMBER[numberKarma]
-              ? parse(NUMEROLOGY_SOUL_NUMBER[numberKarma].tomtat)
-              : ""}
-          </p>
+          <div className="summary-all__content">
+            {NUMEROLOGY_LIFE_PATH[numberDestiny]?.tomtat && (
+              <div>{parse(NUMEROLOGY_LIFE_PATH[numberDestiny].tomtat)}</div>
+            )}
+            {NUMEROLOGY_SOUL_NUMBER[numberSoul]?.tomtat && (
+              <div>{parse(NUMEROLOGY_SOUL_NUMBER[numberSoul].tomtat)}</div>
+            )}
+            {NUMEROLOGY_SOUL_NUMBER[numberKarma]?.tomtat && (
+              <div>{parse(NUMEROLOGY_SOUL_NUMBER[numberKarma].tomtat)}</div>
+            )}
+          </div>
         </div>
-        <div className="m-3  p-3 career-container border border-dark-subtle rounded  ">
-          <h4 className="  mt-3 px-2 ">XU HƯỚNG NGHỀ NGHIỆP</h4>
-          <p class="text-danger">
-            Đây là gợi ý xu hướng nghề nghiệp dựa trên năng lượng thuần trong bộ
-            số của Bạn, trong thực tế để chọn được nghề nghiệp phù hợp Bạn cần
-            xét thêm những yếu tố khác như: Nguồn lực (tài năng thực tế) và lợi
-            thế cạnh tranh (mối quan hệ, truyền thống, gia đình, tài chính, nơi
-            ở ..vv) của Bạn để Bạn lựa chọn được nghề nghiệp phù hợp nhất.
-          </p>
 
-          <div class="career-grid">
+        <div className="summary-all__section">
+          <h4 className="summary-all__section-title">💼 XU HƯỚNG NGHỀ NGHIỆP</h4>
+          <p className="summary-all__section-subtitle">
+            Đây là gợi ý xu hướng nghề nghiệp dựa trên năng lượng thuần trong
+            bộ số của Bạn, trong thực tế để chọn được nghề nghiệp phù hợp Bạn
+            cần xét thêm những yếu tố khác như: Nguồn lực (tài năng thực tế) và
+            lợi thế cạnh tranh (mối quan hệ, truyền thống, gia đình, tài chính,
+            nơi ở ..vv) của Bạn để Bạn lựa chọn được nghề nghiệp phù hợp nhất.
+          </p>
+          <div className="summary-all__career-grid">
             {strongNumb.map((numb, index) =>
-              NUMERLOGY_JOB[numb] && NUMERLOGY_JOB[numb].noidung ? (
-                <div className="mt-4" key={index}>
+              NUMERLOGY_JOB[numb]?.noidung ? (
+                <div key={index} className="summary-all__career-item">
                   {parse(NUMERLOGY_JOB[numb].noidung)}
                 </div>
               ) : null
             )}
           </div>
         </div>
-        <div className="m-3  p-3  conclude  border border-dark-subtle rounded  ">
-          <h4 className="  mt-3 px-2 title"> LỜI KHUYÊN VÀ CÁCH PHÁT TRIỂN</h4>
-          <p class="text-danger">
+
+        <div className="summary-all__section">
+          <h4 className="summary-all__section-title">
+            🛠️ LỜI KHUYÊN VÀ CÁCH PHÁT TRIỂN
+          </h4>
+          <p className="summary-all__section-subtitle">
             Là những đề xuất phát triển giúp bạn trở nên hoàn thiện hơn
           </p>
-          <div>
-            {weakNumb.map((numb, index) => {
-              return (
-                <div
-                  className={`mt-5 section ${index % 2 === 0 ? "even" : "odd"}`}
-                  key={index}
-                >
-                  {SOLUTION_NUMB[numb] && SOLUTION_NUMB[numb].noidung
-                    ? parse(SOLUTION_NUMB[numb].noidung)
-                    : null}
-                </div>
-              );
-            })}
+          <div className="summary-all__content">
+            {weakNumb.map((numb, index) => (
+              <div key={index} className="summary-all__solution-item">
+                {SOLUTION_NUMB[numb]?.noidung &&
+                  parse(SOLUTION_NUMB[numb].noidung)}
+              </div>
+            ))}
           </div>
 
-          <div class="note-box row">
-          
-            <div className=" ">
-              <strong>🚫 LƯU Ý: </strong> Những nghề nêu trên không phải bạn
-              không làm được mà bạn cần phải nỗ lực nhiều hơn để bù đắp{" "}
-            </div>
+          <div className="summary-all__note-box">
+            <strong>🚫 LƯU Ý: </strong> Những nghề nêu trên không phải bạn
+            không làm được mà bạn cần phải nỗ lực nhiều hơn để bù đắp
           </div>
         </div>
       </div>

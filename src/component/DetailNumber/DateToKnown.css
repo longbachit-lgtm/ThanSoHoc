@@ -1,0 +1,148 @@
+.date-to-known {
+  padding: 3rem 0;
+  background: linear-gradient(180deg, #fff9f1 0%, #f5ede2 100%);
+}
+
+.date-to-known__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.date-to-known__header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.date-to-known__title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #3a2a0e;
+  margin: 0 0 1rem 0;
+  letter-spacing: 0.5px;
+}
+
+.date-to-known__image-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.date-to-known__image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(184, 134, 11, 0.15);
+}
+
+.date-to-known__chart-section {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(253, 244, 230, 0.92) 100%);
+  border-radius: 24px;
+  border: 1px solid rgba(232, 199, 140, 0.3);
+  box-shadow: 0 20px 40px rgba(184, 134, 11, 0.14);
+}
+
+.date-to-known__arrows-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.date-to-known__arrows-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #3a2a0e;
+  margin: 0 0 1rem 0;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, rgba(232, 199, 140, 0.15) 0%, rgba(255, 248, 240, 0.8) 100%);
+  border-radius: 16px;
+  border-left: 4px solid #b8860b;
+  letter-spacing: 0.5px;
+}
+
+.date-to-known__arrow-item {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 247, 232, 0.92) 100%);
+  border-radius: 20px;
+  padding: 1.5rem;
+  border: 1px solid rgba(232, 199, 140, 0.28);
+  box-shadow: 0 12px 28px rgba(184, 134, 11, 0.1);
+  margin-bottom: 1.25rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.date-to-known__arrow-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(184, 134, 11, 0.15);
+}
+
+.date-to-known__arrow-visual {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.date-to-known__arrow-content {
+  color: #5c5145;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  padding: 0 0.5rem;
+}
+
+.date-to-known__arrow-content p {
+  margin-bottom: 0.75rem;
+}
+
+.date-to-known__arrow-content p:last-child {
+  margin-bottom: 0;
+}
+
+.date-to-known__empty {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #6e645b;
+  font-style: italic;
+}
+
+@media (max-width: 991.98px) {
+  .date-to-known__container {
+    padding: 0 1.25rem;
+    gap: 2rem;
+  }
+
+  .date-to-known__title {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .date-to-known {
+    padding: 2.5rem 0;
+  }
+
+  .date-to-known__chart-section {
+    padding: 1.5rem;
+  }
+
+  .date-to-known__arrow-item {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .date-to-known__title {
+    font-size: 1.5rem;
+  }
+
+  .date-to-known__arrows-title {
+    font-size: 1.1rem;
+    padding: 0.85rem 1.25rem;
+  }
+}
+

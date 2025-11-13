@@ -3,6 +3,7 @@ import fourchallenge from "../../assets/img/12.png";
 import { TOP_CHALLENGE } from "../../Data/numerology";
 import LifePeak from "./LifePeak";
 import parse from "html-react-parser";
+import "./FourChallenge.css";
 
 function FourChallenge({ topFour }) {
   const birth_day_list = useSelector(
@@ -16,38 +17,77 @@ function FourChallenge({ topFour }) {
     "Thử thách thứ tư",
   ];
 
-  const renderPeak = (peak, index) => {
+  if (!topFour || !birth_day_list) {
+    return (
+      <div id="four_challenge" className="four-challenge">
+        <div className="four-challenge__container">
+          <div className="four-challenge__empty">
+            <div className="four-challenge__empty-icon">🔍</div>
+            <h3>Chưa có dữ liệu các thử thách cuộc đời</h3>
+            <p>
+              Vui lòng nhập đầy đủ thông tin để hệ thống phân tích các thử thách
+              cuộc đời của bạn.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const renderChallenge = (challenge, index) => {
+    if (!challenge) return null;
+
     const title = challengeTitles[index];
     const content =
-      TOP_CHALLENGE[peak.num] && TOP_CHALLENGE[peak.num].noidung
-        ? parse(TOP_CHALLENGE[peak.num].noidung)
+      TOP_CHALLENGE[challenge.num] && TOP_CHALLENGE[challenge.num].noidung
+        ? parse(TOP_CHALLENGE[challenge.num].noidung)
         : "";
 
     return (
-      <div key={index} className="p-4 border rounded shadow-sm bg-light mb-3">
-        <h5 className="fw-bold">
-          ⚠️ {title} của bạn là năm{" "}
-          <span className="text-danger">{peak.age} tuổi</span> - năm{" "}
-          <span className="text-primary">{peak.year}</span>: Con số{" "}
-          <span className="text-danger">{peak.num}</span>
+      <div key={index} className="four-challenge__challenge-card">
+        <h5 className="four-challenge__challenge-title">
+          <span className="four-challenge__challenge-title-icon">🌱</span>
+          {title} của bạn
         </h5>
-        <div className="mt-3">{content}</div>
+        <div className="four-challenge__challenge-info">
+          Năm{" "}
+          <span className="four-challenge__challenge-age">
+            {challenge.age} tuổi
+          </span>{" "}
+          - năm{" "}
+          <span className="four-challenge__challenge-year">
+            {challenge.year}
+          </span>
+          : Con số{" "}
+          <span className="four-challenge__challenge-number">
+            {challenge.num}
+          </span>
+        </div>
+        {content && (
+          <div className="four-challenge__challenge-content">{content}</div>
+        )}
       </div>
     );
   };
 
   return (
-    <div id="four_challenge">
-      <div className="container">
-        <h1 className="h1 my-5 px-2">
-          12{") "} Các thử thách cuộc đời của bạn:
-          <b className="text-info"> {birth_day_list}</b>
-        </h1>
-        <div className="img-box">
-          <img className="my-1 w-100" src={fourchallenge} alt="4 thử thách" />
+    <div id="four_challenge" className="four-challenge">
+      <div className="four-challenge__container">
+        <div className="four-challenge__header">
+          <h1 className="four-challenge__title">
+            12{") "} Các thử thách cuộc đời của bạn:{" "}
+            <span className="four-challenge__title-date">{birth_day_list}</span>
+          </h1>
+          <div className="four-challenge__image-wrapper">
+            <img
+              className="four-challenge__image"
+              src={fourchallenge}
+              alt="4 thử thách cuộc đời"
+            />
+          </div>
         </div>
 
-        <div className="d-flex justify-content-center">
+        <div className="four-challenge__chart-wrapper">
           <LifePeak
             btn={{
               class_name: "btn btn-danger",
@@ -58,9 +98,9 @@ function FourChallenge({ topFour }) {
           />
         </div>
 
-        <div className="container">
+        <div className="four-challenge__challenges-list">
           {["top01", "top02", "top03", "top04"].map((key, index) =>
-            renderPeak(topFour[key], index)
+            renderChallenge(topFour[key], index)
           )}
         </div>
       </div>

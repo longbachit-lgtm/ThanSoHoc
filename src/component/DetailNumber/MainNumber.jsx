@@ -103,7 +103,7 @@ function MainNumber() {
       <div className="main-number__container">
         <section
           className="main-number__hero"
-          style={{ backgroundImage: `url(${sochudao})` }}
+          // style={{ backgroundImage: `url(${sochudao})` }}
         >
           <div className="main-number__hero-overlay" />
           <div className="main-number__hero-content">

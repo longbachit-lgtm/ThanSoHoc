@@ -1,25 +1,63 @@
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import songaysinh from "../../assets/img/7.png";
 import { NUMEROLOGY_BIRTHDAY_NUMBER } from "../../Data/numerology";
 import parse from "html-react-parser";
+import "./BirthNumber.css";
 
 function BirthNumber() {
   const numberDayBirth = useSelector(
     (state) => state.numberKarmaMain.day_birth
   );
-  return (
-    <div id="birth_number">
-      <div className="container">
-        <h1 className=" h1 my-5 px-2">
-          7{") "} Chỉ Số Ngày Sinh:{" "}
-          <b className="text-danger">Số {numberDayBirth} </b>
-        </h1>
-        <div className="img-box">
-          <img className=" my-1  w-100" src={songaysinh} />
+
+  const birthData = useMemo(() => {
+    if (!numberDayBirth) {
+      return null;
+    }
+    return NUMEROLOGY_BIRTHDAY_NUMBER[numberDayBirth];
+  }, [numberDayBirth]);
+
+  if (!numberDayBirth || !birthData) {
+    return (
+      <div id="birth_number" className="birth-number">
+        <div className="birth-number__container">
+          <div className="birth-number__empty">
+            <div className="birth-number__empty-icon">🔍</div>
+            <h3>Chưa có dữ liệu chỉ số ngày sinh</h3>
+            <p>
+              Vui lòng nhập đầy đủ thông tin để hệ thống phân tích chỉ số ngày
+              sinh của bạn.
+            </p>
+          </div>
         </div>
-        {NUMEROLOGY_BIRTHDAY_NUMBER[numberDayBirth]
-          ? parse(NUMEROLOGY_BIRTHDAY_NUMBER[numberDayBirth].noidung)
-          : ""}
+      </div>
+    );
+  }
+
+  return (
+    <div id="birth_number" className="birth-number">
+      <div className="birth-number__container">
+        <div className="birth-number__header">
+          <h1 className="birth-number__title">
+            7{") "} Chỉ số ngày sinh của bạn là:{" "}
+            <span className="birth-number__title-number">
+              Số {numberDayBirth}
+            </span>
+          </h1>
+          <div className="birth-number__image-wrapper">
+            <img
+              className="birth-number__image"
+              src={songaysinh}
+              alt="Chỉ số ngày sinh"
+            />
+          </div>
+        </div>
+
+        {birthData.noidung && (
+          <div className="birth-number__content">
+            {parse(birthData.noidung)}
+          </div>
+        )}
       </div>
     </div>
   );
