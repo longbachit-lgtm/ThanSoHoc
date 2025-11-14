@@ -11,11 +11,12 @@ export default function UserNumerologyHeader() {
   const expressNumber = useSelector((state) => state.numberName.express);
   const destinyNumber = useSelector((state) => state.numberName.destiny);
 
-  // Get from localStorage as fallback
-  const userFullName = localStorage.getItem('userFullName') || fullName || 'Người dùng';
+  // Prioritize Redux store, use localStorage only as fallback
+  const userFullName = fullName || localStorage.getItem('userFullName') || 'Người dùng';
   const userBirthDate = localStorage.getItem('userBirthDate');
   
   let displayBirthDate = birthDayList;
+  // Only use localStorage as fallback if Redux store is empty
   if (!displayBirthDate && userBirthDate) {
     try {
       const birthData = JSON.parse(userBirthDate);

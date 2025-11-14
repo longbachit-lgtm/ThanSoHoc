@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import DrawCellDateName from "./SubComponent/DrawCellDateName";
 
 const ChartDateName = ({
@@ -12,21 +12,27 @@ const ChartDateName = ({
   const [wRightPanel, setWLeftPanel] = useState();
   const [isHovered, setIsHovered] = useState(false);
 
-  const amountNumber = {};
-  for (let chr of numbersData.replaceAll("0", "")) {
-    if (amountNumber[chr]) {
-      amountNumber[chr] += 1;
-    } else {
-      amountNumber[chr] = 1;
+  // Calculate amountNumber using useMemo to recalculate when numbersData changes
+  const amountNumber = useMemo(() => {
+    if (!numbersData) return {};
+    const result = {};
+    const cleanedData = numbersData.toString().replaceAll("0", "");
+    for (let chr of cleanedData) {
+      if (result[chr]) {
+        result[chr] += 1;
+      } else {
+        result[chr] = 1;
+      }
     }
-  }
+    return result;
+  }, [numbersData]);
 
   const canvasEl = useRef(null);
 
   useEffect(() => {
     const width = canvasEl?.current?.offsetWidth;
     setWLeftPanel(width);
-  }, []);
+  }, [numbersData]); // Add numbersData as dependency to recalculate when data changes
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -42,8 +48,7 @@ const ChartDateName = ({
       '#9b59b6': 'linear-gradient(135deg, #C4A1D8 0%, #9b59b6 100%)',
       '#3cbc9b': 'linear-gradient(135deg, #76C7C0 0%, #3cbc9b 100%)',
       'green': 'linear-gradient(135deg, #52B788 0%, #28a745 100%)',
-      'purple': 'linear-gradient(135deg, #C4A1D8 0%, #9b59b6 100%)',
-      '#3cbc9b': 'linear-gradient(135deg, #76C7C0 0%, #3cbc9b 100%)'
+      'purple': 'linear-gradient(135deg, #C4A1D8 0%, #9b59b6 100%)'
     };
     return gradientMap[buttonColor] || `linear-gradient(135deg, ${buttonColor} 0%, ${buttonColor} 100%)`;
   };

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 import bieudongaysinh from "../../assets/img/4.png";
 import { ARROW } from "../../Data/numerology";
@@ -17,21 +17,27 @@ const DateToKnown = ({
   const arrows = useSelector((state) => state.numberKarmaMain.arrow);
   const lack_arrow = useSelector((state) => state.numberKarmaMain.lack_arrow);
 
-  const amountNumber = {};
-  for (let chr of numbersData.replaceAll("0", "")) {
-    if (amountNumber[chr]) {
-      amountNumber[chr] += 1;
-    } else {
-      amountNumber[chr] = 1;
+  // Calculate amountNumber using useMemo to recalculate when numbersData changes
+  const amountNumber = useMemo(() => {
+    if (!numbersData) return {};
+    const result = {};
+    const cleanedData = numbersData.toString().replaceAll("0", "");
+    for (let chr of cleanedData) {
+      if (result[chr]) {
+        result[chr] += 1;
+      } else {
+        result[chr] = 1;
+      }
     }
-  }
+    return result;
+  }, [numbersData]);
 
   const canvasEl = useRef(null);
 
   useEffect(() => {
     const width = canvasEl?.current?.offsetWidth;
     setWLeftPanel(width);
-  }, []);
+  }, [numbersData]); // Add numbersData as dependency to recalculate when data changes
 
   return (
     <div id="date_to_known" className="date-to-known">

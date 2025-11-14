@@ -7,23 +7,25 @@ export default function UserProfileSection() {
   const birthDayList = useSelector((state) => state.numberKarmaMain.birth_day_list);
   const birthDay = useSelector((state) => state.numberKarmaMain.birth_day);
 
-  // Get from localStorage as fallback
-  const userFullName = localStorage.getItem('userFullName') || fullName || 'Người dùng';
+  // Prioritize Redux store, use localStorage only as fallback
+  const userFullName = fullName || localStorage.getItem('userFullName') || 'Người dùng';
   const userBirthDate = localStorage.getItem('userBirthDate');
   
   let day, month, year;
   let displayBirthDate = birthDayList;
   
-  // Parse birth date
+  // Parse birth date - prioritize Redux store
   if (birthDay) {
     const birthStr = birthDay.toString();
     if (birthStr.length === 8) {
       day = parseInt(birthStr.substring(0, 2));
       month = parseInt(birthStr.substring(2, 4));
       year = parseInt(birthStr.substring(4, 8));
+      displayBirthDate = birthDayList || `${day}-${month}-${year}`;
     }
   }
   
+  // Only use localStorage as fallback if Redux store is empty
   if (!day || !month || !year) {
     if (userBirthDate) {
       try {
@@ -36,8 +38,6 @@ export default function UserProfileSection() {
         console.error('Error parsing birth date:', e);
       }
     }
-  } else {
-    displayBirthDate = `${day}-${month}-${year}`;
   }
 
   // Calculate additional info
