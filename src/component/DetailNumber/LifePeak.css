@@ -51,16 +51,25 @@
   box-shadow: inset 0 12px 32px rgba(232, 199, 140, 0.14);
   display: flex;
   justify-content: center;
-  overflow-x: auto;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
-.lifepeak-card__canvas::-webkit-scrollbar {
-  height: 6px;
+.lifepeak-card__canvas > div {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.lifepeak-card__canvas::-webkit-scrollbar-thumb {
-  background: rgba(184, 134, 11, 0.35);
-  border-radius: 999px;
+.lifepeak-card__canvas canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 .lifepeak-card__base {
@@ -112,6 +121,10 @@
   flex-direction: column;
   gap: 0.75rem;
   align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .lifepeak-card__timeline-badge {
@@ -122,6 +135,8 @@
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.4px;
+  white-space: nowrap;
+  text-align: center;
 }
 
 .lifepeak-card__timeline-value {
@@ -129,6 +144,9 @@
   font-weight: 800;
   color: #2f200c;
   text-shadow: 0 4px 12px rgba(184, 134, 11, 0.2);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.2;
 }
 
 .lifepeak-card__timeline-meta {
@@ -136,12 +154,17 @@
   gap: 0.75rem;
   font-size: 0.85rem;
   color: #6e645b;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 .lifepeak-card__timeline-meta span {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
+  white-space: nowrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .lifepeak-card__action {
@@ -199,17 +222,65 @@
   }
 }
 
+@media (max-width: 767.98px) {
+  .lifepeak-card__canvas {
+    padding: 1rem;
+  }
+}
+
 @media (max-width: 575.98px) {
   .lifepeak-card {
     padding: 1.5rem;
   }
 
   .lifepeak-card__canvas {
-    padding: 1rem;
+    padding: 0.75rem;
+  }
+
+  .lifepeak-card__canvas > div > div {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .lifepeak-card__canvas canvas {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
   }
 
   .lifepeak-card__timeline {
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .lifepeak-card__timeline-item {
+    padding: 1rem 0.9rem;
+    gap: 0.6rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .lifepeak-card__timeline-badge {
+    align-self: center;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.7rem;
+  }
+
+  .lifepeak-card__timeline-value {
+    font-size: 1.4rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  .lifepeak-card__timeline-meta {
+    justify-content: center;
+    text-align: center;
+    font-size: 0.8rem;
+    gap: 0.5rem;
+  }
+
+  .lifepeak-card__timeline-meta span {
+    justify-content: center;
   }
 }
 
