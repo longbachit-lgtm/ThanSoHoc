@@ -24,6 +24,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<AuthPage />} />
+              <Route path="/login" element={<AuthPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/name-input" element={<NameInputPage />} />
               <Route path="/birth-date" element={<BirthDatePage />} />
@@ -33,6 +34,7 @@ function App() {
               <Route path="/daily-advice" element={<DailyAdvicePage />} />
               <Route path="/numerology-detail" element={<NumerologyDetailPage />} />
               <Route path="/detail-number" element={<Numerlogy />} />
+              <Route path="/form-infor" element={<FormInfor />} />
             </Routes>
           </BrowserRouter>
         </div>

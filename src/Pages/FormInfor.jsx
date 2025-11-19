@@ -16,10 +16,19 @@ import { numberKarmaActions } from "../store/numberKarma";
 import { numberNameActions } from "../store/numberName";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
+import api from "../service/api";
+
 function FormInfor() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onFinish = (values) => {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const onFinish = async (values) => {
+    setError("");
+    setLoading(true);
     const spaceRegex = /\s+/g;
 
     // main number
@@ -111,6 +120,48 @@ function FormInfor() {
     const mature = mergeNumberString(main - 0 + (detinyNumber - 0) + "", true);
     dispatch(numberNameActions.setNumberMature(mature));
 
+    // Chuẩn bị dữ liệu để lưu vào DB
+    const numerologyDataToSave = {
+      fullName: full_name_list,
+      birthDate: new Date(year, month - 1, day).toISOString(),
+      birthDayString: birthString,
+      birthDayList: birthStringList,
+      // Number Karma
+      number: main,
+      atitute: atitute,
+      day_birth: day_birth,
+      arrow: checkArrow(birthString),
+      lack_arrow: lackArrow(birthString),
+      top4: top4,
+      strong_list: [],
+      weak_list: [],
+      // Number Name
+      destiny: detinyNumber,
+      name: nameNumber,
+      inner: inner_number ? inner_number : "",
+      express: express,
+      soul: soul,
+      mature: mature,
+      full_name_number: full_name_number,
+      full_name_list: full_name_list,
+    };
+
+    // Lưu vào DB (background, non-blocking)
+    if (isAuthenticated()) {
+      // Save in background - don't block navigation
+      api.numerology.save(numerologyDataToSave)
+        .then(() => {
+          console.log("✅ Đã lưu dữ liệu vào database thành công!");
+        })
+        .catch((err) => {
+          console.error("❌ Lỗi khi lưu dữ liệu:", err);
+          setError("Lưu dữ liệu thất bại, nhưng bạn vẫn có thể xem kết quả!");
+        });
+    } else {
+      setError("Vui lòng đăng nhập để lưu dữ liệu!");
+    }
+
+    setLoading(false);
     navigate("/detail-number");
   };
 
@@ -129,12 +180,23 @@ function FormInfor() {
           <p> Khám phá ý nghĩa họ tên và ngày sinh của bạn</p>
 
           <div class="form-box">
+            {error && (
+              <div className="alert alert-warning mb-3" role="alert" style={{
+                borderRadius: '12px',
+                fontSize: '14px',
+                padding: '10px 15px'
+              }}>
+                {error}
+              </div>
+            )}
+            
             <Form layout="vertical" onFinish={onFinish}>
               <div class="mb-3">
                 <Form.Item class="mx-auto w-50" name="name">
                   <Input
                     class="form-control border-success"
                     placeholder="Nhập Họ Tên "
+                    disabled={loading}
                     required
                   />
                 </Form.Item>
@@ -149,13 +211,22 @@ function FormInfor() {
                     style={{
                       width: "100%",
                     }}
+                    disabled={loading}
                     required
                   />
                 </Form.Item>
               </div>
 
-              <button type="submit" class="btn btn-custom">
-                Tra Cứu
+              <button 
+                type="submit" 
+                class="btn btn-custom"
+                disabled={loading}
+                style={{
+                  opacity: loading ? 0.6 : 1,
+                  cursor: loading ? 'not-allowed' : 'pointer'
+                }}
+              >
+                {loading ? "Đang xử lý..." : "Tra Cứu"}
               </button>
             </Form>
           </div>

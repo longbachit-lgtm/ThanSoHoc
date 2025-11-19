@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../service/api";
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
+    username: "",
     fullName: "",
     email: "",
     password: "",
     confirmPassword: ""
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -15,26 +19,46 @@ export default function SignupPage() {
       ...formData,
       [e.target.name]: e.target.value
     });
+    setError(""); // Clear error when user types
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
+    setError("");
     
     // Validation
+    if (!formData.username.trim()) {
+      setError("Vui lòng nhập tên đăng nhập!");
+      return;
+    }
+    
     if (formData.password !== formData.confirmPassword) {
-      alert("Mật khẩu xác nhận không khớp!");
+      setError("Mật khẩu xác nhận không khớp!");
       return;
     }
     
     if (formData.password.length < 6) {
-      alert("Mật khẩu phải có ít nhất 6 ký tự!");
+      setError("Mật khẩu phải có ít nhất 6 ký tự!");
       return;
     }
     
-    // TODO: xử lý đăng ký
-    alert("Đăng ký demo thành công!");
-    // Chuyển đến trang nhập họ tên sau khi đăng ký
-    navigate("/name-input");
+    setLoading(true);
+    
+    try {
+      await api.auth.register(
+        formData.username.trim(),
+        formData.password,
+        formData.fullName.trim() || null,
+        formData.email.trim() || null
+      );
+      
+      alert("Đăng ký thành công! Vui lòng đăng nhập.");
+      navigate("/login");
+    } catch (err) {
+      setError(err.message || "Đăng ký thất bại, vui lòng thử lại!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -181,34 +205,25 @@ export default function SignupPage() {
                 </h2>
 
                 <form onSubmit={submit}>
+                  {error && (
+                    <div className="mb-3 alert alert-danger" role="alert" style={{
+                      borderRadius: '12px',
+                      fontSize: '14px',
+                      padding: '10px 15px'
+                    }}>
+                      {error}
+                    </div>
+                  )}
+                  
                   <div className="mb-3">
                     <input
                       type="text"
-                      name="fullName"
+                      name="username"
                       className="form-control form-control-lg"
-                      placeholder="Họ và tên"
-                      value={formData.fullName}
+                      placeholder="Tên đăng nhập *"
+                      value={formData.username}
                       onChange={handleChange}
-                      style={{
-                        borderRadius: '12px',
-                        border: '2px solid #E8C78C',
-                        backgroundColor: '#fff',
-                        padding: '12px 16px',
-                        fontSize: '15px',
-                        color: '#332211'
-                      }}
-                      required
-                    />
-                  </div>
-
-                  <div className="mb-3">
-                    <input
-                      type="email"
-                      name="email"
-                      className="form-control form-control-lg"
-                      placeholder="Email"
-                      value={formData.email}
-                      onChange={handleChange}
+                      disabled={loading}
                       style={{
                         borderRadius: '12px',
                         border: '2px solid #E8C78C',
@@ -223,12 +238,53 @@ export default function SignupPage() {
                   
                   <div className="mb-3">
                     <input
+                      type="text"
+                      name="fullName"
+                      className="form-control form-control-lg"
+                      placeholder="Họ và tên"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      disabled={loading}
+                      style={{
+                        borderRadius: '12px',
+                        border: '2px solid #E8C78C',
+                        backgroundColor: '#fff',
+                        padding: '12px 16px',
+                        fontSize: '15px',
+                        color: '#332211'
+                      }}
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <input
+                      type="email"
+                      name="email"
+                      className="form-control form-control-lg"
+                      placeholder="Email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      disabled={loading}
+                      style={{
+                        borderRadius: '12px',
+                        border: '2px solid #E8C78C',
+                        backgroundColor: '#fff',
+                        padding: '12px 16px',
+                        fontSize: '15px',
+                        color: '#332211'
+                      }}
+                    />
+                  </div>
+                  
+                  <div className="mb-3">
+                    <input
                       type="password"
                       name="password"
                       className="form-control form-control-lg"
                       placeholder="Mật khẩu"
                       value={formData.password}
                       onChange={handleChange}
+                      disabled={loading}
                       style={{
                         borderRadius: '12px',
                         border: '2px solid #E8C78C',
@@ -249,6 +305,7 @@ export default function SignupPage() {
                       placeholder="Xác nhận mật khẩu"
                       value={formData.confirmPassword}
                       onChange={handleChange}
+                      disabled={loading}
                       style={{
                         borderRadius: '12px',
                         border: '2px solid #E8C78C',
@@ -266,8 +323,9 @@ export default function SignupPage() {
                     <button
                       type="submit"
                       className="btn btn-lg border-0"
+                      disabled={loading}
                       style={{
-                        backgroundColor: '#B8860B',
+                        backgroundColor: loading ? '#d6c0a1' : '#B8860B',
                         borderRadius: '50px',
                         width: '60px',
                         height: '60px',
@@ -275,9 +333,15 @@ export default function SignupPage() {
                         alignItems: 'center',
                         justifyContent: 'center',
                         margin: '0 auto',
-                        boxShadow: '0 4px 12px rgba(184, 134, 11, 0.3)'
+                        boxShadow: loading ? 'none' : '0 4px 12px rgba(184, 134, 11, 0.3)',
+                        cursor: loading ? 'not-allowed' : 'pointer'
                       }}
                     >
+                      {loading ? (
+                        <div className="spinner-border spinner-border-sm text-white" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      ) : (
                       <span 
                         style={{
                           width: '20px',
@@ -288,6 +352,7 @@ export default function SignupPage() {
                           marginLeft: '2px'
                         }}
                       />
+                      )}
                     </button>
                   </div>
 

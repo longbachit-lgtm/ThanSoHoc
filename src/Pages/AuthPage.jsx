@@ -1,17 +1,53 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
+import api from "../service/api";
 
 export default function AuthPage() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const login = useAuthStore((state) => state.login);
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    // TODO: xử lý đăng nhập
-    alert("Đăng nhập demo!");
-    // Chuyển đến trang nhập họ tên sau khi đăng nhập
-    navigate("/name-input");
+    setError("");
+    setLoading(true);
+
+    try {
+      if (!username.trim() || !password.trim()) {
+        setError("Vui lòng nhập đầy đủ thông tin!");
+        setLoading(false);
+        return;
+      }
+
+      const response = await api.auth.login(username.trim(), password);
+      
+      // Lưu thông tin đăng nhập
+      login(response.data.user, response.data.accessToken, response.data.refreshToken);
+      
+      // Kiểm tra xem user đã có dữ liệu thần số học chưa
+      try {
+        const numerologyResponse = await api.numerology.getMyData();
+        
+        if (numerologyResponse.data) {
+          // Đã có dữ liệu → Navigate đến /about
+          navigate("/about");
+        } else {
+          // Chưa có dữ liệu → Navigate đến flow nhập thông tin
+          navigate("/name-input");
+        }
+      } catch (err) {
+        // Nếu lỗi hoặc chưa có data → Navigate đến flow nhập thông tin
+        navigate("/name-input");
+      }
+    } catch (err) {
+      setError(err.message || "Đăng nhập thất bại, vui lòng thử lại!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const skipLogin = () => {
@@ -165,13 +201,24 @@ export default function AuthPage() {
                 </h2>
 
                 <form onSubmit={submit}>
+                  {error && (
+                    <div className="mb-3 alert alert-danger" role="alert" style={{
+                      borderRadius: '12px',
+                      fontSize: '14px',
+                      padding: '10px 15px'
+                    }}>
+                      {error}
+                    </div>
+                  )}
+                  
                   <div className="mb-3">
                     <input
-                      type="email"
+                      type="text"
                       className="form-control form-control-lg"
-                      placeholder="Email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Tên đăng nhập"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      disabled={loading}
                       style={{
                         borderRadius: '12px',
                         border: '2px solid #E8C78C',
@@ -191,6 +238,7 @@ export default function AuthPage() {
                       placeholder="Mật khẩu"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      disabled={loading}
                       style={{
                         borderRadius: '12px',
                         border: '2px solid #E8C78C',
@@ -208,8 +256,9 @@ export default function AuthPage() {
                     <button
                       type="submit"
                       className="btn btn-lg border-0"
+                      disabled={loading}
                       style={{
-                        backgroundColor: '#B8860B',
+                        backgroundColor: loading ? '#d6c0a1' : '#B8860B',
                         borderRadius: '50px',
                         width: '60px',
                         height: '60px',
@@ -217,19 +266,26 @@ export default function AuthPage() {
                         alignItems: 'center',
                         justifyContent: 'center',
                         margin: '0 auto',
-                        boxShadow: '0 4px 12px rgba(184, 134, 11, 0.3)'
+                        boxShadow: loading ? 'none' : '0 4px 12px rgba(184, 134, 11, 0.3)',
+                        cursor: loading ? 'not-allowed' : 'pointer'
                       }}
                     >
-                      <span 
-                        style={{
-                          width: '20px',
-                          height: '20px',
-                          borderRight: '3px solid white',
-                          borderBottom: '3px solid white',
-                          transform: 'rotate(-45deg)',
-                          marginLeft: '2px'
-                        }}
-                      />
+                      {loading ? (
+                        <div className="spinner-border spinner-border-sm text-white" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      ) : (
+                        <span 
+                          style={{
+                            width: '20px',
+                            height: '20px',
+                            borderRight: '3px solid white',
+                            borderBottom: '3px solid white',
+                            transform: 'rotate(-45deg)',
+                            marginLeft: '2px'
+                          }}
+                        />
+                      )}
                     </button>
                   </div>
 

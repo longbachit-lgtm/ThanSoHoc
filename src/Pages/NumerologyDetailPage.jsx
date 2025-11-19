@@ -8,6 +8,10 @@ import ChartsSection from "../component/NumerologyDetail/ChartsSection";
 import OverviewNumber from "../component/OverviewNumber";
 import DetailNumber from "../component/DetailNumber";
 import { initializeNumerologyData } from "../service/initializeNumerologyData";
+import { useAuthStore } from "../store/useAuthStore";
+import api from "../service/api";
+import { numberKarmaActions } from "../store/numberKarma";
+import { numberNameActions } from "../store/numberName";
 
 export default function NumerologyDetailPage() {
   const dispatch = useDispatch();
@@ -16,17 +20,72 @@ export default function NumerologyDetailPage() {
   const [showButton, setShowButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [hasData, setHasData] = useState(false);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
-  // Initialize data from localStorage if Redux store is empty
+  // Load dữ liệu từ DB hoặc localStorage
   useEffect(() => {
-    if (!mainNumber && !birthDay) {
-      const success = initializeNumerologyData(dispatch);
-      setHasData(success);
-    } else {
-      setHasData(true);
-    }
-    setIsLoading(false);
-  }, [dispatch, mainNumber, birthDay]);
+    const loadData = async () => {
+      // Nếu đã có data trong Redux, không cần load
+      if (mainNumber && birthDay) {
+        setHasData(true);
+        setIsLoading(false);
+        return;
+      }
+
+      // Nếu user đã đăng nhập, ưu tiên load từ DB
+      if (isAuthenticated()) {
+        try {
+          const response = await api.numerology.getMyData();
+          
+          if (response.data) {
+            const data = response.data;
+            
+            // Dispatch dữ liệu vào Redux store
+            // Number Karma
+            dispatch(numberKarmaActions.setKamarNumeroMain(data.number || 0));
+            dispatch(numberKarmaActions.setKamarNumeroAtitute(data.atitute || 0));
+            dispatch(numberKarmaActions.setKamarNumeroDayBirth(data.day_birth || 0));
+            dispatch(numberKarmaActions.setBirthDayNumber(data.birthDayString || ""));
+            dispatch(numberKarmaActions.setBirthDayList(data.birthDayList || ""));
+            dispatch(numberKarmaActions.setArrow(data.arrow || []));
+            dispatch(numberKarmaActions.setLackArrow(data.lack_arrow || []));
+            dispatch(numberKarmaActions.setTop4Peak(data.top4 || {}));
+            dispatch(numberKarmaActions.setStrongListNumb(data.strong_list || []));
+            dispatch(numberKarmaActions.setWeakListNumb(data.weak_list || []));
+            
+            // Number Name
+            dispatch(numberNameActions.setNumberDestiny(data.destiny || 0));
+            dispatch(numberNameActions.setNumberName(data.name || 0));
+            dispatch(numberNameActions.setNumberSoul(data.soul || 0));
+            dispatch(numberNameActions.setNumberInner(data.inner || "0"));
+            dispatch(numberNameActions.setNumberExpress(data.express || 0));
+            dispatch(numberNameActions.setNumberMature(data.mature || 0));
+            dispatch(numberNameActions.setFullNameNumber(data.full_name_number || ""));
+            dispatch(numberNameActions.setFullNameList(data.full_name_list || ""));
+            
+            setHasData(true);
+          } else {
+            // Không có data trong DB, thử load từ localStorage
+            const success = initializeNumerologyData(dispatch);
+            setHasData(success);
+          }
+        } catch (err) {
+          console.error("Lỗi khi load dữ liệu từ DB:", err);
+          // Nếu lỗi, thử load từ localStorage
+          const success = initializeNumerologyData(dispatch);
+          setHasData(success);
+        }
+      } else {
+        // Chưa đăng nhập, load từ localStorage
+        const success = initializeNumerologyData(dispatch);
+        setHasData(success);
+      }
+      
+      setIsLoading(false);
+    };
+
+    loadData();
+  }, [dispatch, mainNumber, birthDay, isAuthenticated]);
 
   useEffect(() => {
     const handleScroll = () => {
