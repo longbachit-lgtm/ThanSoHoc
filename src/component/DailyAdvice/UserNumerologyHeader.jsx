@@ -26,6 +26,15 @@ export default function UserNumerologyHeader() {
     }
   }
 
+  // Check if we have data (either from Redux or localStorage)
+  const hasData = fullName || birthDayList || localStorage.getItem('userFullName') || localStorage.getItem('userBirthDate');
+  
+  // Display numbers only if we have data, otherwise show '?'
+  const displayMainNumber = hasData && mainNumber ? mainNumber : '?';
+  const displaySoulNumber = hasData && soulNumber ? soulNumber : '?';
+  const displayExpressNumber = hasData && expressNumber ? expressNumber : '?';
+  const displayDestinyNumber = hasData && destinyNumber ? destinyNumber : '?';
+
   return (
     <div className="text-center mb-4 position-relative">
       {/* Star icon top right */}
@@ -68,7 +77,7 @@ export default function UserNumerologyHeader() {
             color: '#A07A4A'
           }}
         >
-          {mainNumber || '?'}
+          {displayMainNumber}
         </div>
       </div>
 
@@ -83,7 +92,7 @@ export default function UserNumerologyHeader() {
           color: '#A07A4A'
         }}
       >
-        Đường đời  {mainNumber || '?'}
+        Đường đời  {displayMainNumber}
       </div>
 
       {/* Name */}
@@ -132,7 +141,7 @@ export default function UserNumerologyHeader() {
             e.currentTarget.style.transform = 'scale(1)';
           }}
         >
-          Linh hồn: {soulNumber || '?'}
+          Linh hồn: {displaySoulNumber}
         </div>
         <div 
           className="rounded-pill px-3 py-2"
@@ -155,7 +164,7 @@ export default function UserNumerologyHeader() {
             e.currentTarget.style.transform = 'scale(1)';
           }}
         >
-          Nhân cách: {expressNumber || '?'}
+          Nhân cách: {displayExpressNumber}
         </div>
         <div 
           className="rounded-pill px-3 py-2"
@@ -178,7 +187,7 @@ export default function UserNumerologyHeader() {
             e.currentTarget.style.transform = 'scale(1)';
           }}
         >
-          Sứ mệnh: {destinyNumber || '?'}
+          Sứ mệnh: {displayDestinyNumber}
         </div>
       </div>
     </div>

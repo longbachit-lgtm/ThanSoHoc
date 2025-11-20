@@ -142,6 +142,122 @@ export const api = {
       return data;
     },
   },
+
+  // Todo APIs
+  todo: {
+    create: async (todoData) => {
+      const response = await fetch(`${API_BASE_URL}/api/todo`, {
+        method: 'POST',
+        headers: getHeaders(true),
+        body: JSON.stringify(todoData),
+      });
+      
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Tạo danh sách thất bại');
+      }
+      return data;
+    },
+
+    getAll: async () => {
+      const response = await fetch(`${API_BASE_URL}/api/todo`, {
+        method: 'GET',
+        headers: getHeaders(true),
+      });
+      
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Lấy danh sách thất bại');
+      }
+      return data;
+    },
+
+    getActive: async () => {
+      const response = await fetch(`${API_BASE_URL}/api/todo/active`, {
+        method: 'GET',
+        headers: getHeaders(true),
+      });
+      
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Lấy danh sách thất bại');
+      }
+      return data;
+    },
+
+    getByPeriod: async (period, targetDate = null) => {
+      const params = new URLSearchParams({ period });
+      if (targetDate) {
+        params.append('targetDate', targetDate instanceof Date ? targetDate.toISOString() : targetDate);
+      }
+      
+      const response = await fetch(`${API_BASE_URL}/api/todo/period?${params}`, {
+        method: 'GET',
+        headers: getHeaders(true),
+      });
+      
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Lấy danh sách thất bại');
+      }
+      return data;
+    },
+
+    update: async (id, todoData) => {
+      const response = await fetch(`${API_BASE_URL}/api/todo/${id}`, {
+        method: 'PUT',
+        headers: getHeaders(true),
+        body: JSON.stringify(todoData),
+      });
+      
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Cập nhật danh sách thất bại');
+      }
+      return data;
+    },
+
+    updateSection: async (id, sectionId, action, sectionData) => {
+      const response = await fetch(`${API_BASE_URL}/api/todo/${id}/section`, {
+        method: 'PUT',
+        headers: getHeaders(true),
+        body: JSON.stringify({ sectionId, action, sectionData }),
+      });
+      
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Cập nhật section thất bại');
+      }
+      return data;
+    },
+
+    updateItem: async (id, sectionId, itemId, action, itemData) => {
+      const response = await fetch(`${API_BASE_URL}/api/todo/${id}/item`, {
+        method: 'PUT',
+        headers: getHeaders(true),
+        body: JSON.stringify({ sectionId, itemId, action, itemData }),
+      });
+      
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Cập nhật item thất bại');
+      }
+      return data;
+    },
+
+    delete: async (id) => {
+      const response = await fetch(`${API_BASE_URL}/api/todo/${id}`, {
+        method: 'DELETE',
+        headers: getHeaders(true),
+      });
+      
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Xóa danh sách thất bại');
+      }
+      return data;
+    },
+  },
 };
 
 export default api;

@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useAuthStore } from "../store/useAuthStore";
 import api from "../service/api";
+import { numberKarmaActions } from "../store/numberKarma";
+import { numberNameActions } from "../store/numberName";
 
 export default function AuthPage() {
   const [username, setUsername] = useState("");
@@ -9,7 +12,44 @@ export default function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const login = useAuthStore((state) => state.login);
+
+  const populateStoreFromData = (data) => {
+    dispatch(numberKarmaActions.setKamarNumeroMain(data.number || 0));
+    dispatch(numberKarmaActions.setKamarNumeroAtitute(data.atitute || 0));
+    dispatch(numberKarmaActions.setKamarNumeroDayBirth(data.day_birth || 0));
+    dispatch(numberKarmaActions.setBirthDayNumber(data.birthDayString || ""));
+    dispatch(numberKarmaActions.setBirthDayList(data.birthDayList || ""));
+    dispatch(numberKarmaActions.setArrow(data.arrow || []));
+    dispatch(numberKarmaActions.setLackArrow(data.lack_arrow || []));
+    dispatch(numberKarmaActions.setTop4Peak(data.top4 || {}));
+    dispatch(numberKarmaActions.setStrongListNumb(data.strong_list || []));
+    dispatch(numberKarmaActions.setWeakListNumb(data.weak_list || []));
+
+    dispatch(numberNameActions.setNumberDestiny(data.destiny || 0));
+    dispatch(numberNameActions.setNumberName(data.name || 0));
+    dispatch(numberNameActions.setNumberSoul(data.soul || 0));
+    dispatch(numberNameActions.setNumberInner(data.inner || "0"));
+    dispatch(numberNameActions.setNumberExpress(data.express || 0));
+    dispatch(numberNameActions.setNumberMature(data.mature || 0));
+    dispatch(numberNameActions.setFullNameNumber(data.full_name_number || ""));
+    dispatch(numberNameActions.setFullNameList(data.full_name_list || ""));
+
+    if (data.full_name_list) {
+      localStorage.setItem('userFullName', data.full_name_list);
+    }
+
+    if (data.birthDayList) {
+      const parts = data.birthDayList.split("/");
+      if (parts.length === 3) {
+        const [day, month, year] = parts.map((part) => parseInt(part, 10));
+        if (!Number.isNaN(day) && !Number.isNaN(month) && !Number.isNaN(year)) {
+          localStorage.setItem('userBirthDate', JSON.stringify({ day, month, year }));
+        }
+      }
+    }
+  };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -33,7 +73,7 @@ export default function AuthPage() {
         const numerologyResponse = await api.numerology.getMyData();
         
         if (numerologyResponse.data) {
-          // Đã có dữ liệu → Navigate đến /about
+          populateStoreFromData(numerologyResponse.data);
           navigate("/about");
         } else {
           // Chưa có dữ liệu → Navigate đến flow nhập thông tin

@@ -1,21 +1,90 @@
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useAuthStore } from "../store/useAuthStore";
 import UserNumerologyHeader from "../component/DailyAdvice/UserNumerologyHeader";
 import PeriodNavigationTabs from "../component/DailyAdvice/PeriodNavigationTabs";
 import EnergySummary from "../component/DailyAdvice/EnergySummary";
 import AdviceCard from "../component/DailyAdvice/AdviceCard";
+import SuggestedActionsCard from "../component/DailyAdvice/SuggestedActionsCard";
+import TodoListComponent from "../component/DailyAdvice/TodoListComponent";
 import { calculateAllPersonalNumbers } from "../service/dailyAdvice";
 import { getAdviceByNumber } from "../Data/dailyAdviceData";
+import api from "../service/api";
+import { numberKarmaActions } from "../store/numberKarma";
+import { numberNameActions } from "../store/numberName";
 
 export default function DailyAdvicePage() {
   const [selectedPeriod, setSelectedPeriod] = useState('today');
   const [targetDate, setTargetDate] = useState(new Date());
   const [personalNumbers, setPersonalNumbers] = useState(null);
   const [adviceData, setAdviceData] = useState(null);
+  const todoListRef = useRef(null);
+  const dispatch = useDispatch();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   // Get birth date from Redux or localStorage
   const birthDay = useSelector((state) => state.numberKarmaMain.birth_day);
   const birthDayList = useSelector((state) => state.numberKarmaMain.birth_day_list);
+  const fullName = useSelector((state) => state.numberName.full_name_list);
+  const mainNumber = useSelector((state) => state.numberKarmaMain.number);
+
+  // Load numerology data from backend if authenticated but Redux is empty
+  useEffect(() => {
+    const loadNumerologyData = async () => {
+      if (!isAuthenticated) return;
+      
+      // Check if we have data in Redux by checking fullName or birthDayList
+      // (since 0 is a valid numerology number, we can't use it to check)
+      if (fullName || birthDayList) {
+        return; // Already have data
+      }
+
+      try {
+        const response = await api.numerology.getMyData();
+        if (response.data) {
+          // Populate Redux store
+          dispatch(numberKarmaActions.setKamarNumeroMain(response.data.number || 0));
+          dispatch(numberKarmaActions.setKamarNumeroAtitute(response.data.atitute || 0));
+          dispatch(numberKarmaActions.setKamarNumeroDayBirth(response.data.day_birth || 0));
+          dispatch(numberKarmaActions.setBirthDayNumber(response.data.birthDayString || ""));
+          dispatch(numberKarmaActions.setBirthDayList(response.data.birthDayList || ""));
+          dispatch(numberKarmaActions.setArrow(response.data.arrow || []));
+          dispatch(numberKarmaActions.setLackArrow(response.data.lack_arrow || []));
+          dispatch(numberKarmaActions.setTop4Peak(response.data.top4 || {}));
+          dispatch(numberKarmaActions.setStrongListNumb(response.data.strong_list || []));
+          dispatch(numberKarmaActions.setWeakListNumb(response.data.weak_list || []));
+
+          dispatch(numberNameActions.setNumberDestiny(response.data.destiny || 0));
+          dispatch(numberNameActions.setNumberName(response.data.name || 0));
+          dispatch(numberNameActions.setNumberSoul(response.data.soul || 0));
+          dispatch(numberNameActions.setNumberInner(response.data.inner || "0"));
+          dispatch(numberNameActions.setNumberExpress(response.data.express || 0));
+          dispatch(numberNameActions.setNumberMature(response.data.mature || 0));
+          dispatch(numberNameActions.setFullNameNumber(response.data.full_name_number || ""));
+          dispatch(numberNameActions.setFullNameList(response.data.full_name_list || ""));
+
+          // Also save to localStorage for fallback
+          if (response.data.full_name_list) {
+            localStorage.setItem('userFullName', response.data.full_name_list);
+          }
+          if (response.data.birthDayList) {
+            const parts = response.data.birthDayList.split("/");
+            if (parts.length === 3) {
+              const [day, month, year] = parts.map((part) => parseInt(part, 10));
+              if (!Number.isNaN(day) && !Number.isNaN(month) && !Number.isNaN(year)) {
+                localStorage.setItem('userBirthDate', JSON.stringify({ day, month, year }));
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Error loading numerology data:", err);
+        // Silently fail - user might not have data yet
+      }
+    };
+
+    loadNumerologyData();
+  }, [isAuthenticated, fullName, birthDayList, dispatch]);
 
   useEffect(() => {
     // Get birth date
@@ -106,6 +175,13 @@ export default function DailyAdvicePage() {
 
   const handlePeriodChange = (period) => {
     setSelectedPeriod(period);
+    // Scroll to TODO list after a short delay when period changes
+    setTimeout(() => {
+      const todoListElement = document.getElementById('todo-list-component');
+      if (todoListElement) {
+        todoListElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 300);
   };
 
   const formatDate = (date) => {
@@ -186,6 +262,15 @@ export default function DailyAdvicePage() {
               weekNumber={getWeekNumber(targetDate)}
               monthNumber={targetDate.getMonth() + 1}
               yearNumber={targetDate.getFullYear()}
+              onTodoListClick={(period) => {
+                // Scroll to TODO list after a short delay
+                setTimeout(() => {
+                  const todoListElement = document.getElementById('todo-list-component');
+                  if (todoListElement) {
+                    todoListElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }, 100);
+              }}
             />
 
             {/* Energy Summary */}
@@ -254,6 +339,30 @@ export default function DailyAdvicePage() {
                 content={adviceData.motivation.content}
               />
             )}
+
+            {/* Suggested Actions Card */}
+            {adviceData.suggestedActions && (
+              <SuggestedActionsCard
+                title={adviceData.suggestedActions.title}
+                actions={adviceData.suggestedActions.actions}
+                period={selectedPeriod}
+                targetDate={targetDate}
+                onSaveSuccess={() => {
+                  if (todoListRef.current && todoListRef.current.refresh) {
+                    todoListRef.current.refresh();
+                  }
+                }}
+              />
+            )}
+
+            {/* TODO List Component */}
+            <div id="todo-list-component">
+              <TodoListComponent 
+                ref={todoListRef}
+                period={selectedPeriod}
+                targetDate={targetDate}
+              />
+            </div>
           </div>
         </div>
       </div>
