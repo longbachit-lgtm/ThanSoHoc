@@ -175,13 +175,6 @@ export default function DailyAdvicePage() {
 
   const handlePeriodChange = (period) => {
     setSelectedPeriod(period);
-    // Scroll to TODO list after a short delay when period changes
-    setTimeout(() => {
-      const todoListElement = document.getElementById('todo-list-component');
-      if (todoListElement) {
-        todoListElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 300);
   };
 
   const formatDate = (date) => {
@@ -262,15 +255,6 @@ export default function DailyAdvicePage() {
               weekNumber={getWeekNumber(targetDate)}
               monthNumber={targetDate.getMonth() + 1}
               yearNumber={targetDate.getFullYear()}
-              onTodoListClick={(period) => {
-                // Scroll to TODO list after a short delay
-                setTimeout(() => {
-                  const todoListElement = document.getElementById('todo-list-component');
-                  if (todoListElement) {
-                    todoListElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }
-                }, 100);
-              }}
             />
 
             {/* Energy Summary */}
