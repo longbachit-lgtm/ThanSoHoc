@@ -8,7 +8,8 @@ const TodoListComponent = forwardRef(function TodoListComponent({ period = 'cust
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
-  const [editingSection, setEditingSection] = useState(null);
+  const [editingSection, setEditingSection] = useState(null); // sectionIndex đang được edit
+  const [editingSectionTitleValue, setEditingSectionTitleValue] = useState("");
   const [editingItem, setEditingItem] = useState(null);
   const [newSectionTitle, setNewSectionTitle] = useState("");
   const [newItemText, setNewItemText] = useState("");
@@ -239,6 +240,29 @@ const TodoListComponent = forwardRef(function TodoListComponent({ period = 'cust
     saveTodoList(updatedList);
   };
 
+  // Update section title
+  const handleUpdateSectionTitle = async (sectionIndex, newTitle) => {
+    if (!newTitle.trim()) {
+      setEditingSection(null);
+      setEditingSectionTitleValue("");
+      return;
+    }
+    if (!todoList) return;
+
+    const updatedSections = [...todoList.sections];
+    updatedSections[sectionIndex].title = newTitle.trim();
+
+    const updatedList = {
+      ...todoList,
+      sections: updatedSections
+    };
+
+    setTodoList(updatedList);
+    setEditingSection(null);
+    setEditingSectionTitleValue("");
+    saveTodoList(updatedList);
+  };
+
   if (!isAuthenticated) {
     return (
       <div 
@@ -419,24 +443,75 @@ const TodoListComponent = forwardRef(function TodoListComponent({ period = 'cust
                 {/* Section Header */}
                 <div
                   className="d-flex justify-content-between align-items-center mb-2"
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => toggleSection(sectionIndex)}
                 >
-                  <div className="d-flex align-items-center gap-2">
-                    {section.isExpanded ? (
-                      <FaChevronDown style={{ color: '#332211', fontSize: '14px' }} />
-                    ) : (
-                      <FaChevronRight style={{ color: '#332211', fontSize: '14px' }} />
-                    )}
-                    <h4
-                      className="mb-0 fw-bold"
-                      style={{
-                        color: '#332211',
-                        fontSize: '1.1rem'
-                      }}
+                  <div className="d-flex align-items-center gap-2 flex-grow-1">
+                    <div
+                      onClick={() => toggleSection(sectionIndex)}
+                      style={{ cursor: 'pointer', padding: '4px' }}
+                      title="Click để mở/đóng section"
                     >
-                      {section.title}
-                    </h4>
+                      {section.isExpanded ? (
+                        <FaChevronDown style={{ color: '#332211', fontSize: '14px' }} />
+                      ) : (
+                        <FaChevronRight style={{ color: '#332211', fontSize: '14px' }} />
+                      )}
+                    </div>
+                    {editingSection === sectionIndex ? (
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={editingSectionTitleValue}
+                        onChange={(e) => setEditingSectionTitleValue(e.target.value)}
+                        onBlur={() => handleUpdateSectionTitle(sectionIndex, editingSectionTitleValue)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleUpdateSectionTitle(sectionIndex, editingSectionTitleValue);
+                          } else if (e.key === 'Escape') {
+                            setEditingSection(null);
+                            setEditingSectionTitleValue("");
+                          }
+                        }}
+                        style={{
+                          fontSize: '1.1rem',
+                          fontWeight: 'bold',
+                          color: '#332211',
+                          border: '2px solid #B8860B',
+                          borderRadius: '6px',
+                          padding: '4px 8px',
+                          backgroundColor: '#fff',
+                          maxWidth: '500px'
+                        }}
+                        autoFocus
+                      />
+                    ) : (
+                      <h4
+                        className="mb-0 fw-bold"
+                        style={{
+                          color: '#332211',
+                          fontSize: '1.1rem',
+                          cursor: 'pointer',
+                          userSelect: 'none',
+                          padding: '4px 8px',
+                          borderRadius: '4px',
+                          transition: 'background-color 0.2s'
+                        }}
+                        onDoubleClick={(e) => {
+                          e.stopPropagation();
+                          setEditingSection(sectionIndex);
+                          setEditingSectionTitleValue(section.title);
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = 'rgba(184, 134, 11, 0.1)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = 'transparent';
+                        }}
+                        title="Double click để chỉnh sửa tiêu đề"
+                      >
+                        {section.title}
+                      </h4>
+                    )}
                   </div>
                   <div className="d-flex align-items-center gap-2">
                     <button
