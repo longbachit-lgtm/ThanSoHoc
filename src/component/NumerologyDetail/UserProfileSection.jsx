@@ -1,6 +1,57 @@
 import { useSelector } from "react-redux";
 import { calculateAge, getZodiacSign, getChineseZodiac, getLunarDate } from "../../service/astrology";
 
+/**
+ * Lấy emoji tương ứng với con giáp
+ */
+const getZodiacEmoji = (chineseZodiac) => {
+  if (!chineseZodiac) return "🐉";
+  
+  // Lấy phần con giáp (sau dấu cách)
+  const zodiacName = chineseZodiac.split(' ')[1] || chineseZodiac;
+  
+  const zodiacEmojiMap = {
+    "Tý": "🐭",      // Chuột (nghiêm túc hơn)
+    "Sửu": "🐃",     // Trâu nước (nghiêm túc hơn)
+    "Dần": "🐯",     // Mặt hổ (uy nghi hơn)
+    "Mão": "🐱",     // Mèo (nghiêm túc hơn thỏ)
+    "Thìn": "🐉",    // Rồng (giữ nguyên)
+    "Tỵ": "🐍",      // Rắn (giữ nguyên)
+    "Ngọ": "🐴",     // Ngựa (giữ nguyên)
+    "Mùi": "🐐",     // Dê (nghiêm túc hơn cừu)
+    "Thân": "🐒",    // Khỉ (nghiêm túc hơn)
+    "Dậu": "🐓",     // Gà (giữ nguyên)
+    "Tuất": "🐕",    // Chó (giữ nguyên)
+    "Hợi": "🐷"      // Lợn rừng (nghiêm túc hơn)
+  };
+  
+  return zodiacEmojiMap[zodiacName] || "🐉";
+};
+
+/**
+ * Lấy biểu tượng cung hoàng đạo tương ứng
+ */
+const getZodiacSignSymbol = (zodiacSign) => {
+  if (!zodiacSign) return "♈";
+  
+  const zodiacSignMap = {
+    "Bạch Dương": "♈",    // Aries
+    "Kim Ngưu": "♉",      // Taurus
+    "Song Tử": "♊",       // Gemini
+    "Cự Giải": "♋",       // Cancer
+    "Sư Tử": "♌",         // Leo
+    "Xử Nữ": "♍",          // Virgo
+    "Thiên Bình": "♎",     // Libra
+    "Thần Nông": "♏",      // Scorpio
+    "Nhân Mã": "♐",        // Sagittarius
+    "Ma Kết": "♑",         // Capricorn
+    "Bảo Bình": "♒",       // Aquarius
+    "Song Ngư": "♓"        // Pisces
+  };
+  
+  return zodiacSignMap[zodiacSign] || "♈";
+};
+
 export default function UserProfileSection() {
   const mainNumber = useSelector((state) => state.numberKarmaMain.number);
   const fullName = useSelector((state) => state.numberName.full_name_list);
@@ -189,7 +240,7 @@ export default function UserProfileSection() {
                     }}
                   >
                     <div className="d-flex align-items-center gap-2">
-                      <span style={{ fontSize: '24px' }}>♈</span>
+                      <span style={{ fontSize: '24px' }}>{getZodiacSignSymbol(zodiacSign)}</span>
                       <div>
                         <p className="mb-0" style={{ fontSize: '0.75rem', color: '#6e645b' }}>
                           Cung Hoàng Đạo
@@ -220,7 +271,7 @@ export default function UserProfileSection() {
                     }}
                   >
                     <div className="d-flex align-items-center gap-2">
-                      <span style={{ fontSize: '24px' }}>🐉</span>
+                      <span style={{ fontSize: '24px' }}>{getZodiacEmoji(chineseZodiac)}</span>
                       <div>
                         <p className="mb-0" style={{ fontSize: '0.75rem', color: '#6e645b' }}>
                           Năm Con Giáp
@@ -254,7 +305,7 @@ export default function UserProfileSection() {
                       <span style={{ fontSize: '24px' }}>🌙</span>
                       <div>
                         <p className="mb-0" style={{ fontSize: '0.75rem', color: '#6e645b' }}>
-                          Ngày Sinh Âm Lịch
+                          Ngày Sinh 
                         </p>
                         <p 
                           className="mb-0 fw-bold"

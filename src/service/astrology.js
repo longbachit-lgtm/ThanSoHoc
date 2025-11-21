@@ -67,17 +67,21 @@ export const getZodiacSign = (day, month) => {
 
 /**
  * Lấy năm con giáp từ năm sinh
+ * Công thức: Thiên Can = year % 10, Địa Chi = year % 12
  */
 export const getChineseZodiac = (year) => {
+  // Địa Chi (12 con giáp) - thứ tự đúng: Thân, Dậu, Tuất, Hợi, Tý, Sửu, Dần, Mão, Thìn, Tỵ, Ngọ, Mùi
   const zodiacs = [
-    "Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ",
-    "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"
+    "Thân", "Dậu", "Tuất", "Hợi", "Tý", "Sửu",
+    "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi"
   ];
   
+  // Thiên Can (10 can)
   const elements = ["Canh", "Tân", "Nhâm", "Quý", "Giáp", "Ất", "Bính", "Đinh", "Mậu", "Kỷ"];
   
-  const zodiacIndex = (year - 4) % 12;
-  const elementIndex = (year - 4) % 10;
+  // Công thức đúng: không trừ 4
+  const zodiacIndex = year % 12;
+  const elementIndex = year % 10;
   
   return `${elements[elementIndex]} ${zodiacs[zodiacIndex]}`;
 };
