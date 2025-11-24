@@ -119,11 +119,31 @@ export default function DailyAdvicePage() {
       // Calculate date based on selected period
       let dateToCalculate = new Date();
       
-      if (selectedPeriod === 'tomorrow') {
-        dateToCalculate = new Date(dateToCalculate.getTime() + 24 * 60 * 60 * 1000);
+      switch (selectedPeriod) {
+        case 'today':
+          // Use current date
+          dateToCalculate = new Date();
+          break;
+        case 'tomorrow':
+          // Tomorrow
+          dateToCalculate = new Date();
+          dateToCalculate.setDate(dateToCalculate.getDate() + 1);
+          break;
+        case 'week':
+          // Use current date (week calculation is based on week number)
+          dateToCalculate = new Date();
+          break;
+        case 'month':
+          // Use current date (month calculation is based on current month)
+          dateToCalculate = new Date();
+          break;
+        case 'year':
+          // Use current date (year calculation is based on current year)
+          dateToCalculate = new Date();
+          break;
+        default:
+          dateToCalculate = new Date();
       }
-      // For week, month, year - use current date for now
-      // TODO: Add logic to calculate specific week/month/year
       
       setTargetDate(dateToCalculate);
       
@@ -151,8 +171,16 @@ export default function DailyAdvicePage() {
           energyNumber = numbers.personalDay;
       }
       
-      // Get advice data
-      const advice = getAdviceByNumber(energyNumber, 'day');
+      // Get advice data based on period type
+      const adviceType = selectedPeriod === 'week' ? 'week' 
+        : selectedPeriod === 'month' ? 'month'
+        : selectedPeriod === 'year' ? 'year'
+        : 'day';
+      let advice = getAdviceByNumber(energyNumber, adviceType);
+      
+      // Adjust content based on period (including today to fix "Ngày mai" → "Hôm nay")
+      advice = adjustAdviceForPeriod(advice, selectedPeriod);
+      
       setAdviceData(advice);
     }
   }, [selectedPeriod, birthDay]);
@@ -171,6 +199,201 @@ export default function DailyAdvicePage() {
       9: "Nhân đạo - Hoàn thiện - Cho đi"
     };
     return descriptions[number] || "Năng lượng đặc biệt";
+  };
+
+  // Adjust advice content for different periods
+  const adjustAdviceForPeriod = (advice, period) => {
+    const adjusted = JSON.parse(JSON.stringify(advice)); // Deep clone
+    
+    const periodMap = {
+      'today': {
+        content: { 
+          'Ngày mai': 'Hôm nay',
+          'ngày mai': 'hôm nay'
+        }
+      },
+      'tomorrow': {
+        title: { 'ngày mới': 'ngày mai' },
+        content: { 
+          'Hôm nay': 'Ngày mai',
+          'hôm nay': 'ngày mai',
+          'Ngày hôm nay': 'Ngày mai',
+          'ngày hôm nay': 'ngày mai'
+        }
+      },
+      'week': {
+        title: { 'ngày mới': 'tuần mới', 'ngày': 'tuần' },
+        content: { 
+          'Hôm nay': 'Tuần này', 
+          'hôm nay': 'tuần này',
+          'Ngày mai': 'Tuần này',
+          'ngày mai': 'tuần này',
+          'Ngày hôm nay': 'Tuần này',
+          'ngày hôm nay': 'tuần này',
+          'ngày': 'tuần',
+          'Buổi sáng': 'Đầu tuần',
+          'buổi sáng': 'đầu tuần'
+        }
+      },
+      'month': {
+        title: { 'ngày mới': 'tháng mới', 'ngày': 'tháng' },
+        content: { 
+          'Hôm nay': 'Tháng này', 
+          'hôm nay': 'tháng này',
+          'Ngày mai': 'Tháng này',
+          'ngày mai': 'tháng này',
+          'Ngày hôm nay': 'Tháng này',
+          'ngày hôm nay': 'tháng này',
+          'ngày': 'tháng',
+          'Buổi sáng': 'Đầu tháng',
+          'buổi sáng': 'đầu tháng'
+        }
+      },
+      'year': {
+        title: { 'ngày mới': 'năm mới', 'ngày': 'năm' },
+        content: { 
+          'Hôm nay': 'Năm này', 
+          'hôm nay': 'năm này',
+          'Ngày mai': 'Năm này',
+          'ngày mai': 'năm này',
+          'Ngày hôm nay': 'Năm này',
+          'ngày hôm nay': 'năm này',
+          'ngày': 'năm',
+          'Buổi sáng': 'Đầu năm',
+          'buổi sáng': 'đầu năm'
+        }
+      }
+    };
+
+    const replacements = periodMap[period];
+    if (!replacements) return adjusted;
+
+    // Adjust preparation title (only if title replacements exist)
+    if (adjusted.preparation && adjusted.preparation.title && replacements.title) {
+      Object.keys(replacements.title).forEach(key => {
+        adjusted.preparation.title = adjusted.preparation.title.replace(
+          new RegExp(key, 'gi'), 
+          replacements.title[key]
+        );
+      });
+    }
+
+    // Adjust preparation content
+    if (adjusted.preparation && adjusted.preparation.content) {
+      let content = adjusted.preparation.content;
+      Object.keys(replacements.content).forEach(key => {
+        content = content.replace(
+          new RegExp(key, 'g'), 
+          replacements.content[key]
+        );
+      });
+      adjusted.preparation.content = content;
+    }
+
+    // Adjust quickTip
+    if (adjusted.preparation && adjusted.preparation.quickTip) {
+      let quickTip = adjusted.preparation.quickTip;
+      Object.keys(replacements.content).forEach(key => {
+        quickTip = quickTip.replace(
+          new RegExp(key, 'g'), 
+          replacements.content[key]
+        );
+      });
+      adjusted.preparation.quickTip = quickTip;
+    }
+
+    // Adjust challenge content
+    if (adjusted.challenge) {
+      if (adjusted.challenge.challenge) {
+        let challenge = adjusted.challenge.challenge;
+        Object.keys(replacements.content).forEach(key => {
+          challenge = challenge.replace(
+            new RegExp(key, 'g'), 
+            replacements.content[key]
+          );
+        });
+        adjusted.challenge.challenge = challenge;
+      }
+      if (adjusted.challenge.opportunity) {
+        let opportunity = adjusted.challenge.opportunity;
+        Object.keys(replacements.content).forEach(key => {
+          opportunity = opportunity.replace(
+            new RegExp(key, 'g'), 
+            replacements.content[key]
+          );
+        });
+        adjusted.challenge.opportunity = opportunity;
+      }
+    }
+
+    // Adjust mistakes content
+    if (adjusted.mistakes && adjusted.mistakes.content) {
+      if (Array.isArray(adjusted.mistakes.content)) {
+        adjusted.mistakes.content = adjusted.mistakes.content.map(item => {
+          let content = item;
+          Object.keys(replacements.content).forEach(key => {
+            content = content.replace(
+              new RegExp(key, 'g'), 
+              replacements.content[key]
+            );
+          });
+          return content;
+        });
+      } else {
+        let content = adjusted.mistakes.content;
+        Object.keys(replacements.content).forEach(key => {
+          content = content.replace(
+            new RegExp(key, 'g'), 
+            replacements.content[key]
+          );
+        });
+        adjusted.mistakes.content = content;
+      }
+    }
+
+    // Adjust motivation content
+    if (adjusted.motivation && adjusted.motivation.content) {
+      let content = adjusted.motivation.content;
+      Object.keys(replacements.content).forEach(key => {
+        content = content.replace(
+          new RegExp(key, 'g'), 
+          replacements.content[key]
+        );
+      });
+      adjusted.motivation.content = content;
+    }
+
+    // Adjust suggestedActions
+    if (adjusted.suggestedActions && adjusted.suggestedActions.actions) {
+      const timeMap = {
+        'tomorrow': {}, // Keep original time labels for tomorrow
+        'week': { 'Sáng': 'Đầu tuần', 'Trưa': 'Giữa tuần', 'Chiều': 'Cuối tuần', 'Tối': 'Cuối tuần' },
+        'month': { 'Sáng': 'Đầu tháng', 'Trưa': 'Giữa tháng', 'Chiều': 'Cuối tháng', 'Tối': 'Cuối tháng' },
+        'year': { 'Sáng': 'Đầu năm', 'Trưa': 'Giữa năm', 'Chiều': 'Cuối năm', 'Tối': 'Cuối năm' }
+      };
+      
+      adjusted.suggestedActions.actions = adjusted.suggestedActions.actions.map(action => {
+        let text = action.text;
+        let time = action.time;
+        
+        // Adjust time label (only for week/month/year)
+        if (timeMap[period] && timeMap[period][time]) {
+          time = timeMap[period][time];
+        }
+        
+        // Adjust text content
+        Object.keys(replacements.content).forEach(key => {
+          text = text.replace(
+            new RegExp(key, 'g'), 
+            replacements.content[key]
+          );
+        });
+        
+        return { ...action, text, time };
+      });
+    }
+
+    return adjusted;
   };
 
   const handlePeriodChange = (period) => {
@@ -261,7 +484,9 @@ export default function DailyAdvicePage() {
             <EnergySummary
               energyNumber={energyNumber}
               energyDescription={getEnergyDescription(energyNumber)}
-              calculationMethod="Tự tính theo Pythagoras: Năm cá nhân → Tháng cá nhân → Ngày cá nhân"
+              period={selectedPeriod}
+              targetDate={targetDate}
+              personalNumbers={personalNumbers}
             />
 
             {/* Main Energy Number Card */}
@@ -274,6 +499,21 @@ export default function DailyAdvicePage() {
               }}
             >
               <div className="card-body p-4">
+                <div className="text-center mb-2">
+                  <span 
+                    style={{
+                      color: '#6e645b',
+                      fontSize: '13px',
+                      fontStyle: 'italic'
+                    }}
+                  >
+                    {selectedPeriod === 'today' && `Hôm nay, ${formatDate(targetDate)}`}
+                    {selectedPeriod === 'tomorrow' && `Ngày mai, ${formatDate(targetDate)}`}
+                    {selectedPeriod === 'week' && `Tuần ${getWeekNumber(targetDate)}, ${targetDate.getFullYear()}`}
+                    {selectedPeriod === 'month' && `Tháng ${targetDate.getMonth() + 1}/${targetDate.getFullYear()}`}
+                    {selectedPeriod === 'year' && `Năm ${targetDate.getFullYear()}`}
+                  </span>
+                </div>
                 <h3 
                   className="fw-bold text-center mb-0"
                   style={{
@@ -313,6 +553,13 @@ export default function DailyAdvicePage() {
                 title={adviceData.mistakes.title}
                 content={adviceData.mistakes.content}
                 actions={adviceData.mistakes.actions}
+                period={selectedPeriod}
+                targetDate={targetDate}
+                onSaveSuccess={() => {
+                  if (todoListRef.current && todoListRef.current.refresh) {
+                    todoListRef.current.refresh();
+                  }
+                }}
               />
             )}
 

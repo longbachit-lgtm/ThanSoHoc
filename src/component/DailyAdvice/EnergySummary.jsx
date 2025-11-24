@@ -1,4 +1,62 @@
-export default function EnergySummary({ energyNumber, energyDescription, calculationMethod }) {
+export default function EnergySummary({ energyNumber, energyDescription, period, targetDate, personalNumbers }) {
+  // Get period label
+  const getPeriodLabel = () => {
+    switch (period) {
+      case 'today':
+        return 'Hôm nay';
+      case 'tomorrow':
+        return 'Ngày mai';
+      case 'week':
+        if (targetDate) {
+          const weekNumber = getWeekNumber(targetDate);
+          return `Tuần ${weekNumber}`;
+        }
+        return 'Tuần này';
+      case 'month':
+        if (targetDate) {
+          const monthNames = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 
+                             'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+          return monthNames[targetDate.getMonth()];
+        }
+        return 'Tháng này';
+      case 'year':
+        if (targetDate) {
+          return `Năm ${targetDate.getFullYear()}`;
+        }
+        return 'Năm này';
+      default:
+        return 'Hôm nay';
+    }
+  };
+
+  // Get calculation method based on period
+  const getCalculationMethod = () => {
+    if (!personalNumbers) return '';
+    
+    switch (period) {
+      case 'today':
+      case 'tomorrow':
+        return `Năm cá nhân ${personalNumbers.personalYear} → Tháng cá nhân ${personalNumbers.personalMonth} → Ngày cá nhân ${personalNumbers.personalDay}`;
+      case 'week':
+        return `Năm cá nhân ${personalNumbers.personalYear} → Tuần cá nhân ${personalNumbers.personalWeek}`;
+      case 'month':
+        return `Năm cá nhân ${personalNumbers.personalYear} → Tháng cá nhân ${personalNumbers.personalMonth}`;
+      case 'year':
+        return `Năm cá nhân ${personalNumbers.personalYear}`;
+      default:
+        return `Năm cá nhân ${personalNumbers.personalYear} → Tháng cá nhân ${personalNumbers.personalMonth} → Ngày cá nhân ${personalNumbers.personalDay}`;
+    }
+  };
+
+  // Helper function to calculate week number
+  const getWeekNumber = (date) => {
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  };
+
   return (
     <div 
       className="card border-0 shadow-sm mb-4"
@@ -17,7 +75,7 @@ export default function EnergySummary({ energyNumber, energyDescription, calcula
               fontSize: '16px'
             }}
           >
-            Hôm nay:
+            {getPeriodLabel()}:
           </span>
           <span 
             className="rounded-circle d-inline-flex align-items-center justify-content-center"
@@ -49,10 +107,11 @@ export default function EnergySummary({ energyNumber, energyDescription, calcula
           style={{
             color: '#6e645b',
             fontSize: '12px',
-            fontStyle: 'italic'
+            fontStyle: 'italic',
+            lineHeight: '1.5'
           }}
         >
-          {calculationMethod}
+          {getCalculationMethod()}
         </p>
       </div>
     </div>
