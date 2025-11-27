@@ -1,12 +1,24 @@
 import { useState } from "react";
-import { FaSun, FaBalanceScale, FaExclamationTriangle, FaCommentDots, FaLightbulb, FaList, FaCheckCircle } from "react-icons/fa";
+import { FaSun, FaBalanceScale, FaExclamationTriangle, FaCommentDots, FaLightbulb, FaList, FaCheckCircle, FaCircle } from "react-icons/fa";
 import { useAuthStore } from "../../store/useAuthStore";
 import api from "../../service/api";
 
 export default function AdviceCard({ type, title, content, quickTip, challenge, opportunity, reminders, actions, period, targetDate, onSaveSuccess }) {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [completedTasks, setCompletedTasks] = useState({});
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  
+  const handleTaskToggle = (index) => {
+    setCompletedTasks(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+    // Trigger onClick if provided
+    if (actions[index]?.onClick) {
+      actions[index].onClick();
+    }
+  };
   const getIcon = () => {
     switch (type) {
       case 'preparation':
@@ -236,28 +248,56 @@ export default function AdviceCard({ type, title, content, quickTip, challenge, 
           </div>
         )}
 
-        {/* Action Buttons */}
+        {/* Action Tasks */}
         {actions && actions.length > 0 && (
-          <div className="mt-3">
-            <div className="d-flex gap-2 flex-wrap mb-2">
+          <div className="mt-4">
+            <div className="d-flex flex-column gap-2 mb-4">
               {actions.map((action, index) => (
-                <button
+                <div
                   key={index}
-                  onClick={action.onClick}
-                  className="btn border-0 rounded-pill px-3 py-2"
+                  className="d-flex align-items-center gap-3 p-3 rounded"
                   style={{
-                    backgroundColor: action.primary ? '#A07A4A' : '#f8f9fa',
-                    color: action.primary ? '#fff' : '#332211',
-                    fontSize: '14px',
-                    fontWeight: action.primary ? 'bold' : 'normal',
-                    border: action.primary ? 'none' : '1px solid #dee2e6'
+                    backgroundColor: '#fff',
+                    border: '1.5px solid #E8C78C',
+                    borderRadius: '12px',
+                    cursor: 'default',
+                    position: 'relative',
+                    minHeight: '56px',
+                    boxShadow: '0 2px 8px rgba(232, 199, 140, 0.15)'
                   }}
                 >
-                  {action.label}
-                </button>
+                  {/* No Checkbox */}
+                  {/* Task Text */}
+                  <div className="flex-grow-1">
+                    <span
+                      style={{
+                        color: '#332211',
+                        fontSize: '15px',
+                        fontWeight: 500,
+                        textDecoration: 'none',
+                        lineHeight: '1.5'
+                      }}
+                    >
+                      {action.label}
+                    </span>
+                  </div>
+
+                  {/* Decorative indicator */}
+                  {action.primary && (
+                    <div
+                      style={{
+                        width: '8px',
+                        height: '8px',
+                        borderRadius: '50%',
+                        backgroundColor: '#A07A4A',
+                        boxShadow: '0 0 8px rgba(160, 122, 74, 0.5)'
+                      }}
+                    />
+                  )}
+                </div>
               ))}
             </div>
-            
+
             {/* Save to TODO List button (only for mistakes type) */}
             {type === 'mistakes' && (
               <div className="d-flex gap-2 flex-wrap">
@@ -271,18 +311,6 @@ export default function AdviceCard({ type, title, content, quickTip, challenge, 
                     fontSize: '14px',
                     fontWeight: 'bold',
                     transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!saving && !saved) {
-                      e.currentTarget.style.backgroundColor = '#1a1a1a';
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!saving && !saved) {
-                      e.currentTarget.style.backgroundColor = '#332211';
-                      e.currentTarget.style.transform = 'translateY(0)';
-                    }
                   }}
                 >
                   {saving ? (
@@ -302,52 +330,13 @@ export default function AdviceCard({ type, title, content, quickTip, challenge, 
                     </>
                   )}
                 </button>
-                <button
-                  onClick={handleViewSaved}
-                  className="btn border-0 rounded-pill px-4 py-2"
-                  style={{
-                    backgroundColor: '#f8f9fa',
-                    color: '#332211',
-                    fontSize: '14px',
-                    border: '1px solid #dee2e6',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#e9ecef';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = '#f8f9fa';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                  }}
-                >
-                  Xem việc đã lưu
-                </button>
               </div>
             )}
           </div>
         )}
 
-        {/* Reminder Buttons */}
-        {reminders && reminders.length > 0 && (
-          <div className="d-flex gap-2 flex-wrap mt-3">
-            {reminders.map((reminder, index) => (
-              <button
-                key={index}
-                onClick={reminder.onClick}
-                className="btn border-0 rounded-pill px-3 py-2"
-                style={{
-                  backgroundColor: '#f8f9fa',
-                  color: '#332211',
-                  fontSize: '14px',
-                  border: '1px solid #dee2e6'
-                }}
-              >
-                {reminder.label}
-              </button>
-            ))}
-          </div>
-        )}
+
+ 
       </div>
     </div>
   );

@@ -1,12 +1,13 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import UserNumerologyHeader from "../component/DailyAdvice/UserNumerologyHeader";
+import PageNavigationMenu from "../component/DailyAdvice/PageNavigationMenu";
 import PeriodNavigationTabs from "../component/DailyAdvice/PeriodNavigationTabs";
 import EnergySummary from "../component/DailyAdvice/EnergySummary";
 import AdviceCard from "../component/DailyAdvice/AdviceCard";
 import SuggestedActionsCard from "../component/DailyAdvice/SuggestedActionsCard";
-import TodoListComponent from "../component/DailyAdvice/TodoListComponent";
 import { calculateAllPersonalNumbers } from "../service/dailyAdvice";
 import { getAdviceByNumber } from "../Data/dailyAdviceData";
 import api from "../service/api";
@@ -18,9 +19,17 @@ export default function DailyAdvicePage() {
   const [targetDate, setTargetDate] = useState(new Date());
   const [personalNumbers, setPersonalNumbers] = useState(null);
   const [adviceData, setAdviceData] = useState(null);
-  const todoListRef = useRef(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  
+  // Handler để chuyển sang trang TodoList sau khi lưu thành công
+  const handleSaveToTodoSuccess = () => {
+    // Delay một chút để đảm bảo dữ liệu đã được lưu
+    setTimeout(() => {
+      navigate('/todo-list');
+    }, 500);
+  };
 
   // Get birth date from Redux or localStorage
   const birthDay = useSelector((state) => state.numberKarmaMain.birth_day);
@@ -416,9 +425,32 @@ export default function DailyAdvicePage() {
 
   if (!personalNumbers || !adviceData) {
     return (
-      <div className="min-vh-100 d-flex align-items-center justify-content-center p-3">
+      <div 
+        className="min-vh-100 d-flex align-items-center justify-content-center p-3"
+        style={{
+          background: "#FDFBF6",
+          backgroundImage: `
+            radial-gradient(circle at 20% 20%, rgba(232, 199, 140, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%)
+          `
+        }}
+      >
         <div className="text-center">
-          <p style={{ color: '#332211' }}>Đang tải dữ liệu...</p>
+          <div 
+            className="spinner-border mb-3"
+            role="status"
+            style={{
+              width: '3rem',
+              height: '3rem',
+              color: '#A07A4A',
+              borderWidth: '4px'
+            }}
+          >
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p style={{ color: '#332211', fontSize: '16px', fontWeight: '500' }}>
+            Đang tải dữ liệu...
+          </p>
         </div>
       </div>
     );
@@ -467,132 +499,206 @@ export default function DailyAdvicePage() {
       {/* Main container */}
       <div className="container-fluid position-relative">
         <div className="row justify-content-center">
-          <div className="col-12 col-md-10 col-lg-8 col-xl-7">
+          <div className="col-12 col-md-10 col-lg-8 col-xl-7" style={{ maxWidth: '900px' }}>
             {/* Header */}
-            <UserNumerologyHeader />
-
+            <div className="mb-4">
+              <UserNumerologyHeader />
+            </div>
+            
+            {/* Page Navigation Menu */}
+            <div className="mb-4">
+              <PageNavigationMenu />
+            </div>
+            
             {/* Period Navigation */}
-            <PeriodNavigationTabs 
+            <div className="mb-5">
+              <PeriodNavigationTabs 
               selectedPeriod={selectedPeriod}
               onPeriodChange={handlePeriodChange}
               weekNumber={getWeekNumber(targetDate)}
               monthNumber={targetDate.getMonth() + 1}
               yearNumber={targetDate.getFullYear()}
-            />
+              />
+            </div>
 
             {/* Energy Summary */}
-            <EnergySummary
-              energyNumber={energyNumber}
-              energyDescription={getEnergyDescription(energyNumber)}
-              period={selectedPeriod}
-              targetDate={targetDate}
-              personalNumbers={personalNumbers}
-            />
 
-            {/* Main Energy Number Card */}
+
+            {/* Main Energy Number Card - Enhanced */}
             <div 
-              className="card border-0 shadow-sm mb-4"
+              className="card border-0 mb-5"
               style={{
-                backgroundColor: '#FCF8F0',
-                borderRadius: '15px',
-                border: '1px solid #E8C78C'
+                background: 'linear-gradient(135deg, rgba(232, 199, 140, 0.15) 0%, rgba(252, 248, 240, 0.95) 100%)',
+                borderRadius: '20px',
+                border: '2px solid #E8C78C',
+                boxShadow: '0 8px 24px rgba(160, 122, 74, 0.15)',
+                transition: 'all 0.3s ease',
+                overflow: 'hidden',
+                position: 'relative'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(160, 122, 74, 0.2)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(160, 122, 74, 0.15)';
               }}
             >
-              <div className="card-body p-4">
-                <div className="text-center mb-2">
+              {/* Decorative corner elements */}
+              <div 
+                className="position-absolute"
+                style={{
+                  top: 0,
+                  left: 0,
+                  width: '80px',
+                  height: '80px',
+                  background: 'radial-gradient(circle, rgba(232, 199, 140, 0.2) 0%, transparent 70%)',
+                  borderRadius: '0 0 100% 0'
+                }}
+              />
+              <div 
+                className="position-absolute"
+                style={{
+                  bottom: 0,
+                  right: 0,
+                  width: '80px',
+                  height: '80px',
+                  background: 'radial-gradient(circle, rgba(232, 199, 140, 0.2) 0%, transparent 70%)',
+                  borderRadius: '100% 0 0 0'
+                }}
+              />
+              
+              <div className="card-body p-4 position-relative" style={{ zIndex: 1 }}>
+                <div className="text-center mb-3">
                   <span 
                     style={{
-                      color: '#6e645b',
-                      fontSize: '13px',
-                      fontStyle: 'italic'
+                      color: '#8B6F47',
+                      fontSize: '14px',
+                      fontStyle: 'italic',
+                      fontWeight: '500',
+                      letterSpacing: '0.5px'
                     }}
                   >
-                    {selectedPeriod === 'today' && `Hôm nay, ${formatDate(targetDate)}`}
-                    {selectedPeriod === 'tomorrow' && `Ngày mai, ${formatDate(targetDate)}`}
-                    {selectedPeriod === 'week' && `Tuần ${getWeekNumber(targetDate)}, ${targetDate.getFullYear()}`}
-                    {selectedPeriod === 'month' && `Tháng ${targetDate.getMonth() + 1}/${targetDate.getFullYear()}`}
-                    {selectedPeriod === 'year' && `Năm ${targetDate.getFullYear()}`}
+                    {selectedPeriod === 'today' && `📅 Hôm nay, ${formatDate(targetDate)}`}
+                    {selectedPeriod === 'tomorrow' && `📅 Ngày mai, ${formatDate(targetDate)}`}
+                    {selectedPeriod === 'week' && `📅 Tuần ${getWeekNumber(targetDate)}, ${targetDate.getFullYear()}`}
+                    {selectedPeriod === 'month' && `📅 Tháng ${targetDate.getMonth() + 1}/${targetDate.getFullYear()}`}
+                    {selectedPeriod === 'year' && `📅 Năm ${targetDate.getFullYear()}`}
                   </span>
                 </div>
+                
+                {/* Energy Number - Large and Bold */}
+                <div className="text-center mb-3">
+                  <div 
+                    className="d-inline-flex align-items-center justify-content-center mb-2"
+                    style={{
+                      width: '80px',
+                      height: '80px',
+                      borderRadius: '50%',
+                      background: 'linear-gradient(135deg, #A07A4A 0%, #B8860B 100%)',
+                      boxShadow: '0 4px 12px rgba(160, 122, 74, 0.3)',
+                      marginBottom: '8px'
+                    }}
+                  >
+                    <span 
+                      style={{
+                        color: '#fff',
+                        fontSize: '36px',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      {energyNumber}
+                    </span>
+                  </div>
+                </div>
+                
                 <h3 
-                  className="fw-bold text-center mb-0"
+                  className="fw-bold text-center mb-2"
                   style={{
                     color: '#332211',
-                    fontSize: '18px'
+                    fontSize: '20px',
+                    lineHeight: '1.4'
                   }}
                 >
-                  CON SỐ NĂNG LƯỢNG: {energyNumber} ({getEnergyDescription(energyNumber)})
+                  CON SỐ NĂNG LƯỢNG
                 </h3>
+                <p 
+                  className="text-center mb-0"
+                  style={{
+                    color: '#6e645b',
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    lineHeight: '1.5'
+                  }}
+                >
+                  {getEnergyDescription(energyNumber)}
+                </p>
               </div>
             </div>
 
-            {/* Advice Cards */}
-            {adviceData.preparation && (
-              <AdviceCard
-                type="preparation"
-                title={adviceData.preparation.title}
-                content={adviceData.preparation.content}
-                quickTip={adviceData.preparation.quickTip}
-                actions={adviceData.preparation.actions}
-              />
-            )}
+            {/* Advice Cards Section */}
+            <div style={{ marginTop: '32px' }}>
+              {adviceData.preparation && (
+                <div className="mb-4">
+                  <AdviceCard
+                    type="preparation"
+                    title={adviceData.preparation.title}
+                    content={adviceData.preparation.content}
+                    quickTip={adviceData.preparation.quickTip}
+                    actions={adviceData.preparation.actions}
+                  />
+                </div>
+              )}
 
-            {adviceData.challenge && (
-              <AdviceCard
-                type="challenge"
-                title={adviceData.challenge.title}
-                challenge={adviceData.challenge.challenge}
-                opportunity={adviceData.challenge.opportunity}
-                reminders={adviceData.challenge.reminders}
-              />
-            )}
+              {adviceData.challenge && (
+                <div className="mb-4">
+                  <AdviceCard
+                    type="challenge"
+                    title={adviceData.challenge.title}
+                    challenge={adviceData.challenge.challenge}
+                    opportunity={adviceData.challenge.opportunity}
+                    reminders={adviceData.challenge.reminders}
+                  />
+                </div>
+              )}
 
-            {adviceData.mistakes && (
-              <AdviceCard
-                type="mistakes"
-                title={adviceData.mistakes.title}
-                content={adviceData.mistakes.content}
-                actions={adviceData.mistakes.actions}
-                period={selectedPeriod}
-                targetDate={targetDate}
-                onSaveSuccess={() => {
-                  if (todoListRef.current && todoListRef.current.refresh) {
-                    todoListRef.current.refresh();
-                  }
-                }}
-              />
-            )}
+              {adviceData.mistakes && (
+                <div className="mb-4">
+                  <AdviceCard
+                    type="mistakes"
+                    title={adviceData.mistakes.title}
+                    content={adviceData.mistakes.content}
+                    actions={adviceData.mistakes.actions}
+                    period={selectedPeriod}
+                    targetDate={targetDate}
+                    onSaveSuccess={handleSaveToTodoSuccess}
+                  />
+                </div>
+              )}
 
-            {adviceData.motivation && (
-              <AdviceCard
-                type="motivation"
-                title={adviceData.motivation.title}
-                content={adviceData.motivation.content}
-              />
-            )}
+              {adviceData.motivation && (
+                <div className="mb-4">
+                  <AdviceCard
+                    type="motivation"
+                    title={adviceData.motivation.title}
+                    content={adviceData.motivation.content}
+                  />
+                </div>
+              )}
 
-            {/* Suggested Actions Card */}
-            {adviceData.suggestedActions && (
-              <SuggestedActionsCard
-                title={adviceData.suggestedActions.title}
-                actions={adviceData.suggestedActions.actions}
-                period={selectedPeriod}
-                targetDate={targetDate}
-                onSaveSuccess={() => {
-                  if (todoListRef.current && todoListRef.current.refresh) {
-                    todoListRef.current.refresh();
-                  }
-                }}
-              />
-            )}
-
-            {/* TODO List Component */}
-            <div id="todo-list-component">
-              <TodoListComponent 
-                ref={todoListRef}
-                period={selectedPeriod}
-                targetDate={targetDate}
-              />
+              {/* Suggested Actions Card */}
+              {adviceData.suggestedActions && (
+                <div className="mb-4">
+                  <SuggestedActionsCard
+                    title={adviceData.suggestedActions.title}
+                    actions={adviceData.suggestedActions.actions}
+                    period={selectedPeriod}
+                    targetDate={targetDate}
+                    onSaveSuccess={handleSaveToTodoSuccess}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

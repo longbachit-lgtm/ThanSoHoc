@@ -11,6 +11,7 @@ import GenderSelectionPage from "./Pages/GenderSelectionPage";
 import JobInputPage from "./Pages/JobInputPage";
 import AboutPage from "./Pages/AboutPage";
 import DailyAdvicePage from "./Pages/DailyAdvicePage";
+import TodoListPage from "./Pages/TodoListPage";
 import NumerologyDetailPage from "./Pages/NumerologyDetailPage";
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
               <Route path="/job-input" element={<JobInputPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/daily-advice" element={<DailyAdvicePage />} />
+              <Route path="/todo-list" element={<TodoListPage />} />
               <Route path="/numerology-detail" element={<NumerologyDetailPage />} />
               <Route path="/detail-number" element={<Numerlogy />} />
               <Route path="/form-infor" element={<FormInfor />} />

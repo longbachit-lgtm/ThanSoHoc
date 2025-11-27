@@ -180,7 +180,7 @@ export default function SuggestedActionsCard({
           {actions.map((action, index) => (
             <div 
               key={index}
-              className="d-flex align-items-start gap-2 mb-2"
+              className="d-flex align-items-start gap-3 mb-2"
               style={{
                 padding: '10px',
                 backgroundColor: '#fff',
@@ -188,15 +188,26 @@ export default function SuggestedActionsCard({
                 border: '1px solid #E8C78C'
               }}
             >
-              <FaCheckCircle 
-                style={{ 
-                  color: '#B8860B', 
-                  fontSize: '16px', 
+              {/* Number Badge */}
+              <div
+                className="d-flex align-items-center justify-content-center"
+                style={{
+                  width: '28px',
+                  height: '28px',
+                  minWidth: '28px',
+                  borderRadius: '50%',
+                  backgroundColor: '#A07A4A',
+                  color: '#fff',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  flexShrink: 0,
                   marginTop: '2px',
-                  flexShrink: 0
-                }} 
-              />
-              <div>
+                  boxShadow: '0 2px 6px rgba(160, 122, 74, 0.3)'
+                }}
+              >
+                {index + 1}
+              </div>
+              <div className="flex-grow-1">
                 <strong style={{ color: '#A07A4A', fontSize: '14px' }}>
                   {action.time}:
                 </strong>
@@ -251,27 +262,7 @@ export default function SuggestedActionsCard({
               </>
             )}
           </button>
-          <button
-            onClick={handleViewSaved}
-            className="btn border-0 rounded-pill px-4 py-2"
-            style={{
-              backgroundColor: '#f8f9fa',
-              color: '#332211',
-              fontSize: '14px',
-              border: '1px solid #dee2e6',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#e9ecef';
-              e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '#f8f9fa';
-              e.currentTarget.style.transform = 'translateY(0)';
-            }}
-          >
-            Xem việc đã lưu
-          </button>
+    
         </div>
       </div>
     </div>
