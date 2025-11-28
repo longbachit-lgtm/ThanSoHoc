@@ -31,12 +31,12 @@ function LifePeak({ topFour, btn, show = true, id_link }) {
     <Fragment>
       <div className="lifepeak-card">
         <div className="lifepeak-card__header">
-          <div className="lifepeak-card__badge">
+          {/* <div className="lifepeak-card__badge">
             {btn?.badgeLabel ||
               (typeof btn?.noi_dung === "string"
                 ? btn.noi_dung
                 : "Chu kỳ cuộc đời")}
-          </div>
+          </div> */}
           <div className="lifepeak-card__heading">
             <h4>
               {btn?.heading ||

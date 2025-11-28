@@ -133,9 +133,11 @@ function SummaryAll() {
             {NUMEROLOGY_LIFE_PATH[numberDestiny]?.tomtat && (
               <div>{parse(NUMEROLOGY_LIFE_PATH[numberDestiny].tomtat)}</div>
             )}
+           <br />
             {NUMEROLOGY_SOUL_NUMBER[numberSoul]?.tomtat && (
               <div>{parse(NUMEROLOGY_SOUL_NUMBER[numberSoul].tomtat)}</div>
             )}
+            <br />
             {NUMEROLOGY_SOUL_NUMBER[numberKarma]?.tomtat && (
               <div>{parse(NUMEROLOGY_SOUL_NUMBER[numberKarma].tomtat)}</div>
             )}
