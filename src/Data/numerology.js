@@ -888,7 +888,7 @@ export const ARROW = {
       TEN: "Trống kế hoạch",
       Y_NGHIA: "Thiếu trật tự, lộn xộn, cuộc sống vô lối…",
       KET_LUAN:
-        "<p class='mt-5'><strong class='text-danger'>Thiếu trật tự, lộn xộn, </strong></p>",
+        "<p class=''><strong class='text-danger'>Thiếu trật tự, lộn xộn, </strong></p>",
     },
   },
   456: {
@@ -1098,15 +1098,15 @@ export const WEAK_NUMB = {
   },
   2: {
     noidung:
-      "<p class='mt-5'><strong class='text-danger'>Thiếu khả năng kết nối và hòa hợp</strong>, khó làm việc nhóm và dễ xảy ra mâu thuẫn.</p> <p><strong class='text-danger'>Khó bày tỏ cảm xúc</strong>, dễ bị hiểu lầm và tạo khoảng cách với người khác.</p> <p><strong class='text-danger'>Thiếu sự nhạy bén về cảm xúc</strong>, không dễ thấu hiểu tâm lý người khác.</p> ",
+      "<p class=''><strong class='text-danger'>Thiếu khả năng kết nối và hòa hợp</strong>, khó làm việc nhóm và dễ xảy ra mâu thuẫn.</p> <p><strong class='text-danger'>Khó bày tỏ cảm xúc</strong>, dễ bị hiểu lầm và tạo khoảng cách với người khác.</p> <p><strong class='text-danger'>Thiếu sự nhạy bén về cảm xúc</strong>, không dễ thấu hiểu tâm lý người khác.</p> ",
   },
   3: {
     noidung:
-      "<p class='mt-5' ><strong class='text-danger'>Thiếu sự sáng tạo và linh hoạt</strong>, tư duy cứng nhắc.</p><p><strong class='text-danger'>Thiếu sự lạc quan</strong>, dễ bị tiêu cực.</p> <p><strong class='text-danger'>Gặp khó khăn trong việc diễn đạt ý tưởng</strong>, khó thể hiện bản thân trước đám đông.</p>",
+      "<p class='' ><strong class='text-danger'>Thiếu sự sáng tạo và linh hoạt</strong>, tư duy cứng nhắc.</p><p><strong class='text-danger'>Thiếu sự lạc quan</strong>, dễ bị tiêu cực.</p> <p><strong class='text-danger'>Gặp khó khăn trong việc diễn đạt ý tưởng</strong>, khó thể hiện bản thân trước đám đông.</p>",
   },
   4: {
     noidung:
-      "<p class='mt-5'><strong class='text-danger'>Thiếu kỷ luật</strong>, hay tùy hứng hành động.</p><p><strong class='text-danger'>Không có kế hoạch rõ ràng</strong>, hay trì hoãn.</p><p><strong class='text-danger'>Thiếu kiên trì với mục tiêu</strong>, hay thay đổi quyết định.</p>",
+      "<p class=''><strong class='text-danger'>Thiếu kỷ luật</strong>, hay tùy hứng hành động.</p><p><strong class='text-danger'>Không có kế hoạch rõ ràng</strong>, hay trì hoãn.</p><p><strong class='text-danger'>Thiếu kiên trì với mục tiêu</strong>, hay thay đổi quyết định.</p>",
   },
   5: {
     noidung: `<p><strong class='text-danger'>Thiếu linh hoạt</strong>, khó thích nghi với môi trường mới.</p>
@@ -1114,7 +1114,7 @@ export const WEAK_NUMB = {
   },
   6: {
     noidung:
-      "<p class='mt-5'><strong class='text-danger'>Khó thể hiện tình cảm</strong>, cảm thấy không thoải mái khi bày tỏ yêu thương.</p> <p><strong class='text-danger'>Dễ cảm thấy áp lực</strong> khi phải chịu trách nhiệm với ai đó.</p>",
+      "<p class=''><strong class='text-danger'>Khó thể hiện tình cảm</strong>, cảm thấy không thoải mái khi bày tỏ yêu thương.</p> <p><strong class='text-danger'>Dễ cảm thấy áp lực</strong> khi phải chịu trách nhiệm với ai đó.</p>",
   },
   7: {
     noidung: `<p><strong class='text-danger'>Thiếu thực tế</strong>, học theo lý thuyết nhưng khó áp dụng.</p>
@@ -1123,7 +1123,7 @@ export const WEAK_NUMB = {
   },
   8: {
     noidung:
-      "<p class='mt-5'><strong class='text-danger'>Gặp khó khăn trong việc quản lý tài chính</strong>, dễ rơi vào tình trạng chi tiêu mất kiểm soát.</p> <p><strong class='text-danger'>Thiếu quyết đoán trong các quyết định quan trọng</strong> , Hay do dự, sợ sai lầm dẫn đến bỏ lỡ cơ hội.</p> <p><strong class='text-danger'>Dễ bị ảnh hưởng bởi người khác, thiếu lập trường vững vàng</strong> , Thiếu sự kiên định, dễ thay đổi theo ý kiến của người khác.</p> <p><strong class='text-danger'>Không giỏi tổ chức và điều hành</strong>, dễ mất kiểm soát trong công việc, dẫn đến thiếu hiệu quả.</p>",
+      "<p class=''><strong class='text-danger'>Gặp khó khăn trong việc quản lý tài chính</strong>, dễ rơi vào tình trạng chi tiêu mất kiểm soát.</p> <p><strong class='text-danger'>Thiếu quyết đoán trong các quyết định quan trọng</strong> , Hay do dự, sợ sai lầm dẫn đến bỏ lỡ cơ hội.</p> <p><strong class='text-danger'>Dễ bị ảnh hưởng bởi người khác, thiếu lập trường vững vàng</strong> , Thiếu sự kiên định, dễ thay đổi theo ý kiến của người khác.</p> <p><strong class='text-danger'>Không giỏi tổ chức và điều hành</strong>, dễ mất kiểm soát trong công việc, dẫn đến thiếu hiệu quả.</p>",
   },
   9: {
     noidung: `

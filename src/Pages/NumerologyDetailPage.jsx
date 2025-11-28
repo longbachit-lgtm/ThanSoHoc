@@ -336,7 +336,7 @@ export default function NumerologyDetailPage() {
               
               {/* Enhanced action buttons with gradient */}
               <div className="d-flex justify-content-center gap-3 flex-wrap">
-                <Link 
+                {/* <Link 
                   to="/name-input"
                   className="btn rounded-pill px-4 py-2 d-flex align-items-center gap-2"
                   style={{
@@ -357,7 +357,7 @@ export default function NumerologyDetailPage() {
                   }}
                 >
                   <span>🔄</span> Xem Lại
-                </Link>
+                </Link> */}
                 <Link 
                   to="/daily-advice"
                   className="btn rounded-pill px-4 py-2 d-flex align-items-center gap-2"
