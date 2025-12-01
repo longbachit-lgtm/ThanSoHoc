@@ -68,6 +68,7 @@ async function createIndexes() {
     try {
         const User = mongoose.model('User');
         const NumerologyData = mongoose.model('NumerologyData');
+        const RegistrationCode = mongoose.model('RegistrationCode');
         
         // User indexes
         // Note: Mongoose automatically creates index for unique fields (like username),
@@ -83,6 +84,14 @@ async function createIndexes() {
         await safeCreateIndex(NumerologyData.collection, { userId: 1, createdAt: -1 });
         await safeCreateIndex(NumerologyData.collection, { fullName: "text" });
         await safeCreateIndex(NumerologyData.collection, { birthDate: 1 });
+        
+        // RegistrationCode indexes
+        if (RegistrationCode) {
+          await safeCreateIndex(RegistrationCode.collection, { code: 1 }, { unique: true });
+          await safeCreateIndex(RegistrationCode.collection, { isUsed: 1 });
+          await safeCreateIndex(RegistrationCode.collection, { expiresAt: 1 });
+          await safeCreateIndex(RegistrationCode.collection, { createdAt: -1 });
+        }
         
         console.log('✅ Database indexes verified/created successfully');
     } catch (error) {

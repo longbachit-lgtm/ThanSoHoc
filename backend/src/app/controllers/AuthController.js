@@ -2,6 +2,7 @@ const randToken = require("rand-token");
 const bcrypt = require("bcrypt");
 
 const User = require("../models/User");
+const RegistrationCode = require("../models/RegistrationCode");
 const authMethod = require("../sub/subFunc");
 const { sendSuccess, sendError } = require("../utils/response");
 
@@ -12,7 +13,17 @@ class AuthController {
   register = async (req, res) => {
     try {
       const username = req.body.username.toLowerCase().trim();
-      const { password, fullname, email } = req.body;
+      const { password, fullname, email, registrationCode } = req.body;
+
+      // Validate registration code
+      if (!registrationCode || !registrationCode.trim()) {
+        return sendError(res, "Mã CODE đăng ký là bắt buộc.", 400);
+      }
+
+      const codeValidation = await RegistrationCode.validateCode(registrationCode.trim());
+      if (!codeValidation.isValid) {
+        return sendError(res, codeValidation.message, 403);
+      }
 
       // Check if user exists
       const existingUser = await User.getUser(username);
@@ -42,6 +53,9 @@ class AuthController {
       });
 
       await newUser.save();
+
+      // Mark registration code as used
+      await RegistrationCode.markAsUsed(registrationCode.trim(), newUser._id);
       
       return sendSuccess(
         res,

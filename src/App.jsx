@@ -14,6 +14,7 @@ import AboutPage from "./Pages/AboutPage";
 import DailyAdvicePage from "./Pages/DailyAdvicePage";
 import TodoListPage from "./Pages/TodoListPage";
 import NumerologyDetailPage from "./Pages/NumerologyDetailPage";
+import RegistrationCodeAdminPage from "./Pages/RegistrationCodeAdminPage";
 
 function App() {
   const [showMenu, setShowMenu] = useState(false);
@@ -108,6 +109,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <FormInfor />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/registration-codes" 
+                element={
+                  <ProtectedRoute>
+                    <RegistrationCodeAdminPage />
                   </ProtectedRoute>
                 } 
               />

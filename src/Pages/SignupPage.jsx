@@ -9,7 +9,8 @@ export default function SignupPage() {
     fullName: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    registrationCode: ""
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -42,6 +43,11 @@ export default function SignupPage() {
       return;
     }
     
+    if (!formData.registrationCode.trim()) {
+      setError("Vui lòng nhập mã CODE đăng ký!");
+      return;
+    }
+    
     if (formData.password !== formData.confirmPassword) {
       setError("Mật khẩu xác nhận không khớp!");
       return;
@@ -59,7 +65,8 @@ export default function SignupPage() {
         formData.username.trim(),
         formData.password,
         formData.fullName.trim() || null,
-        formData.email.trim() || null
+        formData.email.trim() || null,
+        formData.registrationCode.trim()
       );
       
       // Đăng ký thành công
@@ -93,8 +100,10 @@ export default function SignupPage() {
         const status = err.response.status;
         if (status === 400) {
           errorMessage = err.response.data?.message || "Thông tin đăng ký không hợp lệ!";
-        } else if (status === 409 || status === 403) {
-          errorMessage = "Tên đăng nhập đã tồn tại! Vui lòng chọn tên khác.";
+        } else if (status === 403) {
+          errorMessage = err.response.data?.message || "Mã CODE không hợp lệ hoặc đã được sử dụng!";
+        } else if (status === 409) {
+          errorMessage = err.response.data?.message || "Tên đăng nhập đã tồn tại! Vui lòng chọn tên khác.";
         } else if (status === 500) {
           errorMessage = "Lỗi server, vui lòng thử lại sau!";
         } else if (err.response.data && err.response.data.message) {
@@ -325,6 +334,33 @@ export default function SignupPage() {
                         fontSize: '15px',
                         color: '#332211'
                       }}
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <input
+                      type="text"
+                      name="registrationCode"
+                      className="form-control form-control-lg"
+                      placeholder="Mã CODE đăng ký *"
+                      value={formData.registrationCode}
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          registrationCode: e.target.value.toUpperCase()
+                        });
+                        setError("");
+                      }}
+                      disabled={loading}
+                      style={{
+                        borderRadius: '12px',
+                        border: '2px solid #E8C78C',
+                        backgroundColor: '#fff',
+                        padding: '12px 16px',
+                        fontSize: '15px',
+                        color: '#332211'
+                      }}
+                      required
                     />
                   </div>
                   

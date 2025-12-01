@@ -34,11 +34,11 @@ const getHeaders = (includeAuth = true) => {
 export const api = {
   // Auth APIs
   auth: {
-    register: async (username, password, fullname, email) => {
+    register: async (username, password, fullname, email, registrationCode) => {
       const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
         method: 'POST',
         headers: getHeaders(false),
-        body: JSON.stringify({ username, password, fullname, email }),
+        body: JSON.stringify({ username, password, fullname, email, registrationCode }),
       });
       
       const data = await response.json();
@@ -285,6 +285,109 @@ export const api = {
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data.message || 'Xóa danh sách thất bại');
+      }
+      return data;
+    },
+  },
+
+  // Registration Code APIs
+  registrationCode: {
+    validate: async (code) => {
+      const response = await fetch(`${API_BASE_URL}/api/registration-code/validate`, {
+        method: 'POST',
+        headers: getHeaders(false),
+        body: JSON.stringify({ code }),
+      });
+      
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Validation thất bại');
+      }
+      return data;
+    },
+
+    create: async (codeData) => {
+      const response = await fetch(`${API_BASE_URL}/api/registration-code`, {
+        method: 'POST',
+        headers: getHeaders(true),
+        body: JSON.stringify(codeData),
+      });
+      
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Tạo mã CODE thất bại');
+      }
+      return data;
+    },
+
+    getAll: async (params = {}) => {
+      try {
+        const queryParams = new URLSearchParams(params);
+        const response = await fetch(`${API_BASE_URL}/api/registration-code?${queryParams}`, {
+          method: 'GET',
+          headers: getHeaders(true),
+        });
+        
+        // Handle network errors
+        if (!response) {
+          throw new Error('Không thể kết nối đến server. Vui lòng kiểm tra backend server.');
+        }
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+          // Create error with status info
+          const error = new Error(data.message || 'Lấy danh sách mã CODE thất bại');
+          error.status = response.status;
+          error.response = data;
+          throw error;
+        }
+        return data;
+      } catch (error) {
+        // Re-throw with more context
+        if (error.name === 'TypeError' && error.message.includes('fetch')) {
+          throw new Error('Không thể kết nối đến server. Vui lòng đảm bảo backend server đang chạy tại http://localhost:5000');
+        }
+        throw error;
+      }
+    },
+
+    getById: async (id) => {
+      const response = await fetch(`${API_BASE_URL}/api/registration-code/${id}`, {
+        method: 'GET',
+        headers: getHeaders(true),
+      });
+      
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Lấy thông tin mã CODE thất bại');
+      }
+      return data;
+    },
+
+    update: async (id, codeData) => {
+      const response = await fetch(`${API_BASE_URL}/api/registration-code/${id}`, {
+        method: 'PUT',
+        headers: getHeaders(true),
+        body: JSON.stringify(codeData),
+      });
+      
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Cập nhật mã CODE thất bại');
+      }
+      return data;
+    },
+
+    delete: async (id) => {
+      const response = await fetch(`${API_BASE_URL}/api/registration-code/${id}`, {
+        method: 'DELETE',
+        headers: getHeaders(true),
+      });
+      
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Xóa mã CODE thất bại');
       }
       return data;
     },
