@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { MdMenu } from "react-icons/md";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./component/ProtectedRoute";
 import FormInfor from "./Pages/FormInfor";
 import Numerlogy from "./Pages/Numerlogy";
 import AuthPage from "./Pages/AuthPage";
@@ -24,19 +25,92 @@ function App() {
         <div id="root_content" style={{ position: "relative" }}>
           <BrowserRouter>
             <Routes>
+              {/* Public routes - không cần authentication */}
               <Route path="/" element={<AuthPage />} />
               <Route path="/login" element={<AuthPage />} />
               <Route path="/signup" element={<SignupPage />} />
-              <Route path="/name-input" element={<NameInputPage />} />
-              <Route path="/birth-date" element={<BirthDatePage />} />
-              <Route path="/gender-selection" element={<GenderSelectionPage />} />
-              <Route path="/job-input" element={<JobInputPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/daily-advice" element={<DailyAdvicePage />} />
-              <Route path="/todo-list" element={<TodoListPage />} />
-              <Route path="/numerology-detail" element={<NumerologyDetailPage />} />
-              <Route path="/detail-number" element={<Numerlogy />} />
-              <Route path="/form-infor" element={<FormInfor />} />
+              
+              {/* Protected routes - cần authentication */}
+              <Route 
+                path="/name-input" 
+                element={
+                  <ProtectedRoute>
+                    <NameInputPage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/birth-date" 
+                element={
+                  <ProtectedRoute>
+                    <BirthDatePage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/gender-selection" 
+                element={
+                  <ProtectedRoute>
+                    <GenderSelectionPage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/job-input" 
+                element={
+                  <ProtectedRoute>
+                    <JobInputPage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/about" 
+                element={
+                  <ProtectedRoute>
+                    <AboutPage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/daily-advice" 
+                element={
+                  <ProtectedRoute>
+                    <DailyAdvicePage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/todo-list" 
+                element={
+                  <ProtectedRoute>
+                    <TodoListPage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/numerology-detail" 
+                element={
+                  <ProtectedRoute>
+                    <NumerologyDetailPage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/detail-number" 
+                element={
+                  <ProtectedRoute>
+                    <Numerlogy />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/form-infor" 
+                element={
+                  <ProtectedRoute>
+                    <FormInfor />
+                  </ProtectedRoute>
+                } 
+              />
             </Routes>
           </BrowserRouter>
         </div>

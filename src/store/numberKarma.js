@@ -48,6 +48,9 @@ const numberKarmaSlice = createSlice({
     setWeakListNumb(state, action) {
       state.weak_list = action.payload;
     },
+    resetNumberKarma: () => {
+      return initialNumberState;
+    },
   },
 });
 export const numberKarmaActions = numberKarmaSlice.actions;

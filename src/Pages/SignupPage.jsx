@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
 import api from "../service/api";
 
 export default function SignupPage() {
@@ -13,6 +14,15 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const login = useAuthStore((state) => state.login);
+
+  // Redirect nếu đã đăng nhập
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate("/about", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleChange = (e) => {
     setFormData({
@@ -45,17 +55,59 @@ export default function SignupPage() {
     setLoading(true);
     
     try {
-      await api.auth.register(
+      const response = await api.auth.register(
         formData.username.trim(),
         formData.password,
         formData.fullName.trim() || null,
         formData.email.trim() || null
       );
       
-      alert("Đăng ký thành công! Vui lòng đăng nhập.");
-      navigate("/login");
+      // Đăng ký thành công
+      if (response && response.data) {
+        // Tự động đăng nhập sau khi đăng ký (nếu API trả về token)
+        if (response.data.accessToken && response.data.user) {
+          login(
+            response.data.user,
+            response.data.accessToken,
+            response.data.refreshToken || null
+          );
+          // Redirect đến trang nhập thông tin hoặc trang chính
+          navigate("/name-input", { replace: true });
+        } else {
+          // Chỉ có thông báo, chưa tự động login
+          alert("Đăng ký thành công! Vui lòng đăng nhập.");
+          navigate("/login");
+        }
+      } else {
+        alert("Đăng ký thành công! Vui lòng đăng nhập.");
+        navigate("/login");
+      }
     } catch (err) {
-      setError(err.message || "Đăng ký thất bại, vui lòng thử lại!");
+      console.error("Signup error:", err);
+      
+      // Xử lý các loại lỗi khác nhau
+      let errorMessage = "Đăng ký thất bại, vui lòng thử lại!";
+      
+      if (err.response) {
+        // Lỗi từ server
+        const status = err.response.status;
+        if (status === 400) {
+          errorMessage = err.response.data?.message || "Thông tin đăng ký không hợp lệ!";
+        } else if (status === 409 || status === 403) {
+          errorMessage = "Tên đăng nhập đã tồn tại! Vui lòng chọn tên khác.";
+        } else if (status === 500) {
+          errorMessage = "Lỗi server, vui lòng thử lại sau!";
+        } else if (err.response.data && err.response.data.message) {
+          errorMessage = err.response.data.message;
+        }
+      } else if (err.request) {
+        // Không nhận được response từ server
+        errorMessage = "Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng!";
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -358,15 +410,24 @@ export default function SignupPage() {
 
                   {/* Links */}
                   <div className="text-center">
-                    <div className="d-flex justify-content-center align-items-center gap-3 flex-wrap">
-                      <Link 
-                        to="/" 
-                        className="text-decoration-none"
-                        style={{ color: '#007bff', fontSize: '14px' }}
-                      >
-                        Đã có tài khoản? Đăng nhập
-                      </Link>
-                    </div>
+                    <Link 
+                      to="/login" 
+                      className="text-decoration-none"
+                      style={{ 
+                        color: '#A07A4A', 
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        transition: 'color 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = '#B8860B';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = '#A07A4A';
+                      }}
+                    >
+                      Đã có tài khoản? Đăng nhập ngay
+                    </Link>
                   </div>
                 </form>
               </div>

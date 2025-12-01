@@ -1,9 +1,14 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaSignOutAlt } from "react-icons/fa";
+import { useAuthStore } from "../../store/useAuthStore";
+import { numberKarmaActions } from "../../store/numberKarma";
+import { numberNameActions } from "../../store/numberName";
 
 export default function UserNumerologyHeader() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const logout = useAuthStore((state) => state.logout);
   const mainNumber = useSelector((state) => state.numberKarmaMain.number);
   const fullName = useSelector((state) => state.numberName.full_name_list);
   const birthDayList = useSelector((state) => state.numberKarmaMain.birth_day_list);
@@ -35,18 +40,84 @@ export default function UserNumerologyHeader() {
   const displayExpressNumber = hasData && expressNumber ? expressNumber : '?';
   const displayDestinyNumber = hasData && destinyNumber ? destinyNumber : '?';
 
+  // Handle logout
+  const handleLogout = () => {
+    if (window.confirm('Bạn có chắc chắn muốn đăng xuất? Bạn sẽ cần đăng nhập lại để tiếp tục sử dụng.')) {
+      // Step 1: Clear all localStorage data FIRST
+      localStorage.removeItem('auth');
+      localStorage.removeItem('userFullName');
+      localStorage.removeItem('userBirthDate');
+      
+      // Step 2: Logout from auth store (clears Zustand state)
+      logout();
+      
+      // Step 3: Clear Redux store - reset to initial state
+      dispatch(numberKarmaActions.resetNumberKarma());
+      dispatch(numberNameActions.resetNumberName());
+      
+      // Step 4: Force reload to login page to ensure everything is cleared
+      // Use window.location.replace to prevent back button navigation
+      window.location.replace('/login');
+    }
+  };
+
   return (
     <div className="text-center mb-4 position-relative">
-      {/* Star icon top right */}
+      {/* Star icon top left */}
       <FaStar 
         className="position-absolute"
         style={{
           top: '0',
-          right: '0',
+          left: '0',
           fontSize: '24px',
           color: '#E8C78C'
         }}
       />
+
+      {/* Logout button top right */}
+      <div
+        className="position-absolute"
+        style={{
+          top: '0',
+          right: '0',
+        }}
+      >
+        <button
+          onClick={handleLogout}
+          style={{
+            background: 'linear-gradient(135deg, #fff 0%, #FCF8F0 100%)',
+            border: '2px solid #E8C78C',
+            borderRadius: '50px',
+            padding: '8px 12px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            color: '#A07A4A',
+            fontSize: '13px',
+            fontWeight: '600',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            boxShadow: '0 2px 8px rgba(232, 199, 140, 0.2)',
+            zIndex: 10
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'linear-gradient(135deg, #E8C78C 0%, #B8860B 100%)';
+            e.currentTarget.style.color = '#fff';
+            e.currentTarget.style.transform = 'scale(1.05)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(232, 199, 140, 0.4)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'linear-gradient(135deg, #fff 0%, #FCF8F0 100%)';
+            e.currentTarget.style.color = '#A07A4A';
+            e.currentTarget.style.transform = 'scale(1)';
+            e.currentTarget.style.boxShadow = '0 2px 8px rgba(232, 199, 140, 0.2)';
+          }}
+          title="Đăng xuất"
+        >
+          <FaSignOutAlt style={{ fontSize: '16px' }} />
+          <span className="d-none d-sm-inline">Đăng xuất</span>
+        </button>
+      </div>
 
       {/* Avatar/Tarot card circle */}
       <div 

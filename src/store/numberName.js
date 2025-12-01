@@ -39,6 +39,9 @@ const numberNameSlice = createSlice({
     setFullNameList(state, action) {
       state.full_name_list = action.payload;
     },
+    resetNumberName: () => {
+      return initialNumberState;
+    },
   },
 });
 

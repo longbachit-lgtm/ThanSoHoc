@@ -258,7 +258,7 @@ export default function SuggestedActionsCard({
             ) : (
               <>
                 <FaList />
-                Lưu 3 việc cần khép lại
+                Lưu hành động
               </>
             )}
           </button>

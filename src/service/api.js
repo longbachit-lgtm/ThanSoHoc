@@ -49,17 +49,48 @@ export const api = {
     },
 
     login: async (username, password) => {
-      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
-        method: 'POST',
-        headers: getHeaders(false),
-        body: JSON.stringify({ username, password }),
-      });
-      
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message || 'Đăng nhập thất bại');
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+          method: 'POST',
+          headers: getHeaders(false),
+          body: JSON.stringify({ username, password }),
+        });
+        
+        // Check if response exists (network error will throw before this)
+        if (!response) {
+          throw new Error('Không thể kết nối đến server. Vui lòng kiểm tra xem server có đang chạy không!');
+        }
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+          // Create error object similar to axios error structure
+          const error = new Error(data.message || 'Đăng nhập thất bại');
+          error.response = {
+            status: response.status,
+            statusText: response.statusText,
+            data: data
+          };
+          throw error;
+        }
+        
+        return data;
+      } catch (error) {
+        // Handle network errors (Failed to fetch, CORS, etc.)
+        if (error.name === 'TypeError' && error.message.includes('fetch')) {
+          const networkError = new Error('Không thể kết nối đến server. Vui lòng đảm bảo server đang chạy tại http://localhost:5000');
+          networkError.isNetworkError = true;
+          throw networkError;
+        }
+        
+        // If it's already our custom error, re-throw it
+        if (error.response) {
+          throw error;
+        }
+        
+        // Re-throw other errors as-is
+        throw error;
       }
-      return data;
     },
 
     refreshToken: async (refreshToken) => {

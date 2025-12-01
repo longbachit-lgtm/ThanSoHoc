@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useAuthStore } from "../store/useAuthStore";
 import api from "../service/api";
@@ -12,8 +12,19 @@ export default function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const login = useAuthStore((state) => state.login);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+  // Redirect nếu đã đăng nhập
+  useEffect(() => {
+    if (isAuthenticated()) {
+      // Lấy location từ state hoặc redirect về trang about để chọn
+      const from = location.state?.from?.pathname || "/about";
+      navigate(from, { replace: true });
+    }
+  }, [isAuthenticated, navigate, location]);
 
   const populateStoreFromData = (data) => {
     dispatch(numberKarmaActions.setKamarNumeroMain(data.number || 0));
@@ -65,8 +76,21 @@ export default function AuthPage() {
 
       const response = await api.auth.login(username.trim(), password);
       
+      // Validate response
+      if (!response || !response.data) {
+        throw new Error("Phản hồi từ server không hợp lệ!");
+      }
+
+      if (!response.data.accessToken || !response.data.user) {
+        throw new Error("Thông tin đăng nhập không đầy đủ!");
+      }
+      
       // Lưu thông tin đăng nhập
-      login(response.data.user, response.data.accessToken, response.data.refreshToken);
+      login(
+        response.data.user, 
+        response.data.accessToken, 
+        response.data.refreshToken || null
+      );
       
       // Kiểm tra xem user đã có dữ liệu thần số học chưa
       try {
@@ -74,26 +98,59 @@ export default function AuthPage() {
         
         if (numerologyResponse.data) {
           populateStoreFromData(numerologyResponse.data);
-          navigate("/about");
+          
+          // Redirect về trang mà user muốn truy cập trước đó hoặc trang about để chọn
+          const from = location.state?.from?.pathname || "/about";
+          navigate(from, { replace: true });
         } else {
           // Chưa có dữ liệu → Navigate đến flow nhập thông tin
-          navigate("/name-input");
+          const from = location.state?.from?.pathname;
+          if (from && from.startsWith('/name-input')) {
+            navigate("/name-input", { replace: true });
+          } else {
+            navigate("/name-input", { replace: true });
+          }
         }
       } catch (err) {
+        console.error("Error loading numerology data:", err);
         // Nếu lỗi hoặc chưa có data → Navigate đến flow nhập thông tin
-        navigate("/name-input");
+        navigate("/name-input", { replace: true });
       }
     } catch (err) {
-      setError(err.message || "Đăng nhập thất bại, vui lòng thử lại!");
+      console.error("Login error:", err);
+      
+      // Xử lý các loại lỗi khác nhau
+      let errorMessage = "Đăng nhập thất bại, vui lòng thử lại!";
+      
+      // Check for network errors first
+      if (err.isNetworkError || err.name === 'TypeError') {
+        errorMessage = err.message || "Không thể kết nối đến server. Vui lòng:\n" +
+          "1. Đảm bảo backend server đang chạy tại http://localhost:5000\n" +
+          "2. Kiểm tra kết nối mạng\n" +
+          "3. Kiểm tra console để xem chi tiết lỗi";
+      } else if (err.response) {
+        // Lỗi từ server
+        const status = err.response.status;
+        if (status === 401) {
+          errorMessage = err.response.data?.message || "Tên đăng nhập hoặc mật khẩu không đúng!";
+        } else if (status === 404) {
+          errorMessage = err.response.data?.message || "Không tìm thấy tài khoản!";
+        } else if (status === 500) {
+          errorMessage = "Lỗi server, vui lòng thử lại sau!";
+        } else if (err.response.data && err.response.data.message) {
+          errorMessage = err.response.data.message;
+        }
+      } else if (err.request) {
+        // Không nhận được response từ server
+        errorMessage = "Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng!";
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
-  };
-
-  const skipLogin = () => {
-    alert("Bỏ qua đăng nhập (demo)");
-    // Chuyển đến trang nhập họ tên khi bỏ qua đăng nhập
-    navigate("/name-input");
   };
 
   return (
@@ -331,28 +388,24 @@ export default function AuthPage() {
 
                   {/* Links */}
                   <div className="text-center">
-                    <div className="d-flex justify-content-center align-items-center gap-3 flex-wrap">
-                      <Link 
-                        to="/signup" 
-                        className="text-decoration-none"
-                        style={{ color: '#007bff', fontSize: '14px' }}
-                      >
-                        Đăng kí.
-                      </Link>
-                      <button
-                        type="button"
-                        className="btn btn-link p-0 text-decoration-none"
-                        style={{ 
-                          color: '#6e645b', 
-                          fontSize: '14px',
-                          border: 'none',
-                          background: 'none'
-                        }}
-                        onClick={skipLogin}
-                      >
-                        Bỏ qua bước đăng nhập
-                      </button>
-                    </div>
+                    <Link 
+                      to="/signup" 
+                      className="text-decoration-none"
+                      style={{ 
+                        color: '#A07A4A', 
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        transition: 'color 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = '#B8860B';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = '#A07A4A';
+                      }}
+                    >
+                      Chưa có tài khoản? Đăng ký ngay
+                    </Link>
                   </div>
                 </form>
               </div>
