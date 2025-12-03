@@ -126,14 +126,22 @@ Hệ thống mã CODE đăng ký cho phép:
 http://localhost:5000/api/registration-code
 ```
 
-### Authentication
+### Authentication & Authorization
 
-**Protected routes** (CRUD) yêu cầu header:
+**Protected routes** (CRUD) yêu cầu:
+1. **Authentication**: Header `x_authorization` với `access_token` hợp lệ
+2. **Authorization**: User phải có **role = 'admin'**
+
 ```
 x_authorization: <access_token>
 ```
 
 **Public route** (validate) không cần authentication.
+
+⚠️ **Lưu ý quan trọng**: 
+- Chỉ tài khoản có **role = 'admin'** mới có quyền CRUD mã CODE
+- Tài khoản thường (role = 'user') sẽ nhận lỗi 403 khi truy cập các API CRUD
+- Để set role admin cho một user, xem phần [Set Role Admin](#set-role-admin) bên dưới
 
 ---
 
@@ -268,12 +276,14 @@ Headers: {
 - `Số lượng mã CODE phải từ 1 đến 100.` (400)
 - `Không thể tạo mã CODE nào. <danh sách lỗi>` (400)
 - `Mã CODE đã tồn tại.` (khi tạo mã CODE thủ công trùng)
+- `Bạn không có quyền truy cập tính năng này. Chỉ Admin mới có quyền.` (403)
 
 **Lưu ý:**
 - Nếu không cung cấp `code`, hệ thống sẽ tự động tạo mã CODE 8 ký tự ngẫu nhiên
 - `quantity` từ 1-100
 - Mã CODE tự động được chuyển sang **UPPERCASE**
 - Định dạng mã CODE: 6-20 ký tự, chỉ chữ cái và số (A-Z, 0-9)
+- **Yêu cầu role = 'admin'**
 
 ---
 
@@ -336,6 +346,18 @@ GET /api/registration-code?search=VIP&filter=all
 }
 ```
 
+**Response (Error - 403):**
+```json
+{
+  "success": false,
+  "message": "Bạn không có quyền truy cập tính năng này. Chỉ Admin mới có quyền.",
+  "data": null
+}
+```
+
+**Lưu ý:**
+- **Yêu cầu role = 'admin'**
+
 ---
 
 ### 4. Get Code by ID (Protected)
@@ -380,6 +402,15 @@ GET /api/registration-code/65a1b2c3d4e5f6g7h8i9j0k1
 }
 ```
 
+**Response (Error - 403):**
+```json
+{
+  "success": false,
+  "message": "Bạn không có quyền truy cập tính năng này. Chỉ Admin mới có quyền.",
+  "data": null
+}
+```
+
 **Response (Error - 404):**
 ```json
 {
@@ -388,6 +419,9 @@ GET /api/registration-code/65a1b2c3d4e5f6g7h8i9j0k1
   "data": null
 }
 ```
+
+**Lưu ý:**
+- **Yêu cầu role = 'admin'**
 
 ---
 
@@ -436,10 +470,20 @@ Headers: {
 }
 ```
 
+**Response (Error - 403):**
+```json
+{
+  "success": false,
+  "message": "Bạn không có quyền truy cập tính năng này. Chỉ Admin mới có quyền.",
+  "data": null
+}
+```
+
 **Lưu ý:**
 - Chỉ có thể cập nhật `description` và `expiresAt`
 - Không thể cập nhật mã CODE đã được sử dụng
 - Không thể thay đổi `code` (mã CODE là bất biến)
+- **Yêu cầu role = 'admin'**
 
 ---
 
@@ -478,9 +522,19 @@ DELETE /api/registration-code/65a1b2c3d4e5f6g7h8i9j0k1
 }
 ```
 
+**Response (Error - 403):**
+```json
+{
+  "success": false,
+  "message": "Bạn không có quyền truy cập tính năng này. Chỉ Admin mới có quyền.",
+  "data": null
+}
+```
+
 **Lưu ý:**
 - Chỉ có thể xóa mã CODE chưa được sử dụng
 - Mã CODE đã sử dụng không thể xóa (để đảm bảo tính toàn vẹn dữ liệu)
+- **Yêu cầu role = 'admin'**
 
 ---
 
@@ -826,11 +880,73 @@ await api.auth.register(
 
 ---
 
+## 👤 Set Role Admin
+
+Để một user có quyền CRUD mã CODE, user đó phải có **role = 'admin'**.
+
+### Cách 1: Sử dụng script (Khuyến nghị)
+
+1. Chạy script từ thư mục `backend`:
+```bash
+cd backend
+node scripts/setAdminRole.js <username>
+```
+
+**Ví dụ:**
+```bash
+node scripts/setAdminRole.js admin
+node scripts/setAdminRole.js longbt
+```
+
+Script sẽ:
+- ✅ Kết nối database
+- ✅ Tìm user theo username
+- ✅ Set role = 'admin'
+- ✅ Hiển thị thông tin user đã cập nhật
+
+### Cách 2: Cập nhật trực tiếp trong MongoDB
+
+1. Kết nối MongoDB:
+```bash
+mongosh
+use thansohoc
+```
+
+2. Cập nhật role:
+```javascript
+db.users.updateOne(
+  { username: "admin" },
+  { $set: { role: "admin" } }
+)
+```
+
+3. Kiểm tra:
+```javascript
+db.users.findOne({ username: "admin" })
+```
+
+### Lưu ý
+
+- User mới đăng ký sẽ có **role = 'user'** (mặc định)
+- Chỉ user có **role = 'admin'** mới có quyền CRUD mã CODE
+- Sau khi set role admin, user cần **đăng nhập lại** để token mới có thông tin role
+
+---
+
 ## 📞 Hỗ trợ
 
 Nếu gặp vấn đề, vui lòng kiểm tra:
 1. Backend server có đang chạy không
 2. Token có hợp lệ không
-3. Định dạng request có đúng không
-4. Console logs để xem lỗi chi tiết
+3. **User có role = 'admin' không** (kiểm tra trong database hoặc đăng nhập lại)
+4. Định dạng request có đúng không
+5. Console logs để xem lỗi chi tiết
+
+### Lỗi thường gặp với Admin
+
+**Lỗi 403: "Bạn không có quyền truy cập tính năng này. Chỉ Admin mới có quyền."**
+- **Nguyên nhân**: User không có role = 'admin'
+- **Giải pháp**: 
+  1. Set role admin cho user (xem phần [Set Role Admin](#set-role-admin))
+  2. Đăng nhập lại để lấy token mới có thông tin role
 

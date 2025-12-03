@@ -118,3 +118,5 @@ RegistrationCode.statics.markAsUsed = async function(code, userId) {
 
 module.exports = mongoose.model("RegistrationCode", RegistrationCode);
 
+
+

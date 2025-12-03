@@ -41,6 +41,12 @@ const User = new Schema({
   lastLoginAt: {
     type: Date,
     default: null
+  },
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user',
+    index: true
   }
 }, {
   timestamps: true

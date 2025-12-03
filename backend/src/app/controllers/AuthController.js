@@ -112,6 +112,7 @@ class AuthController {
       const dataForAccessToken = {
         username: user.username,
         userId: user._id.toString(),
+        role: user.role || 'user',
       };
       
       const accessToken = await authMethod.generateToken(
