@@ -2,8 +2,8 @@
 
 @import "tailwindcss";
 body {
-
-  background-image: url("./assets/img/bg6.jpg");
+background-color: blanchedalmond;
+  /* background-image: url("./assets/img/bg6.jpg"); */
 
 }
 

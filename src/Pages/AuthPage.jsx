@@ -9,6 +9,7 @@ import { numberNameActions } from "../store/numberName";
 export default function AuthPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -37,7 +38,6 @@ export default function AuthPage() {
     dispatch(numberKarmaActions.setTop4Peak(data.top4 || {}));
     dispatch(numberKarmaActions.setStrongListNumb(data.strong_list || []));
     dispatch(numberKarmaActions.setWeakListNumb(data.weak_list || []));
-
     dispatch(numberNameActions.setNumberDestiny(data.destiny || 0));
     dispatch(numberNameActions.setNumberName(data.name || 0));
     dispatch(numberNameActions.setNumberSoul(data.soul || 0));
@@ -48,7 +48,7 @@ export default function AuthPage() {
     dispatch(numberNameActions.setFullNameList(data.full_name_list || ""));
 
     if (data.full_name_list) {
-      localStorage.setItem('userFullName', data.full_name_list);
+      localStorage.setItem("userFullName", data.full_name_list);
     }
 
     if (data.birthDayList) {
@@ -56,7 +56,10 @@ export default function AuthPage() {
       if (parts.length === 3) {
         const [day, month, year] = parts.map((part) => parseInt(part, 10));
         if (!Number.isNaN(day) && !Number.isNaN(month) && !Number.isNaN(year)) {
-          localStorage.setItem('userBirthDate', JSON.stringify({ day, month, year }));
+          localStorage.setItem(
+            "userBirthDate",
+            JSON.stringify({ day, month, year })
+          );
         }
       }
     }
@@ -75,7 +78,7 @@ export default function AuthPage() {
       }
 
       const response = await api.auth.login(username.trim(), password);
-      
+
       // Validate response
       if (!response || !response.data) {
         throw new Error("Phản hồi từ server không hợp lệ!");
@@ -84,28 +87,29 @@ export default function AuthPage() {
       if (!response.data.accessToken || !response.data.user) {
         throw new Error("Thông tin đăng nhập không đầy đủ!");
       }
-      
+
       // Lưu thông tin đăng nhập
       login(
-        response.data.user, 
-        response.data.accessToken, 
+        response.data.user,
+        response.data.accessToken,
         response.data.refreshToken || null
       );
-      
+
       // Kiểm tra xem user đã có dữ liệu thần số học chưa
       try {
         const numerologyResponse = await api.numerology.getMyData();
-        
-        if (numerologyResponse.data) {
+
+        console.log(numerologyResponse.data);
+        if (numerologyResponse.data && numerologyResponse.data.fullName) {
           populateStoreFromData(numerologyResponse.data);
-          
+
           // Redirect về trang mà user muốn truy cập trước đó hoặc trang about để chọn
           const from = location.state?.from?.pathname || "/about";
           navigate(from, { replace: true });
         } else {
           // Chưa có dữ liệu → Navigate đến flow nhập thông tin
           const from = location.state?.from?.pathname;
-          if (from && from.startsWith('/name-input')) {
+          if (from && from.startsWith("/name-input")) {
             navigate("/name-input", { replace: true });
           } else {
             navigate("/name-input", { replace: true });
@@ -118,23 +122,28 @@ export default function AuthPage() {
       }
     } catch (err) {
       console.error("Login error:", err);
-      
+
       // Xử lý các loại lỗi khác nhau
       let errorMessage = "Đăng nhập thất bại, vui lòng thử lại!";
-      
+
       // Check for network errors first
-      if (err.isNetworkError || err.name === 'TypeError') {
-        errorMessage = err.message || "Không thể kết nối đến server. Vui lòng:\n" +
-          "1. Đảm bảo backend server đang chạy tại http://localhost:5000\n" +
-          "2. Kiểm tra kết nối mạng\n" +
-          "3. Kiểm tra console để xem chi tiết lỗi";
+      if (err.isNetworkError || err.name === "TypeError") {
+        errorMessage =
+          err.message ||
+          "Không thể kết nối đến server. Vui lòng:\n" +
+            "1. Đảm bảo backend server đang chạy tại http://localhost:5000\n" +
+            "2. Kiểm tra kết nối mạng\n" +
+            "3. Kiểm tra console để xem chi tiết lỗi";
       } else if (err.response) {
         // Lỗi từ server
         const status = err.response.status;
         if (status === 401) {
-          errorMessage = err.response.data?.message || "Tên đăng nhập hoặc mật khẩu không đúng!";
+          errorMessage =
+            err.response.data?.message ||
+            "Tên đăng nhập hoặc mật khẩu không đúng!";
         } else if (status === 404) {
-          errorMessage = err.response.data?.message || "Không tìm thấy tài khoản!";
+          errorMessage =
+            err.response.data?.message || "Không tìm thấy tài khoản!";
         } else if (status === 500) {
           errorMessage = "Lỗi server, vui lòng thử lại sau!";
         } else if (err.response.data && err.response.data.message) {
@@ -142,11 +151,12 @@ export default function AuthPage() {
         }
       } else if (err.request) {
         // Không nhận được response từ server
-        errorMessage = "Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng!";
+        errorMessage =
+          "Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng!";
       } else if (err.message) {
         errorMessage = err.message;
       }
-      
+
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -154,144 +164,27 @@ export default function AuthPage() {
   };
 
   return (
-    <div 
-      className="min-vh-100 d-flex align-items-center justify-content-center p-3"
-    
-    >
-      {/* Background astrological elements */}
-      <div className="position-absolute w-100 h-100" style={{ pointerEvents: 'none' }}>
-        {/* Constellation patterns */}
-        <div 
-          className="position-absolute"
-          style={{
-            top: '10%',
-            left: '15%',
-            width: '60px',
-            height: '40px',
-            background: 'linear-gradient(45deg, transparent 40%, #E8C78C 40%, #E8C78C 60%, transparent 60%)',
-            opacity: 0.3
-          }}
-        />
-        <div 
-          className="position-absolute"
-          style={{
-            top: '20%',
-            right: '20%',
-            width: '80px',
-            height: '50px',
-            background: 'radial-gradient(circle, #E8C78C 2px, transparent 2px)',
-            backgroundSize: '20px 20px',
-            opacity: 0.2
-          }}
-        />
-        <div 
-          className="position-absolute"
-          style={{
-            bottom: '25%',
-            left: '10%',
-            width: '100px',
-            height: '60px',
-            background: 'linear-gradient(135deg, transparent 40%, #E8C78C 40%, #E8C78C 60%, transparent 60%)',
-            opacity: 0.25
-          }}
-        />
-        <div 
-          className="position-absolute"
-          style={{
-            bottom: '15%',
-            right: '15%',
-            width: '70px',
-            height: '70px',
-            borderRadius: '50%',
-            border: '2px solid #E8C78C',
-            opacity: 0.3
-          }}
-        />
-        {/* Individual stars */}
-        <div 
-          className="position-absolute"
-          style={{
-            top: '30%',
-            left: '25%',
-            width: '4px',
-            height: '4px',
-            backgroundColor: '#E8C78C',
-            borderRadius: '50%',
-            opacity: 0.4
-          }}
-        />
-        <div 
-          className="position-absolute"
-          style={{
-            top: '40%',
-            right: '30%',
-            width: '3px',
-            height: '3px',
-            backgroundColor: '#E8C78C',
-            borderRadius: '50%',
-            opacity: 0.5
-          }}
-        />
-        <div 
-          className="position-absolute"
-          style={{
-            bottom: '40%',
-            left: '30%',
-            width: '5px',
-            height: '5px',
-            backgroundColor: '#E8C78C',
-            borderRadius: '50%',
-            opacity: 0.3
-          }}
-        />
-      </div>
-
+    <div className="min-vh-100 d-flex align-items-center justify-content-center p-3">
       {/* Main container */}
       <div className="container-fluid">
         <div className="row justify-content-center">
           <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
-            {/* Logo */}
-            <div className="text-center mb-4">
-              <h1 
-                className="display-4 fw-bold mb-0"
-                style={{
-                  fontFamily: "'Charm', cursive",
-                  color: '#332211',
-                  fontSize: '2.5rem',
-                  position: 'relative'
-                }}
-              >
-      
-                <span 
-                  className="position-absolute"
-                  style={{
-                    top: '-5px',
-                    right: '-15px',
-                    width: '8px',
-                    height: '8px',
-                    backgroundColor: '#E8C78C',
-                    borderRadius: '50%'
-                  }}
-                />
-              </h1>
-            </div>
-
             {/* Login Card */}
-            <div 
+            <div
               className="card border-0 shadow-sm"
               style={{
-                backgroundColor: '#FCF8F0',
-                borderRadius: '20px',
-                border: '1px solid #E8C78C'
+                backgroundColor: "#FCF8F0",
+                borderRadius: "20px",
+                border: "1px solid #E8C78C",
               }}
             >
               <div className="card-body p-4 p-md-5">
-                <h2 
+                <h2
                   className="text-center fw-bold mb-4"
                   style={{
-                    color: '#332211',
-                    fontSize: '1.5rem',
-                    letterSpacing: '1px'
+                    color: "#332211",
+                    fontSize: "1.5rem",
+                    letterSpacing: "1px",
                   }}
                 >
                   ĐĂNG NHẬP
@@ -299,15 +192,19 @@ export default function AuthPage() {
 
                 <form onSubmit={submit}>
                   {error && (
-                    <div className="mb-3 alert alert-danger" role="alert" style={{
-                      borderRadius: '12px',
-                      fontSize: '14px',
-                      padding: '10px 15px'
-                    }}>
+                    <div
+                      className="mb-3 alert alert-danger"
+                      role="alert"
+                      style={{
+                        borderRadius: "12px",
+                        fontSize: "14px",
+                        padding: "10px 15px",
+                      }}
+                    >
                       {error}
                     </div>
                   )}
-                  
+
                   <div className="mb-3">
                     <input
                       type="text"
@@ -317,35 +214,110 @@ export default function AuthPage() {
                       onChange={(e) => setUsername(e.target.value)}
                       disabled={loading}
                       style={{
-                        borderRadius: '12px',
-                        border: '2px solid #E8C78C',
-                        backgroundColor: '#fff',
-                        padding: '12px 16px',
-                        fontSize: '15px',
-                        color: '#332211'
+                        borderRadius: "12px",
+                        border: "2px solid #E8C78C",
+                        backgroundColor: "#fff",
+                        padding: "12px 16px",
+                        fontSize: "15px",
+                        color: "#332211",
                       }}
                       required
                     />
                   </div>
-                  
-                  <div className="mb-4">
+
+                  <div className="mb-4" style={{ position: "relative" }}>
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       className="form-control form-control-lg"
                       placeholder="Mật khẩu"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       disabled={loading}
                       style={{
-                        borderRadius: '12px',
-                        border: '2px solid #E8C78C',
-                        backgroundColor: '#fff',
-                        padding: '12px 16px',
-                        fontSize: '15px',
-                        color: '#332211'
+                        borderRadius: "12px",
+                        border: "2px solid #E8C78C",
+                        backgroundColor: "#fff",
+                        padding: "12px 16px",
+                        fontSize: "15px",
+                        color: "#332211",
                       }}
                       required
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      aria-label={
+                        showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"
+                      }
+                      disabled={loading || !password} // chỉ cho bấm khi có ký tự
+                      style={{
+                        position: "absolute",
+                        right: "12px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        background: "transparent",
+                        border: "none",
+                        padding: 0,
+                        cursor:
+                          loading || !password ? "not-allowed" : "pointer",
+                        fontSize: "18px",
+                        opacity: loading || !password ? 0.35 : 0.9,
+                        lineHeight: 1,
+                      }}
+                    >
+                      {showPassword ? (
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <line
+                            x1="1"
+                            y1="1"
+                            x2="23"
+                            y2="23"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <circle
+                            cx="12"
+                            cy="12"
+                            r="3"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      )}
+                    </button>
                   </div>
 
                   {/* Submit Button */}
@@ -355,31 +327,36 @@ export default function AuthPage() {
                       className="btn btn-lg border-0"
                       disabled={loading}
                       style={{
-                        backgroundColor: loading ? '#d6c0a1' : '#B8860B',
-                        borderRadius: '50px',
-                        width: '60px',
-                        height: '60px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        margin: '0 auto',
-                        boxShadow: loading ? 'none' : '0 4px 12px rgba(184, 134, 11, 0.3)',
-                        cursor: loading ? 'not-allowed' : 'pointer'
+                        backgroundColor: loading ? "#d6c0a1" : "#B8860B",
+                        borderRadius: "50px",
+                        width: "60px",
+                        height: "60px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        margin: "0 auto",
+                        boxShadow: loading
+                          ? "none"
+                          : "0 4px 12px rgba(184, 134, 11, 0.3)",
+                        cursor: loading ? "not-allowed" : "pointer",
                       }}
                     >
                       {loading ? (
-                        <div className="spinner-border spinner-border-sm text-white" role="status">
+                        <div
+                          className="spinner-border spinner-border-sm text-white"
+                          role="status"
+                        >
                           <span className="visually-hidden">Loading...</span>
                         </div>
                       ) : (
-                        <span 
+                        <span
                           style={{
-                            width: '20px',
-                            height: '20px',
-                            borderRight: '3px solid white',
-                            borderBottom: '3px solid white',
-                            transform: 'rotate(-45deg)',
-                            marginLeft: '2px'
+                            width: "20px",
+                            height: "20px",
+                            borderRight: "3px solid white",
+                            borderBottom: "3px solid white",
+                            transform: "rotate(-45deg)",
+                            marginLeft: "-5px",
                           }}
                         />
                       )}
@@ -388,20 +365,20 @@ export default function AuthPage() {
 
                   {/* Links */}
                   <div className="text-center">
-                    <Link 
-                      to="/signup" 
+                    <Link
+                      to="/signup"
                       className="text-decoration-none"
-                      style={{ 
-                        color: '#A07A4A', 
-                        fontSize: '14px',
-                        fontWeight: '500',
-                        transition: 'color 0.2s ease'
+                      style={{
+                        color: "#A07A4A",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        transition: "color 0.2s ease",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.color = '#B8860B';
+                        e.currentTarget.style.color = "#B8860B";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.color = '#A07A4A';
+                        e.currentTarget.style.color = "#A07A4A";
                       }}
                     >
                       Chưa có tài khoản? Đăng ký ngay
@@ -414,49 +391,49 @@ export default function AuthPage() {
             {/* Pagination Dots */}
             <div className="text-center mt-4">
               <div className="d-flex justify-content-center align-items-center gap-2">
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
-                    width: '12px',
-                    height: '12px',
-                    backgroundColor: '#B8860B'
+                    width: "12px",
+                    height: "12px",
+                    backgroundColor: "#B8860B",
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
-                    width: '12px',
-                    height: '12px',
-                    backgroundColor: '#d6c0a1',
-                    opacity: 0.6
+                    width: "12px",
+                    height: "12px",
+                    backgroundColor: "#d6c0a1",
+                    opacity: 0.6,
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
-                    width: '12px',
-                    height: '12px',
-                    backgroundColor: '#d6c0a1',
-                    opacity: 0.6
+                    width: "12px",
+                    height: "12px",
+                    backgroundColor: "#d6c0a1",
+                    opacity: 0.6,
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
-                    width: '12px',
-                    height: '12px',
-                    backgroundColor: '#d6c0a1',
-                    opacity: 0.6
+                    width: "12px",
+                    height: "12px",
+                    backgroundColor: "#d6c0a1",
+                    opacity: 0.6,
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle border"
                   style={{
-                    width: '24px',
-                    height: '24px',
-                    borderColor: '#B8860B',
-                    borderWidth: '2px',
-                    backgroundColor: 'transparent'
+                    width: "24px",
+                    height: "24px",
+                    borderColor: "#B8860B",
+                    borderWidth: "2px",
+                    backgroundColor: "transparent",
                   }}
                 />
               </div>
