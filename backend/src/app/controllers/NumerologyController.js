@@ -8,6 +8,7 @@ class NumerologyController {
   save = async (req, res) => {
     try {
       const userId = req.user.userId;
+
       const {
         fullName,
         birthDate,
@@ -45,7 +46,7 @@ class NumerologyController {
       }
 
       // Prepare data
-      const numerologyData = {
+      const data = {
         fullName: fullName.trim(),
         birthDate: new Date(birthDate),
         birthDayString,
@@ -71,7 +72,7 @@ class NumerologyController {
       // Upsert (update if exists, create if not)
       const result = await NumerologyData.upsertByUserId(
         userId,
-        numerologyData
+        data
       );
 
       // Clear cache

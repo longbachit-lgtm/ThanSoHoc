@@ -34,9 +34,11 @@ export default function JobInputPage() {
 
     try {
       // Lấy dữ liệu từ localStorage
+
+
       const fullName = localStorage.getItem('userFullName');
       const birthDateStr = localStorage.getItem('userBirthDate');
-      
+
       if (!fullName || !birthDateStr) {
         alert("Vui lòng nhập đầy đủ thông tin!");
         navigate("/name-input");
@@ -121,6 +123,8 @@ export default function JobInputPage() {
         full_name_list: full_name_list,
       };
 
+
+
       // Lưu vào DB nếu đã đăng nhập
       if (isAuthenticated()) {
         try {
@@ -131,14 +135,19 @@ export default function JobInputPage() {
         }
       }
 
-      // Save job to localStorage (có thể lưu vào DB sau nếu cần)
-      localStorage.setItem('userJob', JSON.stringify({ 
-        mainField: mainField.trim(), 
-        role: role.trim() 
-      }));
 
+
+      // Save job to localStorage (có thể lưu vào DB sau nếu cần)
+      localStorage.setItem('userJob', JSON.stringify({
+        mainField: mainField.trim(),
+        role: role.trim()
+      }));
+      return
       // Navigate to /about
-      navigate("/about");
+      // navigate("/about");
+
+
+
     } catch (error) {
       console.error("Error processing data:", error);
       alert("Có lỗi xảy ra, vui lòng thử lại!");
@@ -146,20 +155,28 @@ export default function JobInputPage() {
       setLoading(false);
     }
   };
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleNext()
+    }
+  };
 
   const handleBack = () => {
     navigate("/gender-selection");
   };
 
+
+
   return (
-    <div 
+    <div
       className="min-vh-100 d-flex align-items-center justify-content-center p-3"
-  
+
     >
       {/* Background astrological elements */}
       <div className="position-absolute w-100 h-100" style={{ pointerEvents: 'none' }}>
         {/* Constellation patterns */}
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '10%',
@@ -170,7 +187,7 @@ export default function JobInputPage() {
             opacity: 0.3
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '20%',
@@ -182,7 +199,7 @@ export default function JobInputPage() {
             opacity: 0.2
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             bottom: '25%',
@@ -193,7 +210,7 @@ export default function JobInputPage() {
             opacity: 0.25
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             bottom: '15%',
@@ -206,7 +223,7 @@ export default function JobInputPage() {
           }}
         />
         {/* Individual stars */}
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '30%',
@@ -218,7 +235,7 @@ export default function JobInputPage() {
             opacity: 0.4
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '40%',
@@ -230,7 +247,7 @@ export default function JobInputPage() {
             opacity: 0.5
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             bottom: '40%',
@@ -243,7 +260,7 @@ export default function JobInputPage() {
           }}
         />
         {/* Additional celestial objects */}
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '15%',
@@ -255,7 +272,7 @@ export default function JobInputPage() {
             opacity: 0.2
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '25%',
@@ -276,7 +293,7 @@ export default function JobInputPage() {
             {/* Progress Dots */}
             <div className="text-center mb-4">
               <div className="d-flex justify-content-center align-items-center gap-2">
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -284,7 +301,7 @@ export default function JobInputPage() {
                     backgroundColor: '#B8860B'
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -293,7 +310,7 @@ export default function JobInputPage() {
                     opacity: 0.6
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -302,7 +319,7 @@ export default function JobInputPage() {
                     opacity: 0.6
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -311,7 +328,7 @@ export default function JobInputPage() {
                     opacity: 0.6
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle border"
                   style={{
                     width: '24px',
@@ -325,7 +342,7 @@ export default function JobInputPage() {
             </div>
 
             {/* Job Input Card */}
-            <div 
+            <div
               className="card border-0 shadow-sm"
               style={{
                 backgroundColor: '#FCF8F0',
@@ -334,7 +351,7 @@ export default function JobInputPage() {
               }}
             >
               <div className="card-body p-4 p-md-5">
-                <h2 
+                <h2
                   className="text-center fw-bold mb-4"
                   style={{
                     color: '#A07A4A',
@@ -347,7 +364,7 @@ export default function JobInputPage() {
 
                 {/* Quote */}
                 <div className="text-center mb-4">
-                  <p 
+                  <p
                     className="fst-italic mb-0"
                     style={{
                       color: '#332211',
@@ -361,7 +378,7 @@ export default function JobInputPage() {
 
                 {/* Input Fields */}
                 <div className="mb-4">
-                  <label 
+                  <label
                     className="form-label fw-bold mb-2"
                     style={{
                       color: '#A07A4A',
@@ -376,6 +393,7 @@ export default function JobInputPage() {
                     placeholder="Nhập lĩnh vực công việc của bạn"
                     value={mainField}
                     onChange={(e) => setMainField(e.target.value)}
+                    onKeyDown={handleKeyDown}
                     style={{
                       borderRadius: '12px',
                       border: '2px solid #E8C78C',
@@ -389,7 +407,7 @@ export default function JobInputPage() {
                 </div>
 
                 <div className="mb-4">
-                  <label 
+                  <label
                     className="form-label fw-bold mb-2"
                     style={{
                       color: '#A07A4A',
@@ -404,6 +422,7 @@ export default function JobInputPage() {
                     placeholder="Nhập vai trò/chức vụ của bạn"
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
+                    onKeyDown={handleKeyDown}
                     style={{
                       borderRadius: '12px',
                       border: '2px solid #E8C78C',
@@ -430,7 +449,7 @@ export default function JobInputPage() {
                       justifyContent: 'center'
                     }}
                   >
-                    <span 
+                    <span
                       style={{
                         width: '16px',
                         height: '16px',
@@ -440,7 +459,7 @@ export default function JobInputPage() {
                       }}
                     />
                   </button>
-                  
+
                   <button
                     type="button"
                     onClick={handleNext}
@@ -461,7 +480,7 @@ export default function JobInputPage() {
                         <span className="visually-hidden">Loading...</span>
                       </div>
                     ) : (
-                      <span 
+                      <span
                         style={{
                           width: '16px',
                           height: '16px',
@@ -478,7 +497,7 @@ export default function JobInputPage() {
 
             {/* Logo */}
             <div className="text-center mt-4">
-              <h1 
+              <h1
                 className="display-4 fw-bold mb-0"
                 style={{
                   fontFamily: "'Charm', cursive",
@@ -488,7 +507,7 @@ export default function JobInputPage() {
                 }}
               >
                 Cham.
-                <span 
+                <span
                   className="position-absolute"
                   style={{
                     top: '-5px',

@@ -127,6 +127,7 @@ export const api = {
   // Numerology APIs
   numerology: {
     save: async (numerologyData) => {
+      console.log('numerologyData==>',numerologyData)
       const response = await fetch(`${API_BASE_URL}/api/numerology/save`, {
         method: "POST",
         headers: getHeaders(true),
