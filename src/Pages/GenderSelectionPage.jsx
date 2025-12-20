@@ -1,26 +1,158 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaMars, FaVenus, FaTransgender } from "react-icons/fa";
-
+import { useDispatch } from "react-redux";
+import {
+  mergeNumberString,
+  removeVietnameseTones,
+  stringToNumber,
+  soulAndExpress,
+  numberAtLeastThreeTimes,
+  checkArrow,
+  lackArrow,
+  fourTop,
+} from "../service/numerlogy";
+import { numberKarmaActions } from "../store/numberKarma";
 export default function GenderSelectionPage() {
   const [selectedGender, setSelectedGender] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   const handleGenderSelect = (gender) => {
     setSelectedGender(gender);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (!selectedGender) {
       alert("Vui lòng chọn giới tính!");
       return;
     }
 
+    setLoading(true);
+
     // Save to localStorage
     localStorage.setItem('userGender', selectedGender);
-    
-    // Navigate to next page
-    navigate("/job-input");
+
+    try {
+      // Lấy dữ liệu từ localStorage
+
+      const fullName = localStorage.getItem('userFullName');
+      const birthDateStr = localStorage.getItem('userBirthDate');
+
+      if (!fullName || !birthDateStr) {
+        alert("Vui lòng nhập đầy đủ thông tin!");
+        navigate("/name-input");
+        return;
+      }
+
+      const birthDate = JSON.parse(birthDateStr);
+      const { day, month, year } = birthDate;
+
+      // Tính toán tất cả các số (giống FormInfor)
+      const spaceRegex = /\s+/g;
+      const birthString = day + "" + month + year;
+      const main = mergeNumberString(birthString);
+      const atitute = mergeNumberString(day + month + "", true);
+      const day_birth = mergeNumberString(day + "");
+      const top4 = fourTop(day, month, year);
+      const arrow = checkArrow(birthString);
+      const lack_arrow = lackArrow(birthString);
+
+      // Tính toán từ họ tên
+      const full_name_list = fullName.trim();
+      const full_name = removeVietnameseTones(fullName.trim()).toUpperCase();
+      const full_name_number = stringToNumber(full_name);
+      const detinyNumber = mergeNumberString(full_name_number);
+      const full_name_split = full_name.split(" ");
+      const name = full_name_split[full_name_split.length - 1];
+      const nameNumber = mergeNumberString(stringToNumber(name), true);
+      const prename = full_name_split.slice(0, -1).join("");
+      const { soul, express } = soulAndExpress([
+        ...prename.split(spaceRegex),
+        ...name.split(spaceRegex),
+      ]);
+      const list_number_name = stringToNumber(full_name)
+        .split("")
+        .filter((num) => num !== "0");
+      const inner_number = numberAtLeastThreeTimes(list_number_name);
+      const mature = mergeNumberString(main - 0 + (detinyNumber - 0) + "", true);
+      const birthStringList = day + "/" + month + "/" + year;
+
+      // Dispatch vào Redux
+      dispatch(numberKarmaActions.setKamarNumeroMain(main));
+      dispatch(numberKarmaActions.setKamarNumeroAtitute(atitute));
+      dispatch(numberKarmaActions.setKamarNumeroDayBirth(day_birth));
+      dispatch(numberKarmaActions.setBirthDayNumber(birthString));
+      dispatch(numberKarmaActions.setBirthDayList(birthStringList));
+      dispatch(numberKarmaActions.setTop4Peak(top4));
+      dispatch(numberKarmaActions.setArrow(arrow));
+      dispatch(numberKarmaActions.setLackArrow(lack_arrow));
+      dispatch(numberKarmaActions.setStrongListNumb([]));
+      dispatch(numberKarmaActions.setWeakListNumb([]));
+
+      dispatch(numberNameActions.setNumberDestiny(detinyNumber));
+      dispatch(numberNameActions.setNumberName(nameNumber));
+      dispatch(numberNameActions.setNumberSoul(soul));
+      dispatch(numberNameActions.setNumberInner(inner_number ? inner_number : ""));
+      dispatch(numberNameActions.setNumberExpress(express));
+      dispatch(numberNameActions.setNumberMature(mature));
+      dispatch(numberNameActions.setFullNameNumber(full_name_number));
+      dispatch(numberNameActions.setFullNameList(full_name_list));
+
+      // Chuẩn bị data để lưu vào DB
+      const numerologyDataToSave = {
+        fullName: full_name_list,
+        birthDate: new Date(year, month - 1, day).toISOString(),
+        birthDayString: birthString,
+        birthDayList: birthStringList,
+        number: main,
+        atitute: atitute,
+        day_birth: day_birth,
+        arrow: arrow,
+        lack_arrow: lack_arrow,
+        top4: top4,
+        strong_list: [],
+        weak_list: [],
+        destiny: detinyNumber,
+        name: nameNumber,
+        inner: inner_number ? inner_number : "",
+        express: express,
+        soul: soul,
+        mature: mature,
+        full_name_number: full_name_number,
+        full_name_list: full_name_list,
+      };
+
+
+
+      // Lưu vào DB nếu đã đăng nhập
+      if (isAuthenticated()) {
+        try {
+          await api.numerology.save(numerologyDataToSave);
+          console.log("✅ Đã lưu dữ liệu vào database thành công!");
+        } catch (err) {
+          console.error("❌ Lỗi khi lưu dữ liệu:", err);
+        }
+      }
+
+      // Save job to localStorage (có thể lưu vào DB sau nếu cần)
+      localStorage.setItem('userJob', JSON.stringify({
+        mainField: mainField.trim(),
+        role: role.trim()
+      }));
+
+      // Navigate to /about
+      navigate("/about");
+
+    } catch (error) {
+      console.error("Error processing data:", error);
+      alert("Có lỗi xảy ra, vui lòng thử lại!");
+    } finally {
+      setLoading(false);
+    }
+
   };
 
   const handleBack = () => {
@@ -28,14 +160,14 @@ export default function GenderSelectionPage() {
   };
 
   return (
-    <div 
+    <div
       className="min-vh-100 d-flex align-items-center justify-content-center p-3"
-  
+
     >
       {/* Background astrological elements */}
       <div className="position-absolute w-100 h-100" style={{ pointerEvents: 'none' }}>
         {/* Constellation patterns */}
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '10%',
@@ -46,7 +178,7 @@ export default function GenderSelectionPage() {
             opacity: 0.3
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '20%',
@@ -58,7 +190,7 @@ export default function GenderSelectionPage() {
             opacity: 0.2
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             bottom: '25%',
@@ -69,7 +201,7 @@ export default function GenderSelectionPage() {
             opacity: 0.25
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             bottom: '15%',
@@ -82,7 +214,7 @@ export default function GenderSelectionPage() {
           }}
         />
         {/* Individual stars */}
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '30%',
@@ -94,7 +226,7 @@ export default function GenderSelectionPage() {
             opacity: 0.4
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '40%',
@@ -106,7 +238,7 @@ export default function GenderSelectionPage() {
             opacity: 0.5
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             bottom: '40%',
@@ -127,7 +259,7 @@ export default function GenderSelectionPage() {
             {/* Progress Dots */}
             <div className="text-center mb-4">
               <div className="d-flex justify-content-center align-items-center gap-2">
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -136,7 +268,7 @@ export default function GenderSelectionPage() {
                     opacity: 0.6
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -145,7 +277,7 @@ export default function GenderSelectionPage() {
                     opacity: 0.6
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -154,7 +286,7 @@ export default function GenderSelectionPage() {
                     opacity: 0.6
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -162,7 +294,7 @@ export default function GenderSelectionPage() {
                     backgroundColor: '#B8860B'
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle border"
                   style={{
                     width: '24px',
@@ -176,7 +308,7 @@ export default function GenderSelectionPage() {
             </div>
 
             {/* Gender Selection Card */}
-            <div 
+            <div
               className="card border-0 shadow-sm"
               style={{
                 backgroundColor: '#FCF8F0',
@@ -185,7 +317,7 @@ export default function GenderSelectionPage() {
               }}
             >
               <div className="card-body p-4 p-md-5">
-                <h2 
+                <h2
                   className="text-center fw-bold mb-4"
                   style={{
                     color: '#A07A4A',
@@ -198,7 +330,7 @@ export default function GenderSelectionPage() {
 
                 {/* Quote */}
                 <div className="text-center mb-4">
-                  <p 
+                  <p
                     className="fst-italic mb-0"
                     style={{
                       color: '#332211',
@@ -213,12 +345,12 @@ export default function GenderSelectionPage() {
                 {/* Gender Options */}
                 <div className="d-flex justify-content-center gap-4 mb-4">
                   {/* Male Option */}
-                  <div 
+                  <div
                     className="text-center"
                     style={{ cursor: 'pointer' }}
                     onClick={() => handleGenderSelect('male')}
                   >
-                    <div 
+                    <div
                       className="rounded-circle d-flex align-items-center justify-content-center mb-2"
                       style={{
                         width: '80px',
@@ -228,14 +360,14 @@ export default function GenderSelectionPage() {
                         transition: 'all 0.3s ease'
                       }}
                     >
-                      <FaMars 
+                      <FaMars
                         style={{
                           fontSize: '32px',
                           color: selectedGender === 'male' ? 'white' : '#007bff'
                         }}
                       />
                     </div>
-                    <span 
+                    <span
                       className="fw-bold"
                       style={{
                         color: selectedGender === 'male' ? '#007bff' : '#6c757d',
@@ -247,12 +379,12 @@ export default function GenderSelectionPage() {
                   </div>
 
                   {/* Female Option */}
-                  <div 
+                  <div
                     className="text-center"
                     style={{ cursor: 'pointer' }}
                     onClick={() => handleGenderSelect('female')}
                   >
-                    <div 
+                    <div
                       className="rounded-circle d-flex align-items-center justify-content-center mb-2"
                       style={{
                         width: '80px',
@@ -262,14 +394,14 @@ export default function GenderSelectionPage() {
                         transition: 'all 0.3s ease'
                       }}
                     >
-                      <FaVenus 
+                      <FaVenus
                         style={{
                           fontSize: '32px',
                           color: selectedGender === 'female' ? 'white' : '#e91e63'
                         }}
                       />
                     </div>
-                    <span 
+                    <span
                       className="fw-bold"
                       style={{
                         color: selectedGender === 'female' ? '#e91e63' : '#6c757d',
@@ -281,12 +413,12 @@ export default function GenderSelectionPage() {
                   </div>
 
                   {/* Other Option */}
-                  <div 
+                  <div
                     className="text-center"
                     style={{ cursor: 'pointer' }}
                     onClick={() => handleGenderSelect('other')}
                   >
-                    <div 
+                    <div
                       className="rounded-circle d-flex align-items-center justify-content-center mb-2"
                       style={{
                         width: '80px',
@@ -296,14 +428,14 @@ export default function GenderSelectionPage() {
                         transition: 'all 0.3s ease'
                       }}
                     >
-                      <FaTransgender 
+                      <FaTransgender
                         style={{
                           fontSize: '32px',
                           color: selectedGender === 'other' ? 'white' : '#9c27b0'
                         }}
                       />
                     </div>
-                    <span 
+                    <span
                       className="fw-bold"
                       style={{
                         color: selectedGender === 'other' ? '#9c27b0' : '#6c757d',
@@ -330,7 +462,7 @@ export default function GenderSelectionPage() {
                       justifyContent: 'center'
                     }}
                   >
-                    <span 
+                    <span
                       style={{
                         width: '16px',
                         height: '16px',
@@ -340,29 +472,38 @@ export default function GenderSelectionPage() {
                       }}
                     />
                   </button>
-                  
+
+           
                   <button
                     type="button"
                     onClick={handleNext}
                     className="btn border-0 rounded-pill"
+                    disabled={loading}
                     style={{
-                      backgroundColor: '#A07A4A',
+                      backgroundColor: loading ? '#d6c0a1' : '#A07A4A',
                       width: '50px',
                       height: '50px',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center'
+                      justifyContent: 'center',
+                      cursor: loading ? 'not-allowed' : 'pointer'
                     }}
                   >
-                    <span 
-                      style={{
-                        width: '16px',
-                        height: '16px',
-                        borderRight: '3px solid white',
-                        borderBottom: '3px solid white',
-                        transform: 'rotate(-45deg)'
-                      }}
-                    />
+                    {loading ? (
+                      <div className="spinner-border spinner-border-sm text-white" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    ) : (
+                      <span
+                        style={{
+                          width: '16px',
+                          height: '16px',
+                          borderRight: '3px solid white',
+                          borderBottom: '3px solid white',
+                          transform: 'rotate(-45deg)'
+                        }}
+                      />
+                    )}
                   </button>
                 </div>
               </div>
@@ -370,7 +511,7 @@ export default function GenderSelectionPage() {
 
             {/* Logo */}
             <div className="text-center mt-4">
-              <h1 
+              <h1
                 className="display-4 fw-bold mb-0"
                 style={{
                   fontFamily: "'Charm', cursive",
@@ -380,7 +521,7 @@ export default function GenderSelectionPage() {
                 }}
               >
                 Cham.
-                <span 
+                <span
                   className="position-absolute"
                   style={{
                     top: '-5px',
