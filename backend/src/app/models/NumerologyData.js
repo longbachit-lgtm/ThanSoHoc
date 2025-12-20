@@ -173,7 +173,7 @@ NumerologyData.statics.upsertByUserId = async function (userId, data) {
       existing.calculatedAt = new Date();
       existing.version += 1;
 
-      console.log('existing', existing)
+
       await existing.save();
       return existing;
     } else {

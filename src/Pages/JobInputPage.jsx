@@ -35,7 +35,6 @@ export default function JobInputPage() {
     try {
       // Lấy dữ liệu từ localStorage
 
-
       const fullName = localStorage.getItem('userFullName');
       const birthDateStr = localStorage.getItem('userBirthDate');
 
@@ -142,9 +141,9 @@ export default function JobInputPage() {
         mainField: mainField.trim(),
         role: role.trim()
       }));
-      return
+      
       // Navigate to /about
-      // navigate("/about");
+      navigate("/about");
 
 
 
