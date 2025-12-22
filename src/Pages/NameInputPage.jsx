@@ -249,7 +249,7 @@ export default function NameInputPage() {
                           borderRight: '3px solid white',
                           borderBottom: '3px solid white',
                           transform: 'rotate(-45deg)',
-                          marginLeft: '2px'
+                          marginLeft: "-5px",
                         }}
                       />
                     </button>

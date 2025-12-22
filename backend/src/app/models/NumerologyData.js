@@ -33,100 +33,100 @@ const Top4Schema = new Schema({
 }, { _id: false });
 
 const NumerologyData = new Schema({
-  userId: { 
-    type: Schema.Types.ObjectId, 
-    ref: "User", 
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
     required: true,
     index: true
   },
-  
+
   // Input data
-  fullName: { 
-    type: String, 
+  fullName: {
+    type: String,
     required: true,
     trim: true
   },
-  birthDate: { 
-    type: Date, 
-    required: true 
+  birthDate: {
+    type: Date,
+    required: true
   },
-  birthDayString: { 
-    type: String, 
-    required: true 
+  birthDayString: {
+    type: String,
+    required: true
   },
-  birthDayList: { 
-    type: String, 
-    required: true 
+  birthDayList: {
+    type: String,
+    required: true
   },
-  
+
   // Number Karma (from birth date)
-  number: { 
-    type: Number, 
-    default: 0 
+  number: {
+    type: Number,
+    default: 0
   },
-  atitute: { 
-    type: Number, 
-    default: 0 
+  atitute: {
+    type: Number,
+    default: 0
   },
-  day_birth: { 
-    type: Number, 
-    default: 0 
+  day_birth: {
+    type: Number,
+    default: 0
   },
-  arrow: { 
-    type: [String], 
-    default: [] 
+  arrow: {
+    type: [String],
+    default: []
   },
-  lack_arrow: { 
-    type: [String], 
-    default: [] 
+  lack_arrow: {
+    type: [String],
+    default: []
   },
   top4: {
     top4_peak: Top4Schema,
     top4_challenge: Top4Schema
   },
-  strong_list: { 
-    type: [Number], 
-    default: [] 
+  strong_list: {
+    type: [Number],
+    default: []
   },
-  weak_list: { 
-    type: [Number], 
-    default: [] 
+  weak_list: {
+    type: [Number],
+    default: []
   },
-  
+
   // Number Name (from full name)
-  destiny: { 
-    type: Number, 
-    default: 0 
+  destiny: {
+    type: Number,
+    default: 0
   },
-  name: { 
-    type: Number, 
-    default: 0 
+  name: {
+    type: Number,
+    default: 0
   },
-  inner: { 
-    type: String, 
-    default: "0" 
+  inner: {
+    type: String,
+    default: "0"
   },
-  express: { 
-    type: Number, 
-    default: 0 
+  express: {
+    type: Number,
+    default: 0
   },
-  soul: { 
-    type: Number, 
-    default: 0 
+  soul: {
+    type: Number,
+    default: 0
   },
-  mature: { 
-    type: Number, 
-    default: 0 
+  mature: {
+    type: Number,
+    default: 0
   },
-  full_name_number: { 
-    type: String, 
-    default: "" 
+  full_name_number: {
+    type: String,
+    default: ""
   },
-  full_name_list: { 
-    type: String, 
-    default: "" 
+  full_name_list: {
+    type: String,
+    default: ""
   },
-  
+
   // Metadata
   version: {
     type: Number,
@@ -149,9 +149,9 @@ NumerologyData.plugin(mongooseDelete, {
 // Static methods
 NumerologyData.statics.findByUserId = async function (userId) {
   try {
-    return await this.findOne({ 
-      userId, 
-      deletedAt: null 
+    return await this.findOne({
+      userId,
+      deletedAt: null
     }).lean(); // Use lean() for read-only queries (faster)
   } catch (error) {
     console.error("Find numerology data error:", error);
@@ -162,16 +162,18 @@ NumerologyData.statics.findByUserId = async function (userId) {
 NumerologyData.statics.upsertByUserId = async function (userId, data) {
   try {
     // Find existing record
-    const existing = await this.findOne({ 
-      userId, 
-      deletedAt: null 
+    const existing = await this.findOne({
+      userId,
+      deletedAt: null
     });
-    
+
     if (existing) {
       // Update existing
       Object.assign(existing, data);
       existing.calculatedAt = new Date();
       existing.version += 1;
+
+
       await existing.save();
       return existing;
     } else {
@@ -193,7 +195,7 @@ NumerologyData.statics.upsertByUserId = async function (userId, data) {
 NumerologyData.statics.getHistory = async function (userId, page = 1, limit = 10) {
   try {
     const skip = (page - 1) * limit;
-    
+
     const [data, total] = await Promise.all([
       this.find({ userId, deletedAt: null })
         .select('fullName birthDate calculatedAt createdAt')
@@ -203,7 +205,7 @@ NumerologyData.statics.getHistory = async function (userId, page = 1, limit = 10
         .lean(),
       this.countDocuments({ userId, deletedAt: null })
     ]);
-    
+
     return {
       data,
       pagination: {

@@ -8,6 +8,7 @@ class NumerologyController {
   save = async (req, res) => {
     try {
       const userId = req.user.userId;
+
       const {
         fullName,
         birthDate,
@@ -45,7 +46,7 @@ class NumerologyController {
       }
 
       // Prepare data
-      const numerologyData = {
+      const data = {
         fullName: fullName.trim(),
         birthDate: new Date(birthDate),
         birthDayString,
@@ -69,13 +70,10 @@ class NumerologyController {
       };
 
       // Upsert (update if exists, create if not)
-      const result = await NumerologyData.upsertByUserId(
-        userId,
-        numerologyData
-      );
+      const result = await NumerologyData.upsertByUserId(userId, data);
 
       // Clear cache
-      cache.delete(`numerology:${userId}`);
+      // cache.delete(`numerology:${userId}`);
 
       return sendSuccess(
         res,
@@ -96,7 +94,8 @@ class NumerologyController {
   // Get user's numerology data (with caching)
   getMyData = async (req, res) => {
     try {
-      // const userId = req.user.userId;
+      console.log({ req });
+      const userId = req.user.userId;
 
       // Check cache first
       // const cacheKey = `numerology:${userId}`;
@@ -119,7 +118,7 @@ class NumerologyController {
       }
 
       // Cache the result (10 minutes)
-      cache.set(cacheKey, numerologyData, 10 * 60 * 1000);
+      // cache.set(cacheKey, numerologyData, 10 * 60 * 1000);
 
       return sendSuccess(res, numerologyData, "Lấy dữ liệu thành công.", 200);
     } catch (error) {

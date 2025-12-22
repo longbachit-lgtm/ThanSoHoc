@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function BirthDatePage() {
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
+  const dayRef = useRef(null);
+  const monthRef = useRef(null);
+  const yearRef = useRef(null);
   const navigate = useNavigate();
 
   const handleDayChange = (increment) => {
@@ -36,13 +39,22 @@ export default function BirthDatePage() {
     switch (type) {
       case 'day':
         setDay(value);
+        if (value.length === 2) { monthRef.current.focus(); }
         break;
       case 'month':
         setMonth(value);
+        if (value.length === 2) { yearRef.current.focus(); }
         break;
       case 'year':
         setYear(value);
         break;
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleNext();
     }
   };
 
@@ -78,7 +90,7 @@ export default function BirthDatePage() {
 
     // Save to localStorage
     localStorage.setItem('userBirthDate', JSON.stringify({ day: dayNum, month: monthNum, year: yearNum }));
-    
+
     // Navigate to next page
     navigate("/gender-selection");
   };
@@ -88,14 +100,14 @@ export default function BirthDatePage() {
   };
 
   return (
-    <div 
+    <div
       className="min-vh-100 d-flex align-items-center justify-content-center p-3"
- 
+
     >
       {/* Background astrological elements */}
       <div className="position-absolute w-100 h-100" style={{ pointerEvents: 'none' }}>
         {/* Constellation patterns */}
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '10%',
@@ -106,7 +118,7 @@ export default function BirthDatePage() {
             opacity: 0.3
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '20%',
@@ -118,7 +130,7 @@ export default function BirthDatePage() {
             opacity: 0.2
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             bottom: '25%',
@@ -129,7 +141,7 @@ export default function BirthDatePage() {
             opacity: 0.25
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             bottom: '15%',
@@ -142,7 +154,7 @@ export default function BirthDatePage() {
           }}
         />
         {/* Individual stars */}
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '30%',
@@ -154,7 +166,7 @@ export default function BirthDatePage() {
             opacity: 0.4
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '40%',
@@ -166,7 +178,7 @@ export default function BirthDatePage() {
             opacity: 0.5
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             bottom: '40%',
@@ -187,7 +199,7 @@ export default function BirthDatePage() {
             {/* Progress Dots */}
             <div className="text-center mb-4">
               <div className="d-flex justify-content-center align-items-center gap-2">
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -196,7 +208,7 @@ export default function BirthDatePage() {
                     opacity: 0.6
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -205,7 +217,7 @@ export default function BirthDatePage() {
                     opacity: 0.6
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -213,7 +225,7 @@ export default function BirthDatePage() {
                     backgroundColor: '#B8860B'
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -222,7 +234,7 @@ export default function BirthDatePage() {
                     opacity: 0.6
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle border"
                   style={{
                     width: '24px',
@@ -236,7 +248,7 @@ export default function BirthDatePage() {
             </div>
 
             {/* Birth Date Card */}
-            <div 
+            <div
               className="card border-0 shadow-sm"
               style={{
                 backgroundColor: '#FCF8F0',
@@ -245,7 +257,7 @@ export default function BirthDatePage() {
               }}
             >
               <div className="card-body p-4 p-md-5">
-                <h2 
+                <h2
                   className="text-center fw-bold mb-4"
                   style={{
                     color: '#A07A4A',
@@ -258,7 +270,7 @@ export default function BirthDatePage() {
 
                 {/* Quote */}
                 <div className="text-center mb-4">
-                  <p 
+                  <p
                     className="fst-italic mb-0"
                     style={{
                       color: '#332211',
@@ -274,7 +286,7 @@ export default function BirthDatePage() {
                 <div className="d-flex justify-content-center gap-3 mb-4">
                   {/* Day Picker */}
                   <div className="text-center">
-                    <div 
+                    <div
                       className="rounded-3 border d-flex flex-column align-items-center justify-content-center"
                       style={{
                         width: '80px',
@@ -296,9 +308,12 @@ export default function BirthDatePage() {
                         ▲
                       </button>
                       <input
+
                         type="text"
                         value={day}
+                        ref={dayRef}
                         onChange={(e) => handleManualInput('day', e.target.value)}
+                        onKeyDown={handleKeyDown}
                         className="border-0 text-center fw-bold"
                         style={{
                           width: '40px',
@@ -307,6 +322,7 @@ export default function BirthDatePage() {
                           backgroundColor: 'transparent',
                           outline: 'none'
                         }}
+
                         placeholder="01"
                         maxLength="2"
                       />
@@ -327,7 +343,7 @@ export default function BirthDatePage() {
 
                   {/* Month Picker */}
                   <div className="text-center">
-                    <div 
+                    <div
                       className="rounded-3 border d-flex flex-column align-items-center justify-content-center"
                       style={{
                         width: '80px',
@@ -351,7 +367,9 @@ export default function BirthDatePage() {
                       <input
                         type="text"
                         value={month}
+                        ref={monthRef}
                         onChange={(e) => handleManualInput('month', e.target.value)}
+                        onKeyDown={handleKeyDown}
                         className="border-0 text-center fw-bold"
                         style={{
                           width: '40px',
@@ -380,7 +398,7 @@ export default function BirthDatePage() {
 
                   {/* Year Picker */}
                   <div className="text-center">
-                    <div 
+                    <div
                       className="rounded-3 border d-flex flex-column align-items-center justify-content-center"
                       style={{
                         width: '100px',
@@ -404,7 +422,9 @@ export default function BirthDatePage() {
                       <input
                         type="text"
                         value={year}
+                        ref={yearRef}
                         onChange={(e) => handleManualInput('year', e.target.value)}
+                        onKeyDown={handleKeyDown}
                         className="border-0 text-center fw-bold"
                         style={{
                           width: '60px',
@@ -447,17 +467,18 @@ export default function BirthDatePage() {
                       justifyContent: 'center'
                     }}
                   >
-                    <span 
+                    <span
                       style={{
                         width: '16px',
                         height: '16px',
                         borderLeft: '3px solid white',
                         borderBottom: '3px solid white',
-                        transform: 'rotate(45deg)'
+                        transform: 'rotate(45deg)',
+                        marginLeft: "5px",
                       }}
                     />
                   </button>
-                  
+
                   <button
                     type="button"
                     onClick={handleNext}
@@ -471,7 +492,7 @@ export default function BirthDatePage() {
                       justifyContent: 'center'
                     }}
                   >
-                    <span 
+                    <span
                       style={{
                         width: '16px',
                         height: '16px',
@@ -487,7 +508,7 @@ export default function BirthDatePage() {
 
             {/* Logo */}
             <div className="text-center mt-4">
-              <h1 
+              <h1
                 className="display-4 fw-bold mb-0"
                 style={{
                   fontFamily: "'Charm', cursive",
@@ -497,7 +518,7 @@ export default function BirthDatePage() {
                 }}
               >
                 Cham.
-                <span 
+                <span
                   className="position-absolute"
                   style={{
                     top: '-5px',
