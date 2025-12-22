@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaMars, FaVenus, FaTransgender } from "react-icons/fa";
 import { useDispatch } from "react-redux";
+import { useAuthStore } from "../store/useAuthStore";
+import api from "../service/api";
 import {
   mergeNumberString,
   removeVietnameseTones,
@@ -13,12 +15,16 @@ import {
   fourTop,
 } from "../service/numerlogy";
 import { numberKarmaActions } from "../store/numberKarma";
+import { numberNameActions } from "../store/numberName";
 export default function GenderSelectionPage() {
-  const [selectedGender, setSelectedGender] = useState('');
+  const [mainField, setMainField] = useState("");
+  const [role, setRole] = useState("");
+  const [selectedGender, setSelectedGender] = useState("");
   const [loading, setLoading] = useState(false);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
 
   const handleGenderSelect = (gender) => {
     setSelectedGender(gender);
@@ -33,13 +39,13 @@ export default function GenderSelectionPage() {
     setLoading(true);
 
     // Save to localStorage
-    localStorage.setItem('userGender', selectedGender);
+    localStorage.setItem("userGender", selectedGender);
 
     try {
       // Lấy dữ liệu từ localStorage
 
-      const fullName = localStorage.getItem('userFullName');
-      const birthDateStr = localStorage.getItem('userBirthDate');
+      const fullName = localStorage.getItem("userFullName");
+      const birthDateStr = localStorage.getItem("userBirthDate");
 
       if (!fullName || !birthDateStr) {
         alert("Vui lòng nhập đầy đủ thông tin!");
@@ -77,7 +83,10 @@ export default function GenderSelectionPage() {
         .split("")
         .filter((num) => num !== "0");
       const inner_number = numberAtLeastThreeTimes(list_number_name);
-      const mature = mergeNumberString(main - 0 + (detinyNumber - 0) + "", true);
+      const mature = mergeNumberString(
+        main - 0 + (detinyNumber - 0) + "",
+        true
+      );
       const birthStringList = day + "/" + month + "/" + year;
 
       // Dispatch vào Redux
@@ -95,7 +104,9 @@ export default function GenderSelectionPage() {
       dispatch(numberNameActions.setNumberDestiny(detinyNumber));
       dispatch(numberNameActions.setNumberName(nameNumber));
       dispatch(numberNameActions.setNumberSoul(soul));
-      dispatch(numberNameActions.setNumberInner(inner_number ? inner_number : ""));
+      dispatch(
+        numberNameActions.setNumberInner(inner_number ? inner_number : "")
+      );
       dispatch(numberNameActions.setNumberExpress(express));
       dispatch(numberNameActions.setNumberMature(mature));
       dispatch(numberNameActions.setFullNameNumber(full_name_number));
@@ -125,8 +136,6 @@ export default function GenderSelectionPage() {
         full_name_list: full_name_list,
       };
 
-
-
       // Lưu vào DB nếu đã đăng nhập
       if (isAuthenticated()) {
         try {
@@ -138,21 +147,22 @@ export default function GenderSelectionPage() {
       }
 
       // Save job to localStorage (có thể lưu vào DB sau nếu cần)
-      localStorage.setItem('userJob', JSON.stringify({
-        mainField: mainField.trim(),
-        role: role.trim()
-      }));
+      localStorage.setItem(
+        "userJob",
+        JSON.stringify({
+          mainField: mainField.trim(),
+          role: role.trim(),
+        })
+      );
 
       // Navigate to /about
       navigate("/about");
-
     } catch (error) {
       console.error("Error processing data:", error);
       alert("Có lỗi xảy ra, vui lòng thử lại!");
     } finally {
       setLoading(false);
     }
-
   };
 
   const handleBack = () => {
@@ -160,94 +170,96 @@ export default function GenderSelectionPage() {
   };
 
   return (
-    <div
-      className="min-vh-100 d-flex align-items-center justify-content-center p-3"
-
-    >
+    <div className="min-vh-100 d-flex align-items-center justify-content-center p-3">
       {/* Background astrological elements */}
-      <div className="position-absolute w-100 h-100" style={{ pointerEvents: 'none' }}>
+      <div
+        className="position-absolute w-100 h-100"
+        style={{ pointerEvents: "none" }}
+      >
         {/* Constellation patterns */}
         <div
           className="position-absolute"
           style={{
-            top: '10%',
-            left: '15%',
-            width: '60px',
-            height: '40px',
-            background: 'linear-gradient(45deg, transparent 40%, #E8C78C 40%, #E8C78C 60%, transparent 60%)',
-            opacity: 0.3
+            top: "10%",
+            left: "15%",
+            width: "60px",
+            height: "40px",
+            background:
+              "linear-gradient(45deg, transparent 40%, #E8C78C 40%, #E8C78C 60%, transparent 60%)",
+            opacity: 0.3,
           }}
         />
         <div
           className="position-absolute"
           style={{
-            top: '20%',
-            right: '20%',
-            width: '80px',
-            height: '50px',
-            background: 'radial-gradient(circle, #E8C78C 2px, transparent 2px)',
-            backgroundSize: '20px 20px',
-            opacity: 0.2
+            top: "20%",
+            right: "20%",
+            width: "80px",
+            height: "50px",
+            background: "radial-gradient(circle, #E8C78C 2px, transparent 2px)",
+            backgroundSize: "20px 20px",
+            opacity: 0.2,
           }}
         />
         <div
           className="position-absolute"
           style={{
-            bottom: '25%',
-            left: '10%',
-            width: '100px',
-            height: '60px',
-            background: 'linear-gradient(135deg, transparent 40%, #E8C78C 40%, #E8C78C 60%, transparent 60%)',
-            opacity: 0.25
+            bottom: "25%",
+            left: "10%",
+            width: "100px",
+            height: "60px",
+            background:
+              "linear-gradient(135deg, transparent 40%, #E8C78C 40%, #E8C78C 60%, transparent 60%)",
+            opacity: 0.25,
           }}
         />
         <div
           className="position-absolute"
           style={{
-            bottom: '15%',
-            right: '15%',
-            width: '70px',
-            height: '70px',
-            borderRadius: '50%',
-            border: '2px solid #E8C78C',
-            opacity: 0.3
+            bottom: "15%",
+            right: "15%",
+            width: "70px",
+            height: "70px",
+            borderRadius: "50%",
+            border: "2px solid #E8C78C",
+            opacity: 0.3,
           }}
         />
         {/* Individual stars */}
         <div
           className="position-absolute"
           style={{
-            top: '30%',
-            left: '25%',
-            width: '4px',
-            height: '4px',
-            backgroundColor: '#E8C78C',
-            borderRadius: '50%',
-            opacity: 0.4
+            top: "30%",
+            left: "25%",
+            width: "4px",
+            height: "4px",
+            backgroundColor: "#E8C78C",
+            borderRadius: "50%",
+            opacity: 0.4,
           }}
         />
         <div
           className="position-absolute"
           style={{
-            top: '40%',
-            right: '30%',
-            width: '3px',
-            height: '3px',
-            backgroundColor: '#E8C78C',
-            borderRadius: '50%',
-            opacity: 0.5
+            top: "40%",
+            right: "30%",
+            width: "3px",
+            height: "3px",
+            backgroundColor: "#E8C78C",
+            borderRadius: "50%",
+            opacity: 0.5,
           }}
         />
         <div
           className="position-absolute"
           style={{
-            bottom: '40%',
-            left: '30%',
-            width: '5px',
-            height: '5px',
-            backgroundColor: '#E8C78C',
-            borderRadius: '50%',
-            opacity: 0.3
+            bottom: "40%",
+            left: "30%",
+            width: "5px",
+            height: "5px",
+            backgroundColor: "#E8C78C",
+            borderRadius: "50%",
+            opacity: 0.3,
           }}
         />
       </div>
@@ -262,46 +274,46 @@ export default function GenderSelectionPage() {
                 <span
                   className="rounded-circle"
                   style={{
-                    width: '12px',
-                    height: '12px',
-                    backgroundColor: '#d6c0a1',
-                    opacity: 0.6
+                    width: "12px",
+                    height: "12px",
+                    backgroundColor: "#d6c0a1",
+                    opacity: 0.6,
                   }}
                 />
                 <span
                   className="rounded-circle"
                   style={{
-                    width: '12px',
-                    height: '12px',
-                    backgroundColor: '#d6c0a1',
-                    opacity: 0.6
+                    width: "12px",
+                    height: "12px",
+                    backgroundColor: "#d6c0a1",
+                    opacity: 0.6,
                   }}
                 />
                 <span
                   className="rounded-circle"
                   style={{
-                    width: '12px',
-                    height: '12px',
-                    backgroundColor: '#d6c0a1',
-                    opacity: 0.6
+                    width: "12px",
+                    height: "12px",
+                    backgroundColor: "#d6c0a1",
+                    opacity: 0.6,
                   }}
                 />
                 <span
                   className="rounded-circle"
                   style={{
-                    width: '12px',
-                    height: '12px',
-                    backgroundColor: '#B8860B'
+                    width: "12px",
+                    height: "12px",
+                    backgroundColor: "#B8860B",
                   }}
                 />
                 <span
                   className="rounded-circle border"
                   style={{
-                    width: '24px',
-                    height: '24px',
-                    borderColor: '#B8860B',
-                    borderWidth: '2px',
-                    backgroundColor: 'transparent'
+                    width: "24px",
+                    height: "24px",
+                    borderColor: "#B8860B",
+                    borderWidth: "2px",
+                    backgroundColor: "transparent",
                   }}
                 />
               </div>
@@ -311,18 +323,18 @@ export default function GenderSelectionPage() {
             <div
               className="card border-0 shadow-sm"
               style={{
-                backgroundColor: '#FCF8F0',
-                borderRadius: '20px',
-                border: '1px solid #E8C78C'
+                backgroundColor: "#FCF8F0",
+                borderRadius: "20px",
+                border: "1px solid #E8C78C",
               }}
             >
               <div className="card-body p-4 p-md-5">
                 <h2
                   className="text-center fw-bold mb-4"
                   style={{
-                    color: '#A07A4A',
-                    fontSize: '1.8rem',
-                    letterSpacing: '1px'
+                    color: "#A07A4A",
+                    fontSize: "1.8rem",
+                    letterSpacing: "1px",
                   }}
                 >
                   Giới tính
@@ -333,12 +345,13 @@ export default function GenderSelectionPage() {
                   <p
                     className="fst-italic mb-0"
                     style={{
-                      color: '#332211',
-                      fontSize: '14px',
-                      lineHeight: '1.5'
+                      color: "#332211",
+                      fontSize: "14px",
+                      lineHeight: "1.5",
                     }}
                   >
-                    Dù bạn là ai, năng lượng trong bạn vẫn là sự hòa hợp – giữa mạnh mẽ và dịu dàng.
+                    Dù bạn là ai, năng lượng trong bạn vẫn là sự hòa hợp – giữa
+                    mạnh mẽ và dịu dàng.
                   </p>
                 </div>
 
@@ -347,31 +360,37 @@ export default function GenderSelectionPage() {
                   {/* Male Option */}
                   <div
                     className="text-center"
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => handleGenderSelect('male')}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleGenderSelect("male")}
                   >
                     <div
                       className="rounded-circle d-flex align-items-center justify-content-center mb-2"
                       style={{
-                        width: '80px',
-                        height: '80px',
-                        backgroundColor: selectedGender === 'male' ? '#007bff' : '#f8f9fa',
-                        border: selectedGender === 'male' ? '3px solid #007bff' : '2px solid #dee2e6',
-                        transition: 'all 0.3s ease'
+                        width: "80px",
+                        height: "80px",
+                        backgroundColor:
+                          selectedGender === "male" ? "#007bff" : "#f8f9fa",
+                        border:
+                          selectedGender === "male"
+                            ? "3px solid #007bff"
+                            : "2px solid #dee2e6",
+                        transition: "all 0.3s ease",
                       }}
                     >
                       <FaMars
                         style={{
-                          fontSize: '32px',
-                          color: selectedGender === 'male' ? 'white' : '#007bff'
+                          fontSize: "32px",
+                          color:
+                            selectedGender === "male" ? "white" : "#007bff",
                         }}
                       />
                     </div>
                     <span
                       className="fw-bold"
                       style={{
-                        color: selectedGender === 'male' ? '#007bff' : '#6c757d',
-                        fontSize: '16px'
+                        color:
+                          selectedGender === "male" ? "#007bff" : "#6c757d",
+                        fontSize: "16px",
                       }}
                     >
                       Nam
@@ -381,31 +400,37 @@ export default function GenderSelectionPage() {
                   {/* Female Option */}
                   <div
                     className="text-center"
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => handleGenderSelect('female')}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleGenderSelect("female")}
                   >
                     <div
                       className="rounded-circle d-flex align-items-center justify-content-center mb-2"
                       style={{
-                        width: '80px',
-                        height: '80px',
-                        backgroundColor: selectedGender === 'female' ? '#e91e63' : '#f8f9fa',
-                        border: selectedGender === 'female' ? '3px solid #e91e63' : '2px solid #dee2e6',
-                        transition: 'all 0.3s ease'
+                        width: "80px",
+                        height: "80px",
+                        backgroundColor:
+                          selectedGender === "female" ? "#e91e63" : "#f8f9fa",
+                        border:
+                          selectedGender === "female"
+                            ? "3px solid #e91e63"
+                            : "2px solid #dee2e6",
+                        transition: "all 0.3s ease",
                       }}
                     >
                       <FaVenus
                         style={{
-                          fontSize: '32px',
-                          color: selectedGender === 'female' ? 'white' : '#e91e63'
+                          fontSize: "32px",
+                          color:
+                            selectedGender === "female" ? "white" : "#e91e63",
                         }}
                       />
                     </div>
                     <span
                       className="fw-bold"
                       style={{
-                        color: selectedGender === 'female' ? '#e91e63' : '#6c757d',
-                        fontSize: '16px'
+                        color:
+                          selectedGender === "female" ? "#e91e63" : "#6c757d",
+                        fontSize: "16px",
                       }}
                     >
                       Nữ
@@ -415,31 +440,37 @@ export default function GenderSelectionPage() {
                   {/* Other Option */}
                   <div
                     className="text-center"
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => handleGenderSelect('other')}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleGenderSelect("other")}
                   >
                     <div
                       className="rounded-circle d-flex align-items-center justify-content-center mb-2"
                       style={{
-                        width: '80px',
-                        height: '80px',
-                        backgroundColor: selectedGender === 'other' ? '#9c27b0' : '#f8f9fa',
-                        border: selectedGender === 'other' ? '3px solid #9c27b0' : '2px solid #dee2e6',
-                        transition: 'all 0.3s ease'
+                        width: "80px",
+                        height: "80px",
+                        backgroundColor:
+                          selectedGender === "other" ? "#9c27b0" : "#f8f9fa",
+                        border:
+                          selectedGender === "other"
+                            ? "3px solid #9c27b0"
+                            : "2px solid #dee2e6",
+                        transition: "all 0.3s ease",
                       }}
                     >
                       <FaTransgender
                         style={{
-                          fontSize: '32px',
-                          color: selectedGender === 'other' ? 'white' : '#9c27b0'
+                          fontSize: "32px",
+                          color:
+                            selectedGender === "other" ? "white" : "#9c27b0",
                         }}
                       />
                     </div>
                     <span
                       className="fw-bold"
                       style={{
-                        color: selectedGender === 'other' ? '#9c27b0' : '#6c757d',
-                        fontSize: '16px'
+                        color:
+                          selectedGender === "other" ? "#9c27b0" : "#6c757d",
+                        fontSize: "16px",
                       }}
                     >
                       Khác
@@ -454,53 +485,55 @@ export default function GenderSelectionPage() {
                     onClick={handleBack}
                     className="btn border-0 rounded-pill"
                     style={{
-                      backgroundColor: '#d6c0a1',
-                      width: '50px',
-                      height: '50px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
+                      backgroundColor: "#d6c0a1",
+                      width: "50px",
+                      height: "50px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
                     <span
                       style={{
-                        width: '16px',
-                        height: '16px',
-                        borderLeft: '3px solid white',
-                        borderBottom: '3px solid white',
-                        transform: 'rotate(45deg)'
+                        width: "16px",
+                        height: "16px",
+                        borderLeft: "3px solid white",
+                        borderBottom: "3px solid white",
+                        transform: "rotate(45deg)",
                       }}
                     />
                   </button>
 
-           
                   <button
                     type="button"
                     onClick={handleNext}
                     className="btn border-0 rounded-pill"
                     disabled={loading}
                     style={{
-                      backgroundColor: loading ? '#d6c0a1' : '#A07A4A',
-                      width: '50px',
-                      height: '50px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: loading ? 'not-allowed' : 'pointer'
+                      backgroundColor: loading ? "#d6c0a1" : "#A07A4A",
+                      width: "50px",
+                      height: "50px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: loading ? "not-allowed" : "pointer",
                     }}
                   >
                     {loading ? (
-                      <div className="spinner-border spinner-border-sm text-white" role="status">
+                      <div
+                        className="spinner-border spinner-border-sm text-white"
+                        role="status"
+                      >
                         <span className="visually-hidden">Loading...</span>
                       </div>
                     ) : (
                       <span
                         style={{
-                          width: '16px',
-                          height: '16px',
-                          borderRight: '3px solid white',
-                          borderBottom: '3px solid white',
-                          transform: 'rotate(-45deg)'
+                          width: "16px",
+                          height: "16px",
+                          borderRight: "3px solid white",
+                          borderBottom: "3px solid white",
+                          transform: "rotate(-45deg)",
                         }}
                       />
                     )}
@@ -515,21 +548,21 @@ export default function GenderSelectionPage() {
                 className="display-4 fw-bold mb-0"
                 style={{
                   fontFamily: "'Charm', cursive",
-                  color: '#332211',
-                  fontSize: '2.5rem',
-                  position: 'relative'
+                  color: "#332211",
+                  fontSize: "2.5rem",
+                  position: "relative",
                 }}
               >
                 Cham.
                 <span
                   className="position-absolute"
                   style={{
-                    top: '-5px',
-                    right: '-15px',
-                    width: '8px',
-                    height: '8px',
-                    backgroundColor: '#E8C78C',
-                    borderRadius: '50%'
+                    top: "-5px",
+                    right: "-15px",
+                    width: "8px",
+                    height: "8px",
+                    backgroundColor: "#E8C78C",
+                    borderRadius: "50%",
                   }}
                 />
               </h1>
