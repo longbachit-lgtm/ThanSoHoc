@@ -4,20 +4,21 @@ import { Stage, Layer, Rect, Text } from "react-konva";
 const DrawCellDateName = ({ wRightPanel, amountNumber, color, buttonText }) => {
   // Calculate optimal matrix size with better responsive logic
   const widthWindow = window.innerWidth;
-  
+
   // Consistent max size for all charts
   const maxSize = 220;
-  
+
   // Calculate width based on container and screen size (same for all charts)
-  let calculatedWidth = widthWindow < 576
-    ? Math.min(wRightPanel * 0.75, 190)
-    : widthWindow < 768
-    ? Math.min(wRightPanel * 0.7, 210)
-    : widthWindow < 992
-    ? Math.min(wRightPanel * 0.65, maxSize)
-    : widthWindow < 1200
-    ? Math.min(wRightPanel * 0.6, maxSize)
-    : Math.min(wRightPanel * 0.55, maxSize);
+  let calculatedWidth =
+    widthWindow < 576
+      ? Math.min(wRightPanel * 0.75, 190)
+      : widthWindow < 768
+      ? Math.min(wRightPanel * 0.7, 210)
+      : widthWindow < 992
+      ? Math.min(wRightPanel * 0.65, maxSize)
+      : widthWindow < 1200
+      ? Math.min(wRightPanel * 0.6, maxSize)
+      : Math.min(wRightPanel * 0.55, maxSize);
 
   // No special handling - all charts have same size for consistency
 
@@ -26,7 +27,7 @@ const DrawCellDateName = ({ wRightPanel, amountNumber, color, buttonText }) => {
   const cellSize = matrixSize / 3;
   const padding = 2; // Padding between cells
   const gap = 6; // Gap between cells (increased from 4 to 6 for better spacing)
-  
+
   const rects = [];
 
   // Generate 3x3 grid
@@ -38,23 +39,15 @@ const DrawCellDateName = ({ wRightPanel, amountNumber, color, buttonText }) => {
       const cellHeight = cellSize - (gap + padding);
 
       // Calculate number position (1-9)
-      // Grid layout: 1,2,3 on top row, 4,5,6 middle, 7,8,9 bottom
-      const position = col * 3 + row + 1;
-      
-      // Map to actual number (handling special numbers)
-      let displayNumber;
-      switch(position) {
-        case 1: displayNumber = 1; break;
-        case 2: displayNumber = 4; break;
-        case 3: displayNumber = 7; break;
-        case 4: displayNumber = 2; break;
-        case 5: displayNumber = 5; break;
-        case 6: displayNumber = 8; break;
-        case 7: displayNumber = 3; break;
-        case 8: displayNumber = 6; break;
-        case 9: displayNumber = 9; break;
-        default: displayNumber = position;
-      }
+      // Grid layout: 123 ở cột trái, 456 ở giữa, 789 ở cột phải
+      // Cột trái (col 0): 1, 2, 3 (từ trên xuống)
+      // Cột giữa (col 1): 4, 5, 6 (từ trên xuống)
+      // Cột phải (col 2): 7, 8, 9 (từ trên xuống)
+      // Formula: displayNumber = row * 3 + col + 1
+      // row 0, col 0 → 1; row 0, col 1 → 4; row 0, col 2 → 7
+      // row 1, col 0 → 2; row 1, col 1 → 5; row 1, col 2 → 8
+      // row 2, col 0 → 3; row 2, col 1 → 6; row 2, col 2 → 9
+      const displayNumber = row * 3 + col + 1;
 
       // Check if this number exists in data
       const hasNumber = amountNumber.hasOwnProperty(displayNumber.toString());
@@ -68,7 +61,11 @@ const DrawCellDateName = ({ wRightPanel, amountNumber, color, buttonText }) => {
             y={y}
             width={cellWidth}
             height={cellHeight}
-            fill={hasNumber ? "rgba(255, 255, 255, 0.95)" : "rgba(255, 255, 255, 0.7)"}
+            fill={
+              hasNumber
+                ? "rgba(255, 255, 255, 0.95)"
+                : "rgba(255, 255, 255, 0.7)"
+            }
             stroke={hasNumber ? color : "#d0d0d0"}
             strokeWidth={hasNumber ? 3 : 1.5}
             cornerRadius={6}
@@ -76,7 +73,7 @@ const DrawCellDateName = ({ wRightPanel, amountNumber, color, buttonText }) => {
             shadowColor={color}
             shadowOpacity={0.3}
           />
-          
+
           {/* Number text */}
           {hasNumber && (
             <>
@@ -92,7 +89,7 @@ const DrawCellDateName = ({ wRightPanel, amountNumber, color, buttonText }) => {
                 align="center"
                 verticalAlign="middle"
               />
-              
+
               {/* Count indicator (small text) */}
               <Text
                 x={x}
@@ -108,7 +105,7 @@ const DrawCellDateName = ({ wRightPanel, amountNumber, color, buttonText }) => {
               />
             </>
           )}
-          
+
           {/* Corner number label (always show) */}
           <Text
             x={x + 3}
@@ -125,18 +122,20 @@ const DrawCellDateName = ({ wRightPanel, amountNumber, color, buttonText }) => {
   }
 
   return (
-    <div style={{ 
-      display: 'flex', 
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%'
-    }}>
-      <Stage 
-        width={matrixSize} 
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
+      <Stage
+        width={matrixSize}
         height={matrixSize}
         style={{
-          maxWidth: '100%',
-          height: 'auto'
+          maxWidth: "100%",
+          height: "auto",
         }}
       >
         <Layer>{rects}</Layer>

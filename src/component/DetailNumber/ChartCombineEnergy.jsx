@@ -139,9 +139,6 @@ const ChartCombineEnergy = function ({
     };
   }, []);
 
-  const wMatrix = wRightPanel ? wRightPanel * 0.5 : 0;
-  const hMatrix = wMatrix ? (wMatrix / 3) * 3 : 0;
-
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -188,11 +185,10 @@ const ChartCombineEnergy = function ({
         />
         
         {/* Chart Canvas */}
-        {wMatrix > 0 && (
+        {wRightPanel && (
           <div style={{ position: 'relative', zIndex: 1 }}>
             <DrawCell
-              wMatrix={wMatrix}
-              hMatrix={hMatrix}
+              wRightPanel={wRightPanel}
               amountNumber={amountNumber}
               color="#B8860B"
             />
