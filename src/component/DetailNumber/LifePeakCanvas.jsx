@@ -1,11 +1,4 @@
-import {
-  Stage,
-  Layer,
-  Label,
-  Text,
-  Circle,
-  Line,
-} from "react-konva";
+import { Stage, Layer, Label, Text, Circle, Line } from "react-konva";
 import React, { useEffect, useRef, useState } from "react";
 
 function LifePeakCanvas({ peakData, numberBase }) {
@@ -19,34 +12,49 @@ function LifePeakCanvas({ peakData, numberBase }) {
         // Đợi một chút để đảm bảo container đã render xong
         setTimeout(() => {
           if (containerRef.current) {
-            const containerWidth = containerRef.current.offsetWidth || containerRef.current.clientWidth;
-            
+            const containerWidth =
+              containerRef.current.offsetWidth ||
+              containerRef.current.clientWidth;
+
             if (containerWidth > 0) {
-              // Tính toán padding dựa trên kích thước màn hình
-              const padding = window.innerWidth < 576 ? 40 : window.innerWidth < 768 ? 60 : 80;
+              const windowWidth = window.innerWidth;
+
+              // Tính toán padding dựa trên kích thước màn hình - giảm padding để tận dụng không gian
+              const padding =
+                windowWidth < 576
+                  ? 20 // Mobile: giảm padding
+                  : windowWidth < 768
+                  ? 30 // Tablet nhỏ: giảm padding
+                  : windowWidth < 1000
+                  ? 40 // Tablet lớn/Desktop nhỏ: padding vừa phải
+                  : 60; // Desktop lớn: padding bình thường
+
               const availableWidth = containerWidth - padding;
-              
+
               // Base dimensions cho desktop
               const baseWidth = 615;
               const baseHeight = 357;
-              
+
               let newWidth;
-              if (window.innerWidth < 576) {
-                // Mobile: sử dụng 95% của available width, tối đa 350px
-                newWidth = Math.min(availableWidth * 0.95, 350);
-              } else if (window.innerWidth < 768) {
-                // Tablet: sử dụng 90% của available width, tối đa 500px
-                newWidth = Math.min(availableWidth * 0.9, 500);
+              if (windowWidth < 576) {
+                // Mobile: tăng kích thước để nhìn rõ hơn - tối thiểu 420px, tối đa 95% available
+                newWidth = Math.max(420, Math.min(availableWidth * 0.98, 480));
+              } else if (windowWidth < 768) {
+                // Tablet nhỏ: tăng kích thước - tối thiểu 500px, tối đa 95% available
+                newWidth = Math.max(500, Math.min(availableWidth * 0.95, 580));
+              } else if (windowWidth < 1000) {
+                // Tablet lớn/Desktop nhỏ: sử dụng 90% available, tối đa 615px
+                newWidth = Math.min(availableWidth * 0.92, 615);
               } else {
-                // Desktop: giữ nguyên base width hoặc scale theo container
+                // Desktop lớn: giữ nguyên base width hoặc scale theo container
                 newWidth = Math.min(baseWidth, availableWidth);
               }
-              
+
               const newHeight = (newWidth / baseWidth) * baseHeight;
-              
+
               setCanvasSize({
-                width: Math.max(newWidth, 200), // Minimum width
-                height: Math.max(newHeight, 120) // Minimum height
+                width: Math.max(newWidth, 400), // Tăng minimum width
+                height: Math.max(newHeight, 230), // Tăng minimum height
               });
             }
           }
@@ -56,10 +64,10 @@ function LifePeakCanvas({ peakData, numberBase }) {
 
     // Initial calculation với delay nhỏ
     const timeoutId = setTimeout(updateCanvasSize, 100);
-    
+
     // Update on resize
-    window.addEventListener('resize', updateCanvasSize);
-    
+    window.addEventListener("resize", updateCanvasSize);
+
     // Use ResizeObserver for more accurate container size tracking
     let resizeObserver;
     if (containerRef.current && window.ResizeObserver) {
@@ -68,10 +76,10 @@ function LifePeakCanvas({ peakData, numberBase }) {
       });
       resizeObserver.observe(containerRef.current);
     }
-    
+
     return () => {
       clearTimeout(timeoutId);
-      window.removeEventListener('resize', updateCanvasSize);
+      window.removeEventListener("resize", updateCanvasSize);
       if (resizeObserver) {
         resizeObserver.disconnect();
       }
@@ -81,25 +89,63 @@ function LifePeakCanvas({ peakData, numberBase }) {
   const baseWidth = 615;
   const baseHeight = 357;
   const scaleFactor = canvasSize.width / baseWidth;
-  
+
   // Tính toán các tọa độ với scale factor
   const w4Top = canvasSize.width;
   const h4Top = canvasSize.height;
-  
+
+  // Khai báo windowWidth trước khi sử dụng
+  const windowWidth = typeof window !== "undefined" ? window.innerWidth : 1000;
+
   // Tính subWidth để căn giữa - dựa trên base width của tam giác (300px)
   const triangleBaseWidth = 300 * scaleFactor;
   let subWidth;
-  if (window.innerWidth < 576) {
-    subWidth = Math.max(5, (w4Top - triangleBaseWidth) / 2);
-  } else if (window.innerWidth < 768) {
+  if (windowWidth < 576) {
+    subWidth = Math.max(10, (w4Top - triangleBaseWidth) / 2);
+  } else if (windowWidth < 768) {
     subWidth = Math.max(15, (w4Top - triangleBaseWidth) / 2);
+  } else if (windowWidth < 1000) {
+    subWidth = Math.max(20, (w4Top - triangleBaseWidth) / 2);
   } else {
     subWidth = (w4Top - triangleBaseWidth) / 2;
   }
 
-  const radius = 15 * scaleFactor;
+  // Radius đồng bộ với scaleFactor - chỉ tăng nhẹ cho màn hình nhỏ để dễ nhìn
+  const baseRadius = windowWidth < 1000 ? 16 : 15; // Tăng nhẹ radius cho màn hình < 1000px
+  const radius = baseRadius * scaleFactor;
   const gray_color = "#b2aea5";
-  const spaceShowNumPeak = { x: 80 * scaleFactor, y: 20 * scaleFactor };
+  // Tăng spacing cho labels ở màn hình 768-1000px để không bị dính
+  const spaceShowNumPeak = {
+    x:
+      windowWidth < 768
+        ? 90 * scaleFactor
+        : windowWidth < 1000
+        ? 110 * scaleFactor // Tăng spacing cho màn hình 768-1000px
+        : 80 * scaleFactor,
+    y:
+      windowWidth < 768
+        ? 25 * scaleFactor
+        : windowWidth < 1000
+        ? 35 * scaleFactor // Tăng spacing cho màn hình 768-1000px
+        : 20 * scaleFactor,
+  };
+
+  // Font size đồng bộ với scaleFactor của tam giác
+  // Chỉ đảm bảo font size tối thiểu để dễ đọc, không tăng thêm %
+  const getFontSize = (baseSize) => {
+    const scaledSize = baseSize * scaleFactor;
+    // Chỉ đảm bảo font size tối thiểu, không tăng thêm
+    if (windowWidth < 576) {
+      return Math.max(14, scaledSize); // Minimum 14px cho mobile
+    } else if (windowWidth < 1000) {
+      return Math.max(13, scaledSize); // Minimum 13px cho tablet
+    }
+    return scaledSize; // Desktop: scale bình thường
+  };
+
+  const fontSizePeak = getFontSize(15);
+  const fontSizeAge = getFontSize(14);
+  const fontSizeBase = getFontSize(14);
 
   // Tam giác ngoài
   const TAMGIACNGOAI = {
@@ -131,9 +177,10 @@ function LifePeakCanvas({ peakData, numberBase }) {
   };
 
   TUOIDINH1.chisotuoi = {
-    x: window.innerWidth < 768
-      ? TUOIDINH1.muiten.x1 - spaceShowNumPeak.x + 45 * scaleFactor
-      : TUOIDINH1.muiten.x1 - spaceShowNumPeak.x,
+    x:
+      windowWidth < 768
+        ? TUOIDINH1.muiten.x1 - spaceShowNumPeak.x + 20 * scaleFactor
+        : TUOIDINH1.muiten.x1 - spaceShowNumPeak.x,
     y: TUOIDINH1.muiten.y1 - spaceShowNumPeak.y,
   };
 
@@ -151,17 +198,19 @@ function LifePeakCanvas({ peakData, numberBase }) {
     muiten: {
       x: TAMGIACDINH2.x2 + 20 * scaleFactor,
       y: TAMGIACDINH2.y2 - 10 * scaleFactor,
-      x1: window.innerWidth < 768 
-        ? TAMGIACDINH2.x2 + 65 * scaleFactor 
-        : TAMGIACDINH2.x2 + 80 * scaleFactor,
+      x1:
+        windowWidth < 768
+          ? TAMGIACDINH2.x2 + 65 * scaleFactor
+          : TAMGIACDINH2.x2 + 80 * scaleFactor,
       y1: TAMGIACDINH2.y2 - 40 * scaleFactor,
     },
   };
 
   TUOIDINH2.chisotuoi = {
-    x: window.innerWidth < 768
-      ? TUOIDINH2.muiten.x1 - 33 * scaleFactor
-      : TUOIDINH2.muiten.x1 + 5 * scaleFactor,
+    x:
+      windowWidth < 768
+        ? TUOIDINH2.muiten.x1 - 20 * scaleFactor
+        : TUOIDINH2.muiten.x1 + 5 * scaleFactor,
     y: TUOIDINH2.muiten.y1 - spaceShowNumPeak.y,
   };
 
@@ -185,7 +234,10 @@ function LifePeakCanvas({ peakData, numberBase }) {
   };
 
   TUOIDINH3.chisotuoi = {
-    x: TUOIDINH3.muiten.x1 - spaceShowNumPeak.x,
+    x:
+      windowWidth < 768
+        ? TUOIDINH3.muiten.x1 - 80 * scaleFactor
+        : TUOIDINH3.muiten.x1 - spaceShowNumPeak.x,
     y: TUOIDINH3.muiten.y1 - spaceShowNumPeak.y,
   };
 
@@ -202,9 +254,10 @@ function LifePeakCanvas({ peakData, numberBase }) {
   };
 
   TUOIDINH4.chisotuoi = {
-    x: window.innerWidth < 768
-      ? TUOIDINH4.muiten.x1 - 5 * scaleFactor
-      : TUOIDINH4.muiten.x1 + 5 * scaleFactor,
+    x:
+      windowWidth < 768
+        ? TUOIDINH4.muiten.x1 - 5 * scaleFactor
+        : TUOIDINH4.muiten.x1 + 5 * scaleFactor,
     y: TUOIDINH4.muiten.y1 - spaceShowNumPeak.y,
   };
 
@@ -214,374 +267,445 @@ function LifePeakCanvas({ peakData, numberBase }) {
         <Stage
           width={w4Top}
           height={h4Top}
-          style={{ 
-            maxWidth: "100%", 
+          style={{
+            maxWidth: "100%",
             width: `${w4Top}px`,
-            height: `${h4Top}px`
+            height: `${h4Top}px`,
           }}
         >
-        <Layer>
-          {/* Tam giác ngoài */}
-          <Line
-            points={[
-              TAMGIACNGOAI.x,
-              TAMGIACNGOAI.y,
-              TAMGIACNGOAI.x1,
-              TAMGIACNGOAI.y1,
-              TAMGIACNGOAI.x2,
-              TAMGIACNGOAI.y2,
-            ]}
-            closed
-            lineCap="round"
-            lineJoin="round"
-            stroke="black"
-            strokeWidth={3 * scaleFactor}
-          />
+          <Layer>
+            {/* Tam giác ngoài */}
+            <Line
+              points={[
+                TAMGIACNGOAI.x,
+                TAMGIACNGOAI.y,
+                TAMGIACNGOAI.x1,
+                TAMGIACNGOAI.y1,
+                TAMGIACNGOAI.x2,
+                TAMGIACNGOAI.y2,
+              ]}
+              closed
+              lineCap="round"
+              lineJoin="round"
+              stroke="black"
+              strokeWidth={3 * scaleFactor}
+            />
 
-          {/* Đỉnh 4 */}
-          <Circle
-            x={TAMGIACNGOAI.x2}
-            y={TAMGIACNGOAI.y2}
-            radius={radius}
-            fill="white"
-            stroke="black"
-            strokeWidth={2 * scaleFactor}
-          />
-          <Label x={TAMGIACNGOAI.x2 - 5 * scaleFactor} y={TAMGIACNGOAI.y2 - 8 * scaleFactor}>
-            <Text
-              align="center"
-              verticalAlign="middle"
-              text={peakData.top04.num}
-              fill="red"
-              fontSize={15 * scaleFactor}
-              fontStyle="bold"
+            {/* Đỉnh 4 */}
+            <Circle
+              x={TAMGIACNGOAI.x2}
+              y={TAMGIACNGOAI.y2}
+              radius={radius}
+              fill="white"
+              stroke="black"
+              strokeWidth={2 * scaleFactor}
             />
-          </Label>
+            <Label x={TAMGIACNGOAI.x2 - radius} y={TAMGIACNGOAI.y2 - radius}>
+              <Text
+                text={String(peakData.top04.num)}
+                fill="red"
+                fontSize={fontSizePeak}
+                fontStyle="bold"
+                align="center"
+                verticalAlign="middle"
+                width={radius * 2}
+                height={radius * 2}
+              />
+            </Label>
 
-          {/* Đỉnh 4 + Tuổi */}
-          <Line
-            points={[
-              TUOIDINH4.muiten.x,
-              TUOIDINH4.muiten.y,
-              TUOIDINH4.muiten.x1,
-              TUOIDINH4.muiten.y1,
-            ]}
-            lineJoin="round"
-            stroke="blue"
-            strokeWidth={2 * scaleFactor}
-            dash={[10 * scaleFactor, 10 * scaleFactor]}
-          />
-          <Label x={TUOIDINH4.chisotuoi.x} y={TUOIDINH4.chisotuoi.y}>
-            <Text
-              align="center"
-              verticalAlign="middle"
-              text={peakData.top04.age}
-              fill="red"
-              fontSize={15 * scaleFactor}
+            {/* Đỉnh 4 + Tuổi */}
+            <Line
+              points={[
+                TUOIDINH4.muiten.x,
+                TUOIDINH4.muiten.y,
+                TUOIDINH4.muiten.x1,
+                TUOIDINH4.muiten.y1,
+              ]}
+              lineJoin="round"
+              stroke="blue"
+              strokeWidth={2 * scaleFactor}
+              dash={[10 * scaleFactor, 10 * scaleFactor]}
             />
-            <Text
-              align="center"
-              verticalAlign="middle"
-              x={20 * scaleFactor}
-              text="tuổi"
-              fill="#908c89"
-              fontSize={15 * scaleFactor}
-            />
-            <Text
-              align="center"
-              verticalAlign="middle"
-              x={48 * scaleFactor}
-              text={peakData.top04.year}
-              fill="blue"
-              fontSize={15 * scaleFactor}
-            />
-          </Label>
+            <Label x={TUOIDINH4.chisotuoi.x} y={TUOIDINH4.chisotuoi.y}>
+              <Text
+                text={String(peakData.top04.age)}
+                fill="red"
+                fontSize={fontSizeAge}
+                align="left"
+                verticalAlign="middle"
+              />
+              <Text
+                x={
+                  windowWidth < 768
+                    ? 28 * scaleFactor
+                    : windowWidth < 1000
+                    ? 35 * scaleFactor - 3 // Tăng spacing cho màn hình 768-1000px
+                    : 22 * scaleFactor
+                }
+                text="tuổi"
+                fill="#908c89"
+                fontSize={fontSizeAge}
+                align="left"
+                verticalAlign="middle"
+              />
+              <Text
+                x={
+                  windowWidth < 768
+                    ? 68 * scaleFactor
+                    : windowWidth < 1000
+                    ? 70 * scaleFactor // Tăng spacing cho màn hình 768-1000px
+                    : 50 * scaleFactor
+                }
+                text={String(peakData.top04.year)}
+                fill="blue"
+                fontSize={fontSizeAge}
+                align="left"
+                verticalAlign="middle"
+              />
+            </Label>
 
-          {/* Đỉnh 3 */}
-          <Line
-            points={[
-              TAMGIACDINH3.x,
-              TAMGIACDINH3.y,
-              TAMGIACDINH3.x1,
-              TAMGIACDINH3.y1,
-              TAMGIACDINH3.x2,
-              TAMGIACDINH3.y2,
-            ]}
-            closed
-            lineCap="round"
-            lineJoin="round"
-            stroke="black"
-            strokeWidth={3 * scaleFactor}
-          />
-          <Circle
-            x={TAMGIACDINH3.x2}
-            y={TAMGIACDINH3.y2}
-            radius={radius + 5 * scaleFactor}
-            fill="white"
-            stroke="black"
-            strokeWidth={2 * scaleFactor}
-          />
-          <Label x={TAMGIACDINH3.x2 - 5 * scaleFactor} y={TAMGIACDINH3.y2 - 8 * scaleFactor}>
-            <Text
-              align="center"
-              verticalAlign="middle"
-              text={peakData.top03.num}
-              fill="red"
-              fontSize={15 * scaleFactor}
-              fontStyle="bold"
+            {/* Đỉnh 3 */}
+            <Line
+              points={[
+                TAMGIACDINH3.x,
+                TAMGIACDINH3.y,
+                TAMGIACDINH3.x1,
+                TAMGIACDINH3.y1,
+                TAMGIACDINH3.x2,
+                TAMGIACDINH3.y2,
+              ]}
+              closed
+              lineCap="round"
+              lineJoin="round"
+              stroke="black"
+              strokeWidth={3 * scaleFactor}
             />
-          </Label>
-          
-          {/* Đỉnh 3 + Tuổi */}
-          <Line
-            points={[
-              TUOIDINH3.muiten.x,
-              TUOIDINH3.muiten.y,
-              TUOIDINH3.muiten.x1,
-              TUOIDINH3.muiten.y1,
-            ]}
-            lineJoin="round"
-            stroke="blue"
-            strokeWidth={2 * scaleFactor}
-            dash={[10 * scaleFactor, 10 * scaleFactor]}
-          />
-          <Label x={TUOIDINH3.chisotuoi.x} y={TUOIDINH3.chisotuoi.y}>
-            <Text
-              align="center"
-              verticalAlign="middle"
-              text={peakData.top03.age}
-              fill="red"
-              fontSize={15 * scaleFactor}
-            />
-            <Text
-              align="center"
-              verticalAlign="middle"
-              x={20 * scaleFactor}
-              text="tuổi"
-              fill="#908c89"
-              fontSize={15 * scaleFactor}
-            />
-            <Text
-              align="center"
-              verticalAlign="middle"
-              x={48 * scaleFactor}
-              text={peakData.top03.year}
-              fill="blue"
-              fontSize={15 * scaleFactor}
-            />
-          </Label>
 
-          {/* Đỉnh 2 */}
-          <Line
-            points={[
-              TAMGIACDINH2.x,
-              TAMGIACDINH2.y,
-              TAMGIACDINH2.x1,
-              TAMGIACDINH2.y1,
-              TAMGIACDINH2.x2,
-              TAMGIACDINH2.y2,
-            ]}
-            closed
-            lineCap="round"
-            lineJoin="round"
-            stroke="black"
-            strokeWidth={3 * scaleFactor}
-          />
-          <Circle
-            x={TAMGIACDINH2.x2}
-            y={TAMGIACDINH2.y2}
-            radius={radius}
-            fill="white"
-            stroke="black"
-            strokeWidth={2 * scaleFactor}
-          />
-          <Label x={TAMGIACDINH2.x2 - 5 * scaleFactor} y={TAMGIACDINH2.y2 - 8 * scaleFactor}>
-            <Text
-              align="center"
-              verticalAlign="middle"
-              text={peakData.top02.num}
-              fill="red"
-              fontSize={15 * scaleFactor}
-              fontStyle="bold"
+            <Circle
+              x={TAMGIACDINH3.x2}
+              y={TAMGIACDINH3.y2}
+              radius={radius}
+              fill="white"
+              stroke="black"
+              strokeWidth={2 * scaleFactor}
             />
-          </Label>
+            <Label x={TAMGIACDINH3.x2 - radius} y={TAMGIACDINH3.y2 - radius}>
+              <Text
+                text={String(peakData.top03.num)}
+                fill="red"
+                fontSize={fontSizePeak}
+                fontStyle="bold"
+                align="center"
+                verticalAlign="middle"
+                width={radius * 2}
+                height={radius * 2}
+              />
+            </Label>
 
-          {/* Đỉnh 2 + Tuổi */}
-          <Line
-            points={[
-              TUOIDINH2.muiten.x,
-              TUOIDINH2.muiten.y,
-              TUOIDINH2.muiten.x1,
-              TUOIDINH2.muiten.y1,
-            ]}
-            lineJoin="round"
-            stroke="blue"
-            strokeWidth={2 * scaleFactor}
-            dash={[10 * scaleFactor, 10 * scaleFactor]}
-          />
-          <Label x={TUOIDINH2.chisotuoi.x} y={TUOIDINH2.chisotuoi.y}>
-            <Text
-              align="center"
-              verticalAlign="middle"
-              text={peakData.top02.age}
-              fill="red"
-              fontSize={15 * scaleFactor}
+            {/* Đỉnh 3 + Tuổi */}
+            <Line
+              points={[
+                TUOIDINH3.muiten.x,
+                TUOIDINH3.muiten.y,
+                TUOIDINH3.muiten.x1,
+                TUOIDINH3.muiten.y1,
+              ]}
+              lineJoin="round"
+              stroke="blue"
+              strokeWidth={2 * scaleFactor}
+              dash={[10 * scaleFactor, 10 * scaleFactor]}
             />
-            <Text
-              align="center"
-              verticalAlign="middle"
-              x={20 * scaleFactor}
-              text="tuổi"
-              fill="#908c89"
-              fontSize={15 * scaleFactor}
-            />
-            <Text
-              align="center"
-              verticalAlign="middle"
-              x={48 * scaleFactor}
-              text={peakData.top02.year}
-              fill="blue"
-              fontSize={15 * scaleFactor}
-            />
-          </Label>
+            <Label x={TUOIDINH3.chisotuoi.x} y={TUOIDINH3.chisotuoi.y}>
+              <Text
+                text={String(peakData.top03.age)}
+                fill="red"
+                fontSize={fontSizeAge}
+                align="left"
+                verticalAlign="middle"
+              />
+              <Text
+                x={
+                  windowWidth < 768
+                    ? 28 * scaleFactor
+                    : windowWidth < 1000
+                    ? 35 * scaleFactor - 3 // Tăng spacing cho màn hình 768-1000px
+                    : 22 * scaleFactor
+                }
+                text="tuổi"
+                fill="#908c89"
+                fontSize={fontSizeAge}
+                align="left"
+                verticalAlign="middle"
+              />
+              <Text
+                x={
+                  windowWidth < 768
+                    ? 68 * scaleFactor
+                    : windowWidth < 1000
+                    ? 70 * scaleFactor // Tăng spacing cho màn hình 768-1000px
+                    : 50 * scaleFactor
+                }
+                text={String(peakData.top03.year)}
+                fill="blue"
+                fontSize={fontSizeAge}
+                align="left"
+                verticalAlign="middle"
+              />
+            </Label>
 
-          {/* Đỉnh 1 */}
-          <Line
-            points={[
-              TAMGIACDINH1.x,
-              TAMGIACDINH1.y,
-              TAMGIACDINH1.x1,
-              TAMGIACDINH1.y1,
-              TAMGIACDINH1.x2,
-              TAMGIACDINH1.y2,
-            ]}
-            closed
-            lineCap="round"
-            lineJoin="round"
-            stroke="black"
-            strokeWidth={3 * scaleFactor}
-          />
-          <Circle
-            x={TAMGIACDINH1.x2}
-            y={TAMGIACDINH1.y2}
-            radius={radius}
-            fill="white"
-            stroke="black"
-            strokeWidth={2 * scaleFactor}
-          />
-          <Label x={TAMGIACDINH1.x2 - 5 * scaleFactor} y={TAMGIACDINH1.y2 - 8 * scaleFactor}>
-            <Text
-              align="center"
-              verticalAlign="middle"
-              text={peakData.top01.num}
-              fill="red"
-              fontSize={15 * scaleFactor}
-              fontStyle="bold"
+            {/* Đỉnh 2 */}
+            <Line
+              points={[
+                TAMGIACDINH2.x,
+                TAMGIACDINH2.y,
+                TAMGIACDINH2.x1,
+                TAMGIACDINH2.y1,
+                TAMGIACDINH2.x2,
+                TAMGIACDINH2.y2,
+              ]}
+              closed
+              lineCap="round"
+              lineJoin="round"
+              stroke="black"
+              strokeWidth={3 * scaleFactor}
             />
-          </Label>
+            <Circle
+              x={TAMGIACDINH2.x2}
+              y={TAMGIACDINH2.y2}
+              radius={radius}
+              fill="white"
+              stroke="black"
+              strokeWidth={2 * scaleFactor}
+            />
+            <Label x={TAMGIACDINH2.x2 - radius} y={TAMGIACDINH2.y2 - radius}>
+              <Text
+                text={String(peakData.top02.num)}
+                fill="red"
+                fontSize={fontSizePeak}
+                fontStyle="bold"
+                align="center"
+                verticalAlign="middle"
+                width={radius * 2}
+                height={radius * 2}
+              />
+            </Label>
 
-          {/* Đỉnh 1 + Tuổi */}
-          <Line
-            points={[
-              TUOIDINH1.muiten.x,
-              TUOIDINH1.muiten.y,
-              TUOIDINH1.muiten.x1,
-              TUOIDINH1.muiten.y1,
-            ]}
-            lineJoin="round"
-            stroke="blue"
-            strokeWidth={2 * scaleFactor}
-            dash={[10 * scaleFactor, 10 * scaleFactor]}
-          />
-          <Label x={TUOIDINH1.chisotuoi.x} y={TUOIDINH1.chisotuoi.y}>
-            <Text
-              align="center"
-              verticalAlign="middle"
-              text={peakData.top01.age}
-              fill="red"
-              fontSize={15 * scaleFactor}
+            {/* Đỉnh 2 + Tuổi */}
+            <Line
+              points={[
+                TUOIDINH2.muiten.x,
+                TUOIDINH2.muiten.y,
+                TUOIDINH2.muiten.x1,
+                TUOIDINH2.muiten.y1,
+              ]}
+              lineJoin="round"
+              stroke="blue"
+              strokeWidth={2 * scaleFactor}
+              dash={[10 * scaleFactor, 10 * scaleFactor]}
             />
-            <Text
-              align="center"
-              verticalAlign="middle"
-              x={20 * scaleFactor}
-              text="tuổi"
-              fill="#908c89"
-              fontSize={15 * scaleFactor}
-            />
-            <Text
-              align="center"
-              verticalAlign="middle"
-              x={48 * scaleFactor}
-              text={peakData.top01.year}
-              fill="blue"
-              fontSize={15 * scaleFactor}
-            />
-          </Label>
+            <Label x={TUOIDINH2.chisotuoi.x} y={TUOIDINH2.chisotuoi.y}>
+              <Text
+                text={String(peakData.top02.age)}
+                fill="red"
+                fontSize={fontSizeAge}
+                align="left"
+                verticalAlign="middle"
+              />
+              <Text
+                x={
+                  windowWidth < 768
+                    ? 28 * scaleFactor
+                    : windowWidth < 1000
+                    ? 35 * scaleFactor - 3 // Tăng spacing cho màn hình 768-1000px
+                    : 22 * scaleFactor
+                }
+                text="tuổi"
+                fill="#908c89"
+                fontSize={fontSizeAge}
+                align="left"
+                verticalAlign="middle"
+              />
+              <Text
+                x={
+                  windowWidth < 768
+                    ? 68 * scaleFactor
+                    : windowWidth < 1000
+                    ? 70 * scaleFactor // Tăng spacing cho màn hình 768-1000px
+                    : 50 * scaleFactor
+                }
+                text={String(peakData.top02.year)}
+                fill="blue"
+                fontSize={fontSizeAge}
+                align="left"
+                verticalAlign="middle"
+              />
+            </Label>
 
-          {/* Các điểm dưới đáy */}
-          {/* Điểm 1 */}
-          <Circle
-            x={TAMGIACNGOAI.x + 50 * scaleFactor}
-            y={TAMGIACNGOAI.y}
-            radius={radius}
-            fill="white"
-            stroke={gray_color}
-            strokeWidth={2 * scaleFactor}
-          />
-          <Label x={TAMGIACNGOAI.x + 45 * scaleFactor} y={TAMGIACNGOAI.y - 8 * scaleFactor}>
-            <Text
-              align="center"
-              verticalAlign="middle"
-              text={numberBase.num1 ?? "-"}
-              fill={gray_color}
-              fontSize={15 * scaleFactor}
+            {/* Đỉnh 1 */}
+            <Line
+              points={[
+                TAMGIACDINH1.x,
+                TAMGIACDINH1.y,
+                TAMGIACDINH1.x1,
+                TAMGIACDINH1.y1,
+                TAMGIACDINH1.x2,
+                TAMGIACDINH1.y2,
+              ]}
+              closed
+              lineCap="round"
+              lineJoin="round"
+              stroke="black"
+              strokeWidth={3 * scaleFactor}
             />
-          </Label>
+            <Circle
+              x={TAMGIACDINH1.x2}
+              y={TAMGIACDINH1.y2}
+              radius={radius}
+              fill="white"
+              stroke="black"
+              strokeWidth={2 * scaleFactor}
+            />
+            <Label x={TAMGIACDINH1.x2 - radius} y={TAMGIACDINH1.y2 - radius}>
+              <Text
+                text={String(peakData.top01.num)}
+                fill="red"
+                fontSize={fontSizePeak}
+                fontStyle="bold"
+                align="center"
+                verticalAlign="middle"
+                width={radius * 2}
+                height={radius * 2}
+              />
+            </Label>
 
-          {/* Điểm 2 */}
-          <Circle
-            x={TAMGIACNGOAI.x + 149 * scaleFactor}
-            y={TAMGIACNGOAI.y}
-            radius={radius}
-            fill="white"
-            stroke={gray_color}
-            strokeWidth={2 * scaleFactor}
-          />
-          <Label x={TAMGIACNGOAI.x + 144 * scaleFactor} y={TAMGIACNGOAI.y - 8 * scaleFactor}>
-            <Text
-              align="center"
-              verticalAlign="middle"
-              text={numberBase.num2 ?? "-"}
-              fill={gray_color}
-              fontSize={15 * scaleFactor}
+            {/* Đỉnh 1 + Tuổi */}
+            <Line
+              points={[
+                TUOIDINH1.muiten.x,
+                TUOIDINH1.muiten.y,
+                TUOIDINH1.muiten.x1,
+                TUOIDINH1.muiten.y1,
+              ]}
+              lineJoin="round"
+              stroke="blue"
+              strokeWidth={2 * scaleFactor}
+              dash={[10 * scaleFactor, 10 * scaleFactor]}
             />
-          </Label>
+            <Label x={TUOIDINH1.chisotuoi.x} y={TUOIDINH1.chisotuoi.y}>
+              <Text
+                text={String(peakData.top01.age)}
+                fill="red"
+                fontSize={fontSizeAge}
+                align="left"
+                verticalAlign="middle"
+              />
+              <Text
+                x={
+                  windowWidth < 768
+                    ? 28 * scaleFactor
+                    : windowWidth < 1000
+                    ? 35 * scaleFactor - 3 // Tăng spacing cho màn hình 768-1000px
+                    : 22 * scaleFactor
+                }
+                text="tuổi"
+                fill="#908c89"
+                fontSize={fontSizeAge}
+                align="left"
+                verticalAlign="middle"
+              />
+              <Text
+                x={
+                  windowWidth < 768
+                    ? 68 * scaleFactor
+                    : windowWidth < 1000
+                    ? 70 * scaleFactor // Tăng spacing cho màn hình 768-1000px
+                    : 50 * scaleFactor
+                }
+                text={String(peakData.top01.year)}
+                fill="blue"
+                fontSize={fontSizeAge}
+                align="left"
+                verticalAlign="middle"
+              />
+            </Label>
 
-          {/* Điểm 3 */}
-          <Circle
-            x={TAMGIACNGOAI.x + 250 * scaleFactor}
-            y={TAMGIACNGOAI.y}
-            radius={radius}
-            fill="white"
-            stroke={gray_color}
-            strokeWidth={2 * scaleFactor}
-          />
-          <Label x={TAMGIACNGOAI.x + 245 * scaleFactor} y={TAMGIACNGOAI.y - 8 * scaleFactor}>
-            <Text
-              align="center"
-              verticalAlign="middle"
-              text={numberBase.num3 ?? "-"}
-              fill={gray_color}
-              fontSize={15 * scaleFactor}
+            {/* Các điểm dưới đáy */}
+            {/* Điểm 1 */}
+            <Circle
+              x={TAMGIACNGOAI.x + 50 * scaleFactor}
+              y={TAMGIACNGOAI.y}
+              radius={radius}
+              fill="white"
+              stroke={gray_color}
+              strokeWidth={2 * scaleFactor}
             />
-          </Label>
-        </Layer>
-      </Stage>
+            <Label
+              x={TAMGIACNGOAI.x + 50 * scaleFactor - radius}
+              y={TAMGIACNGOAI.y - radius}
+            >
+              <Text
+                text={String(numberBase.num1 ?? "-")}
+                fill={gray_color}
+                fontSize={fontSizeBase}
+                align="center"
+                verticalAlign="middle"
+                width={radius * 2}
+                height={radius * 2}
+              />
+            </Label>
+
+            {/* Điểm 2 */}
+            <Circle
+              x={TAMGIACNGOAI.x + 149 * scaleFactor}
+              y={TAMGIACNGOAI.y}
+              radius={radius}
+              fill="white"
+              stroke={gray_color}
+              strokeWidth={2 * scaleFactor}
+            />
+            <Label
+              x={TAMGIACNGOAI.x + 149 * scaleFactor - radius}
+              y={TAMGIACNGOAI.y - radius}
+            >
+              <Text
+                text={String(numberBase.num2 ?? "-")}
+                fill={gray_color}
+                fontSize={fontSizeBase}
+                align="center"
+                verticalAlign="middle"
+                width={radius * 2}
+                height={radius * 2}
+              />
+            </Label>
+
+            {/* Điểm 3 */}
+            <Circle
+              x={TAMGIACNGOAI.x + 250 * scaleFactor}
+              y={TAMGIACNGOAI.y}
+              radius={radius}
+              fill="white"
+              stroke={gray_color}
+              strokeWidth={2 * scaleFactor}
+            />
+            <Label
+              x={TAMGIACNGOAI.x + 250 * scaleFactor - radius}
+              y={TAMGIACNGOAI.y - radius}
+            >
+              <Text
+                text={String(numberBase.num3 ?? "-")}
+                fill={gray_color}
+                fontSize={fontSizeBase}
+                align="center"
+                verticalAlign="middle"
+                width={radius * 2}
+                height={radius * 2}
+              />
+            </Label>
+          </Layer>
+        </Stage>
       </div>
     </div>
   );
 }
 
 export default LifePeakCanvas;
-
