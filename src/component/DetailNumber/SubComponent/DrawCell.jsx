@@ -62,58 +62,51 @@ const DrawCell = ({ wRightPanel, amountNumber, color }) => {
       const width = cellWidth - (gap + padding);
       const height = cellHeight - (gap + padding);
 
-      const position = col * 3 + row + 1;
-
-      // Map positions to numbers (including master numbers)
+      // Map positions to numbers
+      // Cột 0 (trái ngoài cùng): 3, 2, 1 (1 ở dưới cùng)
+      // Cột 1 (giữa): 6, 5, 4 (4 ở dưới cùng)
+      // Cột 2 (phải): 9, 8, 7 (7 ở dưới cùng)
+      // Cột 3: 30, 20, 10 (10 ở dưới cùng)
+      // Cột 4: 33, 22, 11 (11 ở dưới cùng)
       let displayNumber;
-      switch (position) {
-        case 1:
-          displayNumber = 1;
-          break;
-        case 2:
-          displayNumber = 4;
-          break;
-        case 3:
-          displayNumber = 7;
-          break;
-        case 4:
-          displayNumber = 2;
-          break;
-        case 5:
-          displayNumber = 5;
-          break;
-        case 6:
-          displayNumber = 8;
-          break;
-        case 7:
-          displayNumber = 3;
-          break;
-        case 8:
-          displayNumber = 6;
-          break;
-        case 9:
-          displayNumber = 9;
-          break;
-        case 10:
-          displayNumber = 11;
-          break;
-        case 11:
-          displayNumber = 20;
-          break;
-        case 12:
-          displayNumber = 30;
-          break;
-        case 13:
-          displayNumber = 22;
-          break;
-        case 14:
-          displayNumber = 33;
-          break;
-        case 15:
-          displayNumber = 10;
-          break;
-        default:
-          displayNumber = position;
+      if (col < 3) {
+        // Các số 1-9: (2 - row) + col * 3 + 1
+        // row 0, col 0 → 3; row 0, col 1 → 6; row 0, col 2 → 9
+        // row 1, col 0 → 2; row 1, col 1 → 5; row 1, col 2 → 8
+        // row 2, col 0 → 1; row 2, col 1 → 4; row 2, col 2 → 7
+        displayNumber = (2 - row) + col * 3 + 1;
+      } else if (col === 3) {
+        // Cột 3: 30, 20, 10 (10 ở dưới cùng)
+        switch (row) {
+          case 0:
+            displayNumber = 30;
+            break;
+          case 1:
+            displayNumber = 20;
+            break;
+          case 2:
+            displayNumber = 10;
+            break;
+          default:
+            displayNumber = 0;
+        }
+      } else if (col === 4) {
+        // Cột 4: 33, 22, 11 (11 ở dưới cùng)
+        switch (row) {
+          case 0:
+            displayNumber = 33;
+            break;
+          case 1:
+            displayNumber = 22;
+            break;
+          case 2:
+            displayNumber = 11;
+            break;
+          default:
+            displayNumber = 0;
+        }
+      } else {
+        displayNumber = 0;
       }
 
       const hasNumber = amountNumber.hasOwnProperty(displayNumber.toString());

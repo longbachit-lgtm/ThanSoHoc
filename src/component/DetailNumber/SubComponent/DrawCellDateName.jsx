@@ -40,14 +40,14 @@ const DrawCellDateName = ({ wRightPanel, amountNumber, color, buttonText }) => {
 
       // Calculate number position (1-9)
       // Grid layout: 123 ở cột trái, 456 ở giữa, 789 ở cột phải
-      // Cột trái (col 0): 1, 2, 3 (từ trên xuống)
-      // Cột giữa (col 1): 4, 5, 6 (từ trên xuống)
-      // Cột phải (col 2): 7, 8, 9 (từ trên xuống)
-      // Formula: displayNumber = row * 3 + col + 1
-      // row 0, col 0 → 1; row 0, col 1 → 4; row 0, col 2 → 7
+      // Cột trái (col 0): 3, 2, 1 (1 ở dưới cùng)
+      // Cột giữa (col 1): 6, 5, 4 (4 ở dưới cùng)
+      // Cột phải (col 2): 9, 8, 7 (7 ở dưới cùng)
+      // Formula: displayNumber = (2 - row) + col * 3 + 1
+      // row 0, col 0 → 3; row 0, col 1 → 6; row 0, col 2 → 9
       // row 1, col 0 → 2; row 1, col 1 → 5; row 1, col 2 → 8
-      // row 2, col 0 → 3; row 2, col 1 → 6; row 2, col 2 → 9
-      const displayNumber = row * 3 + col + 1;
+      // row 2, col 0 → 1; row 2, col 1 → 4; row 2, col 2 → 7
+      const displayNumber = (2 - row) + col * 3 + 1;
 
       // Check if this number exists in data
       const hasNumber = amountNumber.hasOwnProperty(displayNumber.toString());
