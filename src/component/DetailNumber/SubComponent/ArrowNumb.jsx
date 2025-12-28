@@ -20,25 +20,73 @@ const ArrowNumb = ({ wRightPanel, arr, typeArrow, stroke }) => {
     }
   }, [wRightPanel, widthWindow]);
 
-  const stageHeight = 80; // Fixed height for arrow visualization
+  // Responsive height - taller on mobile to prevent overlap
+  const stageHeight = useMemo(() => {
+    if (widthWindow < 576) {
+      return 110; // More space on mobile
+    } else if (widthWindow < 768) {
+      return 100;
+    } else {
+      return 80;
+    }
+  }, [widthWindow]);
+  
   const padding = 12;
-  const arrowY = stageHeight / 2;
-  const textY = 20;
-  const numberY = 10;
+  
+  // Calculate arrowY and positions together
+  const { arrowY, textY, numberY } = useMemo(() => {
+    const calculatedArrowY = stageHeight / 2;
+    let calculatedTextY, calculatedNumberY;
+    
+    if (widthWindow < 576) {
+      // On mobile: text closer to arrow, just above it
+      calculatedTextY = calculatedArrowY - 20; // Just above arrow
+      calculatedNumberY = calculatedArrowY + 25; // Below arrow on mobile
+    } else {
+      // On desktop: text just above arrow
+      calculatedTextY = calculatedArrowY - 15; // Just above arrow
+      calculatedNumberY = 10; // Above arrow on desktop
+    }
+    
+    return {
+      arrowY: calculatedArrowY,
+      textY: calculatedTextY,
+      numberY: calculatedNumberY
+    };
+  }, [widthWindow, stageHeight]);
 
   // Calculate positions
   const arrowStartX = padding;
   const arrowEndX = stageWidth - padding;
   const arrowLength = arrowEndX - arrowStartX;
   
-  // Better spacing for 3 numbers
+  // Calculate number positions - evenly distribute 3 numbers along arrow
+  // Divide arrow into 4 equal segments, place numbers at 1/4, 2/4, 3/4 positions
   const numberCount = 3;
-  const numberSpacing = arrowLength / (numberCount + 1);
-  const numberStartX = arrowStartX + numberSpacing;
+  const numberPositions = useMemo(() => {
+    return Array.from({ length: numberCount }, (_, i) => {
+      // Position at (i+1) / (numberCount + 1) of arrow length
+      const ratio = (i + 1) / (numberCount + 1);
+      return arrowStartX + (arrowLength * ratio);
+    });
+  }, [arrowStartX, arrowLength, numberCount]);
 
-  // Font sizes based on stage width
-  const titleFontSize = Math.max(stageWidth * 0.04, 14);
-  const numberFontSize = Math.max(stageWidth * 0.045, 16);
+  // Font sizes based on stage width - smaller on mobile
+  const titleFontSize = useMemo(() => {
+    if (widthWindow < 576) {
+      return Math.max(stageWidth * 0.035, 12);
+    } else {
+      return Math.max(stageWidth * 0.04, 14);
+    }
+  }, [stageWidth, widthWindow]);
+  
+  const numberFontSize = useMemo(() => {
+    if (widthWindow < 576) {
+      return Math.max(stageWidth * 0.04, 14);
+    } else {
+      return Math.max(stageWidth * 0.045, 16);
+    }
+  }, [stageWidth, widthWindow]);
 
   // Arrow data - arr is a string like "123", "456", etc.
   const arrowName = ARROW[arr]?.[typeArrow]?.TEN || "";
@@ -63,22 +111,27 @@ const ArrowNumb = ({ wRightPanel, arr, typeArrow, stroke }) => {
         }}
       >
         <Layer>
-          {/* Arrow Name/Title */}
+          {/* Arrow Name/Title - positioned at left, close to arrow start */}
           <Text
-            x={padding}
+            x={arrowStartX}
             y={textY}
-            width={arrowLength * 0.4}
+            width={widthWindow < 576 ? arrowLength * 0.6 : arrowLength * 0.35}
             align="left"
             text={arrowName}
             fontStyle="bold"
             fontSize={titleFontSize}
             fill={stroke}
             fontFamily="Arial, sans-serif"
+            wrap="word"
           />
 
-          {/* Numbers above arrow */}
+          {/* Numbers - evenly distributed along arrow */}
           {arrowNumbers.map((num, iNum) => {
-            const numX = numberStartX + numberSpacing * iNum;
+            // Use pre-calculated position for even distribution
+            const numX = numberPositions[iNum];
+            // Text width for centering
+            const textWidth = (arrowLength / (numberCount + 1)) * 0.8;
+            
             return (
               <Label
                 key={`arrowNum${iNum}`}
@@ -86,7 +139,7 @@ const ArrowNumb = ({ wRightPanel, arr, typeArrow, stroke }) => {
                 y={numberY}
               >
                 <Text
-                  width={numberSpacing * 0.9}
+                  width={textWidth}
                   align="center"
                   text={num}
                   fontStyle="bold"

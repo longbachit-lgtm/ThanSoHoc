@@ -1,8 +1,5 @@
 import sochudao from "../../assets/img/1.png";
-import {
-  NUMEROLOGY_KARMA,
-  NUMERLOGY_COMMON,
-} from "../../Data/numerology";
+import { NUMEROLOGY_KARMA, NUMERLOGY_COMMON } from "../../Data/numerology";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 import { ArrowRightOutlined } from "@ant-design/icons";
@@ -113,8 +110,16 @@ function MainNumber() {
               <span className="main-number__value-shadow">{numberKarma}</span>
             </div>
             <p className="main-number__subtitle">{heroSubtitle}</p>
-            <div className="main-number__stats">
-              <div className="main-number__stat">
+            <div
+              className="main-number__stats"
+              style={{
+                display: "flex",
+                gap: "2rem",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {/* <div className="main-number__stat">
                 <span className="main-number__stat-label">Mũi tên mạnh</span>
                 <span className="main-number__stat-value">
                   {arrow?.length ? arrow.length : 0}
@@ -125,7 +130,7 @@ function MainNumber() {
                 <span className="main-number__stat-value">
                   {lack_arrow?.length ? lack_arrow.length : 0}
                 </span>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>
