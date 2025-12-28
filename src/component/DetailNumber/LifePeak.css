@@ -7,6 +7,10 @@
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(248, 236, 210, 0.85) 100%);
   border: 1px solid rgba(232, 199, 140, 0.32);
   box-shadow: 0 22px 45px rgba(184, 134, 11, 0.16);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .lifepeak-card__header {
@@ -209,12 +213,24 @@
 
 @media (max-width: 767.98px) {
   .lifepeak-card {
-    padding: 1.75rem;
-    gap: 1.5rem;
+    padding: 1rem;
+    gap: 1rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
   .lifepeak-card__heading h4 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .lifepeak-card__heading p {
+    font-size: 0.85rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .lifepeak-card__timeline {
@@ -230,11 +246,12 @@
 
 @media (max-width: 575.98px) {
   .lifepeak-card {
-    padding: 1.5rem;
+    padding: 0.75rem;
+    gap: 0.75rem;
   }
 
   .lifepeak-card__canvas {
-    padding: 0.75rem;
+    padding: 0.5rem;
   }
 
   .lifepeak-card__canvas > div > div {

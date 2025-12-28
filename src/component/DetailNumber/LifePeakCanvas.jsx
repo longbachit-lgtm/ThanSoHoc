@@ -101,9 +101,9 @@ function LifePeakCanvas({ peakData, numberBase }) {
   const triangleBaseWidth = 300 * scaleFactor;
   let subWidth;
   if (windowWidth < 576) {
-    subWidth = Math.max(10, (w4Top - triangleBaseWidth) / 2);
+    subWidth = Math.max(10, (w4Top - triangleBaseWidth) / 2) - 50;
   } else if (windowWidth < 768) {
-    subWidth = Math.max(15, (w4Top - triangleBaseWidth) / 2);
+    subWidth = Math.max(15, (w4Top - triangleBaseWidth) / 2) - 60;
   } else if (windowWidth < 1000) {
     subWidth = Math.max(20, (w4Top - triangleBaseWidth) / 2);
   } else {
