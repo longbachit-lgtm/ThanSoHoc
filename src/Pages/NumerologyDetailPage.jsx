@@ -175,8 +175,6 @@ export default function NumerologyDetailPage() {
     <div
       className="min-vh-100"
       style={{
-        background:
-          "linear-gradient(135deg, #FFF9F0 0%, #FDFBF6 50%, #FFF5E8 100%)",
         position: "relative",
         overflow: "hidden",
       }}

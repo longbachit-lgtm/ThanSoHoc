@@ -744,55 +744,55 @@ export const NUMEROLOGY_BIRTHDAY_NUMBER = {
 export const NUMEROLOGY_SOUL_NUMBER = {
   1: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Linh Hồn 1 - Người cá tính và tiên phong</h4> <p>Chỉ số linh hồn 1 là người rất cá tính. Đây là những người luôn mong muốn được là chính mình, có tính tranh đua và cạnh tranh cao. Họ thường thể hiện bản lĩnh vượt trội trong môi trường tập thể như lớp học, công ty hay đội nhóm. Sự khao khát đấu tranh và chiến thắng luôn thúc đẩy họ không ngừng cố gắng để đạt được thành tựu, và từ sâu thẳm bên trong, họ khao khát được công nhận năng lực của mình. Tuy nhiên, nếu công sức của họ bị phủ nhận, họ có thể dễ mất nhuệ khí. Họ thích cảm giác chinh phục và tận hưởng mùi vị của chiến thắng, và không chịu nổi việc bị gò ép theo khuôn mẫu.</p> <p><strong>💡 Điểm mạnh:</strong> Quyết đoán, độc lập, nhiệt huyết và có khả năng lãnh đạo.</p> <p><strong>⚠️ Thách thức:</strong> Cần học cách làm việc nhóm, lắng nghe và điều chỉnh cái tôi để không trở nên quá bảo thủ.</p> <p><strong>🚀 Định hướng phát triển:</strong> Khuyến khích sự động viên, giảm bớt chỉ trích và tạo môi trường cho họ phát huy tối đa năng lực cá nhân trong khi vẫn hòa nhập với tập thể.</p>",
+      "<h4 class='my-3'>Chỉ Số Linh Hồn 1 - Người cá tính và tiên phong</h4> <p>Chỉ số linh hồn 1 là người rất cá tính. Đây là những người luôn mong muốn được là chính mình, có tính tranh đua và cạnh tranh cao. Họ thường thể hiện bản lĩnh vượt trội trong môi trường tập thể như lớp học, công ty hay đội nhóm. Sự khao khát đấu tranh và chiến thắng luôn thúc đẩy họ không ngừng cố gắng để đạt được thành tựu, và từ sâu thẳm bên trong, họ khao khát được công nhận năng lực của mình. Tuy nhiên, nếu công sức của họ bị phủ nhận, họ có thể dễ mất nhuệ khí. Họ thích cảm giác chinh phục và tận hưởng mùi vị của chiến thắng, và không chịu nổi việc bị gò ép theo khuôn mẫu.</p> <p><strong>🌱  Điểm mạnh:</strong> Quyết đoán, độc lập, nhiệt huyết và có khả năng lãnh đạo.</p> <p><strong>⚠️ Thách thức:</strong> Cần học cách làm việc nhóm, lắng nghe và điều chỉnh cái tôi để không trở nên quá bảo thủ.</p> <p><strong>🚀 Định hướng phát triển:</strong> Khuyến khích sự động viên, giảm bớt chỉ trích và tạo môi trường cho họ phát huy tối đa năng lực cá nhân trong khi vẫn hòa nhập với tập thể.</p>",
     tomtat:
-      "Thích cảm giác chinh phục và tận hưởng mùi vị của chiến thắng, và không chịu nổi việc bị gò ép theo khuôn mẫu.</p> <p><strong>💡 Điểm mạnh:</strong> Quyết đoán, độc lập, nhiệt huyết và có khả năng lãnh đạo.</p> <p><strong>⚠️ Thách thức:</strong> Cần học cách làm việc nhóm, lắng nghe và điều chỉnh cái tôi để không trở nên quá bảo thủ.</p> <p><strong>🚀 Định hướng phát triển:</strong> Khuyến khích sự động viên, giảm bớt chỉ trích và tạo môi trường cho họ phát huy tối đa năng lực cá nhân trong khi vẫn hòa nhập với tập thể.",
+      "Thích cảm giác chinh phục và tận hưởng mùi vị của chiến thắng, và không chịu nổi việc bị gò ép theo khuôn mẫu.</p> <p><strong>🌱  Điểm mạnh:</strong> Quyết đoán, độc lập, nhiệt huyết và có khả năng lãnh đạo.</p> <p><strong>⚠️ Thách thức:</strong> Cần học cách làm việc nhóm, lắng nghe và điều chỉnh cái tôi để không trở nên quá bảo thủ.</p> <p><strong>🚀 Định hướng phát triển:</strong> Khuyến khích sự động viên, giảm bớt chỉ trích và tạo môi trường cho họ phát huy tối đa năng lực cá nhân trong khi vẫn hòa nhập với tập thể.",
   },
   2: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Linh Hồn 2 - Người hòa hợp và nhạy cảm</h4> <p>Người có chỉ số linh hồn 2 luôn tìm kiếm sự thoải mái, hòa hợp và cân bằng trong tình cảm cũng như các mối quan hệ. Họ rất hòa đồng, ấm áp và mong muốn tạo dựng các mối quan hệ lành mạnh. Sự nhạy cảm của họ giúp họ dễ dàng nhận biết cảm xúc của người khác và thường trở thành người hòa giải trong tập thể. Họ không thích xung đột và luôn nỗ lực để duy trì sự yên bình trong mọi tình huống.</p> <p><strong>💡 Điểm mạnh:</strong> Đồng cảm, khéo léo trong giao tiếp, có khả năng giải quyết xung đột một cách tế nhị.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị tổn thương khi bị phớt lờ, cần học cách đặt ra ranh giới cá nhân và tự tin hơn trong quyết định.</p> <p><strong>🚀 Định hướng phát triển:</strong> Rèn luyện sự độc lập cảm xúc, tăng cường tự tin và biết tự chủ hơn trong mối quan hệ.</p>",
+      "<h4 class='my-3'>Chỉ Số Linh Hồn 2 - Người hòa hợp và nhạy cảm</h4> <p>Người có chỉ số linh hồn 2 luôn tìm kiếm sự thoải mái, hòa hợp và cân bằng trong tình cảm cũng như các mối quan hệ. Họ rất hòa đồng, ấm áp và mong muốn tạo dựng các mối quan hệ lành mạnh. Sự nhạy cảm của họ giúp họ dễ dàng nhận biết cảm xúc của người khác và thường trở thành người hòa giải trong tập thể. Họ không thích xung đột và luôn nỗ lực để duy trì sự yên bình trong mọi tình huống.</p> <p><strong>🌱  Điểm mạnh:</strong> Đồng cảm, khéo léo trong giao tiếp, có khả năng giải quyết xung đột một cách tế nhị.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị tổn thương khi bị phớt lờ, cần học cách đặt ra ranh giới cá nhân và tự tin hơn trong quyết định.</p> <p><strong>🚀 Định hướng phát triển:</strong> Rèn luyện sự độc lập cảm xúc, tăng cường tự tin và biết tự chủ hơn trong mối quan hệ.</p>",
     tomtat:
       "Không thích xung đột và luôn nỗ lực để duy trì sự yên bình trong mọi tình huống.",
   },
   3: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Linh Hồn 3 - Người sáng tạo và truyền cảm hứng</h4> <p>Người có chỉ số linh hồn 3 luôn khao khát được thể hiện bản thân một cách tự do. Họ thích môi trường sống vui tươi, sáng tạo và không gian dân chủ, nơi năng lượng tích cực được lan tỏa. Họ là những người mang đến nguồn cảm hứng và luôn tìm cách phá vỡ những giới hạn truyền thống để tìm ra con đường riêng của mình. Họ cũng rất mong muốn được cổ vũ và động viên khi theo đuổi đam mê của mình.</p> <p><strong>💡 Điểm mạnh:</strong> Sáng tạo, hài hước, tràn đầy năng lượng và khả năng giao tiếp xuất sắc.</p> <p><strong>⚠️ Thách thức:</strong> Dễ mất tập trung, thiếu kiên trì và đôi khi chỉ tập trung vào việc tìm kiếm niềm vui thay vì đạt được mục tiêu lâu dài.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách duy trì sự tập trung và kiên trì theo đuổi mục tiêu trong khi vẫn giữ được tính sáng tạo.</p>",
+      "<h4 class='my-3'>Chỉ Số Linh Hồn 3 - Người sáng tạo và truyền cảm hứng</h4> <p>Người có chỉ số linh hồn 3 luôn khao khát được thể hiện bản thân một cách tự do. Họ thích môi trường sống vui tươi, sáng tạo và không gian dân chủ, nơi năng lượng tích cực được lan tỏa. Họ là những người mang đến nguồn cảm hứng và luôn tìm cách phá vỡ những giới hạn truyền thống để tìm ra con đường riêng của mình. Họ cũng rất mong muốn được cổ vũ và động viên khi theo đuổi đam mê của mình.</p> <p><strong>🌱  Điểm mạnh:</strong> Sáng tạo, hài hước, tràn đầy năng lượng và khả năng giao tiếp xuất sắc.</p> <p><strong>⚠️ Thách thức:</strong> Dễ mất tập trung, thiếu kiên trì và đôi khi chỉ tập trung vào việc tìm kiếm niềm vui thay vì đạt được mục tiêu lâu dài.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách duy trì sự tập trung và kiên trì theo đuổi mục tiêu trong khi vẫn giữ được tính sáng tạo.</p>",
     tomtat:
       "Thích môi trường sống vui tươi, sáng tạo và không gian dân chủ, nơi năng lượng tích cực được lan tỏa.",
   },
   4: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Linh Hồn 4 - Người thực tế và cầu toàn</h4> <p>Chỉ số linh hồn 4 biểu thị cho người có xu hướng cầu toàn và luôn nỗ lực để làm tốt mọi việc. Họ luôn cẩn thận, suy nghĩ thấu đáo và không ngừng học hỏi để trau dồi kiến thức. Họ đề cao sự ổn định và coi trọng mối quan hệ gia đình, bạn bè và những giá trị truyền thống. Tính cách này giúp họ trở thành những người có uy tín và luôn được tin cậy trong mọi hoàn cảnh.</p> <p><strong>💡 Điểm mạnh:</strong> Cẩn thận, tỉ mỉ, chăm chỉ và có tổ chức.</p> <p><strong>⚠️ Thách thức:</strong> Dễ trở nên bảo thủ, cứng nhắc và thiếu linh hoạt khi đối mặt với sự thay đổi.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách đón nhận sự thay đổi và phát huy tính sáng tạo bên trong, mở rộng tầm nhìn ngoài khuôn khổ truyền thống.</p>",
+      "<h4 class='my-3'>Chỉ Số Linh Hồn 4 - Người thực tế và cầu toàn</h4> <p>Chỉ số linh hồn 4 biểu thị cho người có xu hướng cầu toàn và luôn nỗ lực để làm tốt mọi việc. Họ luôn cẩn thận, suy nghĩ thấu đáo và không ngừng học hỏi để trau dồi kiến thức. Họ đề cao sự ổn định và coi trọng mối quan hệ gia đình, bạn bè và những giá trị truyền thống. Tính cách này giúp họ trở thành những người có uy tín và luôn được tin cậy trong mọi hoàn cảnh.</p> <p><strong>🌱  Điểm mạnh:</strong> Cẩn thận, tỉ mỉ, chăm chỉ và có tổ chức.</p> <p><strong>⚠️ Thách thức:</strong> Dễ trở nên bảo thủ, cứng nhắc và thiếu linh hoạt khi đối mặt với sự thay đổi.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách đón nhận sự thay đổi và phát huy tính sáng tạo bên trong, mở rộng tầm nhìn ngoài khuôn khổ truyền thống.</p>",
     tomtat:
       "Đề cao sự ổn định và coi trọng mối quan hệ gia đình, bạn bè và những giá trị truyền thống",
   },
   5: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Linh Hồn 5 - Người yêu tự do và khám phá</h4> <p>Chỉ số linh hồn 5 là biểu hiện của tâm hồn yêu tự do, phóng khoáng và khao khát khám phá mọi ngóc ngách của cuộc sống. Họ luôn tìm kiếm những trải nghiệm mới lạ và độc đáo, thích tham gia các chuyến du lịch, thám hiểm và sáng tạo. Tuy nhiên, họ không nhất thiết muốn thể hiện điều đó ra bên ngoài; họ chỉ mong muốn được tự do và thoải mái theo cách của riêng mình.</p> <p><strong>💡 Điểm mạnh:</strong> Linh hoạt, nhanh nhẹn, có khả năng thích nghi và giao tiếp tốt.</p> <p><strong>⚠️ Thách thức:</strong> Dễ mất phương hướng, thiếu kiên trì và dễ dao động trong cảm xúc.</p> <p><strong>🚀 Định hướng phát triển:</strong> Cần tập trung vào việc duy trì sự ổn định và định hướng rõ ràng để tận dụng tối đa khả năng sáng tạo của bản thân.</p>",
+      "<h4 class='my-3'>Chỉ Số Linh Hồn 5 - Người yêu tự do và khám phá</h4> <p>Chỉ số linh hồn 5 là biểu hiện của tâm hồn yêu tự do, phóng khoáng và khao khát khám phá mọi ngóc ngách của cuộc sống. Họ luôn tìm kiếm những trải nghiệm mới lạ và độc đáo, thích tham gia các chuyến du lịch, thám hiểm và sáng tạo. Tuy nhiên, họ không nhất thiết muốn thể hiện điều đó ra bên ngoài; họ chỉ mong muốn được tự do và thoải mái theo cách của riêng mình.</p> <p><strong>🌱  Điểm mạnh:</strong> Linh hoạt, nhanh nhẹn, có khả năng thích nghi và giao tiếp tốt.</p> <p><strong>⚠️ Thách thức:</strong> Dễ mất phương hướng, thiếu kiên trì và dễ dao động trong cảm xúc.</p> <p><strong>🚀 Định hướng phát triển:</strong> Cần tập trung vào việc duy trì sự ổn định và định hướng rõ ràng để tận dụng tối đa khả năng sáng tạo của bản thân.</p>",
     tomtat:
       "Luôn tìm kiếm những trải nghiệm mới lạ và độc đáo, thích tham gia các chuyến du lịch, thám hiểm và sáng tạo.",
   },
   6: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Linh Hồn 6 - Người tận tâm và cống hiến</h4> <p>Người có chỉ số linh hồn 6 luôn thể hiện lòng nhiệt huyết trong việc chăm sóc và cống hiến cho người khác. Họ đề cao giá trị gia đình, luôn mong muốn mang lại sự ấm áp và hạnh phúc cho mọi người xung quanh. Sự tận tâm và chu đáo của họ giúp xây dựng những mối quan hệ bền vững và ý nghĩa.</p> <p><strong>💡 Điểm mạnh:</strong> Yêu thương, nhân hậu, luôn sẵn sàng giúp đỡ và chăm sóc người khác.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị quá tải khi gánh vác nhiều trách nhiệm, cần học cách chăm sóc chính mình nhiều hơn.</p> <p><strong>🚀 Định hướng phát triển:</strong> Cần học cách cân bằng giữa việc hỗ trợ người khác và bảo vệ sức khỏe, tinh thần của bản thân.</p>",
+      "<h4 class='my-3'>Chỉ Số Linh Hồn 6 - Người tận tâm và cống hiến</h4> <p>Người có chỉ số linh hồn 6 luôn thể hiện lòng nhiệt huyết trong việc chăm sóc và cống hiến cho người khác. Họ đề cao giá trị gia đình, luôn mong muốn mang lại sự ấm áp và hạnh phúc cho mọi người xung quanh. Sự tận tâm và chu đáo của họ giúp xây dựng những mối quan hệ bền vững và ý nghĩa.</p> <p><strong>🌱  Điểm mạnh:</strong> Yêu thương, nhân hậu, luôn sẵn sàng giúp đỡ và chăm sóc người khác.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị quá tải khi gánh vác nhiều trách nhiệm, cần học cách chăm sóc chính mình nhiều hơn.</p> <p><strong>🚀 Định hướng phát triển:</strong> Cần học cách cân bằng giữa việc hỗ trợ người khác và bảo vệ sức khỏe, tinh thần của bản thân.</p>",
     tomtat:
       "Đề cao giá trị gia đình, luôn mong muốn mang lại sự ấm áp và hạnh phúc cho mọi người xung quanh",
   },
   7: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Linh Hồn 7 - Người tìm kiếm tri thức và sâu sắc</h4> <p>Chỉ số linh hồn 7 biểu thị cho những người có tâm hồn nghiên cứu, chiêm nghiệm và luôn tò mò về sự thật của cuộc sống. Họ có triết lý sống riêng, thường sống nội tâm và không dễ bị ảnh hưởng bởi đám đông. Họ đặt ra những chuẩn mực cao cho bản thân và mong muốn khám phá những điều sâu sắc bên trong cuộc sống.</p> <p><strong>💡 Điểm mạnh:</strong> Sâu sắc, thông thái, có tư duy phân tích và trực giác mạnh mẽ.</p> <p><strong>⚠️ Thách thức:</strong> Dễ trở nên cô độc, khó mở lòng và thiếu sự kết nối với xã hội.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách chia sẻ kiến thức và kinh nghiệm, kết nối với cộng đồng để cân bằng giữa nội tâm và giao tiếp xã hội.</p>",
+      "<h4 class='my-3'>Chỉ Số Linh Hồn 7 - Người tìm kiếm tri thức và sâu sắc</h4> <p>Chỉ số linh hồn 7 biểu thị cho những người có tâm hồn nghiên cứu, chiêm nghiệm và luôn tò mò về sự thật của cuộc sống. Họ có triết lý sống riêng, thường sống nội tâm và không dễ bị ảnh hưởng bởi đám đông. Họ đặt ra những chuẩn mực cao cho bản thân và mong muốn khám phá những điều sâu sắc bên trong cuộc sống.</p> <p><strong>🌱  Điểm mạnh:</strong> Sâu sắc, thông thái, có tư duy phân tích và trực giác mạnh mẽ.</p> <p><strong>⚠️ Thách thức:</strong> Dễ trở nên cô độc, khó mở lòng và thiếu sự kết nối với xã hội.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách chia sẻ kiến thức và kinh nghiệm, kết nối với cộng đồng để cân bằng giữa nội tâm và giao tiếp xã hội.</p>",
     tomtat:
       "Chuẩn mực cao cho bản thân và mong muốn khám phá những điều sâu sắc bên trong cuộc sống.",
   },
   8: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Linh Hồn 8 - Người lãnh đạo mạnh mẽ và độc lập</h4> <p>Chỉ số linh hồn 8 cho thấy bạn có khát khao được tự chủ và đạt được thành công lớn. Bạn luôn tìm cách kiểm soát vận mệnh của mình, với khả năng lãnh đạo và tinh thần quyết đoán. Bạn thường tự chủ về mặt tài chính và luôn theo đuổi mục tiêu một cách mạnh mẽ.</p> <p><strong>💡 Điểm mạnh:</strong> Tham vọng, có tố chất lãnh đạo và khả năng định hướng tốt.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị cuốn vào quyền lực, có xu hướng cứng nhắc và quá tập trung vào vật chất.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách cân bằng giữa thành công cá nhân và trách nhiệm với cộng đồng, cũng như lắng nghe và chấp nhận ý kiến đóng góp từ người khác.</p>",
+      "<h4 class='my-3'>Chỉ Số Linh Hồn 8 - Người lãnh đạo mạnh mẽ và độc lập</h4> <p>Chỉ số linh hồn 8 cho thấy bạn có khát khao được tự chủ và đạt được thành công lớn. Bạn luôn tìm cách kiểm soát vận mệnh của mình, với khả năng lãnh đạo và tinh thần quyết đoán. Bạn thường tự chủ về mặt tài chính và luôn theo đuổi mục tiêu một cách mạnh mẽ.</p> <p><strong>🌱  Điểm mạnh:</strong> Tham vọng, có tố chất lãnh đạo và khả năng định hướng tốt.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị cuốn vào quyền lực, có xu hướng cứng nhắc và quá tập trung vào vật chất.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách cân bằng giữa thành công cá nhân và trách nhiệm với cộng đồng, cũng như lắng nghe và chấp nhận ý kiến đóng góp từ người khác.</p>",
     tomtat:
       "Luôn tìm cách kiểm soát vận mệnh của mình, với khả năng lãnh đạo và tinh thần quyết đoán. Bạn mong muốn tự chủ về mặt tài chính và luôn theo đuổi mục tiêu một cách mạnh mẽ",
   },
   9: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Linh Hồn 9 - Người nhân ái và cống hiến</h4> <p>Chỉ số linh hồn 9 thường là người mang trong mình tấm lòng rộng lớn, mong muốn cống hiến vì cộng đồng và những lý tưởng cao đẹp. Bạn luôn muốn sống trọn vẹn và tạo ra những giá trị nhân văn, giúp đỡ người khác một cách thiết thực. Bạn có xu hướng lãnh đạo và truyền cảm hứng cho mọi người xung quanh thông qua lòng nhân ái của mình.</p> <p><strong>💡 Điểm mạnh:</strong> Nhân hậu, bao dung, có tầm nhìn và khả năng truyền cảm hứng mạnh mẽ.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị lợi dụng vì lòng tốt, cần học cách bảo vệ bản thân khi cần thiết.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách giữ cân bằng giữa lý tưởng và thực tế, cũng như biết bảo vệ bản thân trong khi vẫn cống hiến cho người khác.</p>",
+      "<h4 class='my-3'>Chỉ Số Linh Hồn 9 - Người nhân ái và cống hiến</h4> <p>Chỉ số linh hồn 9 thường là người mang trong mình tấm lòng rộng lớn, mong muốn cống hiến vì cộng đồng và những lý tưởng cao đẹp. Bạn luôn muốn sống trọn vẹn và tạo ra những giá trị nhân văn, giúp đỡ người khác một cách thiết thực. Bạn có xu hướng lãnh đạo và truyền cảm hứng cho mọi người xung quanh thông qua lòng nhân ái của mình.</p> <p><strong>🌱  Điểm mạnh:</strong> Nhân hậu, bao dung, có tầm nhìn và khả năng truyền cảm hứng mạnh mẽ.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị lợi dụng vì lòng tốt, cần học cách bảo vệ bản thân khi cần thiết.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách giữ cân bằng giữa lý tưởng và thực tế, cũng như biết bảo vệ bản thân trong khi vẫn cống hiến cho người khác.</p>",
     tomtat:
       "Mong muốn cống hiến vì cộng đồng và những lý tưởng cao đẹp. Bạn luôn muốn sống trọn vẹn và tạo ra những giá trị nhân văn, giúp đỡ người khác một cách thiết thực. Bạn có xu hướng lãnh đạo và truyền cảm hứng cho mọi người xung quanh thông qua lòng nhân ái của mình.",
   },
@@ -840,39 +840,39 @@ export const INNER_NUMBER = {
 export const EXPRESSION_NUMBER = {
   1: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Biểu Đạt 1 - Người lãnh đạo độc lập</h4> <p>Người có chỉ số biểu đạt 1 luôn thể hiện cá tính mạnh mẽ, độc lập và đầy quyết đoán. Họ có khả năng lãnh đạo tự nhiên, luôn tìm cách khẳng định bản thân và dẫn dắt người khác theo con đường riêng của mình. Họ đam mê sáng tạo và không ngại đứng ra đối mặt với thách thức, mong muốn đạt được thành công vượt trội.</p> <p><strong>💡 Điểm mạnh:</strong> Tính cách độc lập, quyết đoán, sáng tạo và khả năng lãnh đạo xuất sắc.</p> <p><strong>⚠️ Thách thức:</strong> Có thể quá tự phụ, ít lắng nghe ý kiến của người khác và có xu hướng cô lập khi bị phủ nhận.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách cởi mở, lắng nghe đóng góp từ người khác và làm việc nhóm hiệu quả hơn để tận dụng tối đa tiềm năng lãnh đạo của mình.</p>",
+      "<h4 class='my-3'>Chỉ Số Biểu Đạt 1 - Người lãnh đạo độc lập</h4> <p>Người có chỉ số biểu đạt 1 luôn thể hiện cá tính mạnh mẽ, độc lập và đầy quyết đoán. Họ có khả năng lãnh đạo tự nhiên, luôn tìm cách khẳng định bản thân và dẫn dắt người khác theo con đường riêng của mình. Họ đam mê sáng tạo và không ngại đứng ra đối mặt với thách thức, mong muốn đạt được thành công vượt trội.</p> <p><strong>🌱  Điểm mạnh:</strong> Tính cách độc lập, quyết đoán, sáng tạo và khả năng lãnh đạo xuất sắc.</p> <p><strong>⚠️ Thách thức:</strong> Có thể quá tự phụ, ít lắng nghe ý kiến của người khác và có xu hướng cô lập khi bị phủ nhận.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách cởi mở, lắng nghe đóng góp từ người khác và làm việc nhóm hiệu quả hơn để tận dụng tối đa tiềm năng lãnh đạo của mình.</p>",
   },
   2: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Biểu Đạt 2 - Người hòa giải và nhạy cảm</h4> <p>Người có chỉ số biểu đạt 2 thường rất nhạy cảm, tinh tế và có khả năng giao tiếp mềm dẻo. Họ là những người có tài hòa giải, biết cách làm dịu bầu không khí căng thẳng và tạo ra môi trường làm việc hòa bình. Họ luôn đề cao sự thấu hiểu và mong muốn xây dựng mối quan hệ bền vững với người xung quanh.</p> <p><strong>💡 Điểm mạnh:</strong> Khả năng đồng cảm, tinh tế và làm việc nhóm tốt.</p> <p><strong>⚠️ Thách thức:</strong> Có thể quá phụ thuộc vào người khác và gặp khó khăn khi phải đưa ra quyết định độc lập.</p> <p><strong>🚀 Định hướng phát triển:</strong> Cần rèn luyện sự tự tin và khả năng tự quyết để duy trì sự cân bằng giữa hòa nhập và độc lập.</p>",
+      "<h4 class='my-3'>Chỉ Số Biểu Đạt 2 - Người hòa giải và nhạy cảm</h4> <p>Người có chỉ số biểu đạt 2 thường rất nhạy cảm, tinh tế và có khả năng giao tiếp mềm dẻo. Họ là những người có tài hòa giải, biết cách làm dịu bầu không khí căng thẳng và tạo ra môi trường làm việc hòa bình. Họ luôn đề cao sự thấu hiểu và mong muốn xây dựng mối quan hệ bền vững với người xung quanh.</p> <p><strong>🌱  Điểm mạnh:</strong> Khả năng đồng cảm, tinh tế và làm việc nhóm tốt.</p> <p><strong>⚠️ Thách thức:</strong> Có thể quá phụ thuộc vào người khác và gặp khó khăn khi phải đưa ra quyết định độc lập.</p> <p><strong>🚀 Định hướng phát triển:</strong> Cần rèn luyện sự tự tin và khả năng tự quyết để duy trì sự cân bằng giữa hòa nhập và độc lập.</p>",
   },
   3: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Biểu Đạt 3 - Người sáng tạo và biểu đạt</h4> <p>Người có chỉ số biểu đạt 3 là những người có tài nghệ thuật bẩm sinh. Họ có khả năng giao tiếp xuất sắc, mang đến nguồn năng lượng tích cực và luôn biết cách truyền cảm hứng cho người khác. Họ yêu thích sự tự do trong việc sáng tạo và thể hiện bản thân, đồng thời luôn tìm cách phá vỡ các khuôn mẫu truyền thống.</p> <p><strong>💡 Điểm mạnh:</strong> Sáng tạo, hài hước, giao tiếp tốt và có khả năng truyền cảm hứng.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị phân tán, thiếu kiên trì và có xu hướng ưu tiên niềm vui ngắn hạn.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách duy trì sự tập trung và kiên trì theo đuổi mục tiêu lâu dài, đồng thời phát huy tối đa năng lực sáng tạo của mình.</p>",
+      "<h4 class='my-3'>Chỉ Số Biểu Đạt 3 - Người sáng tạo và biểu đạt</h4> <p>Người có chỉ số biểu đạt 3 là những người có tài nghệ thuật bẩm sinh. Họ có khả năng giao tiếp xuất sắc, mang đến nguồn năng lượng tích cực và luôn biết cách truyền cảm hứng cho người khác. Họ yêu thích sự tự do trong việc sáng tạo và thể hiện bản thân, đồng thời luôn tìm cách phá vỡ các khuôn mẫu truyền thống.</p> <p><strong>🌱  Điểm mạnh:</strong> Sáng tạo, hài hước, giao tiếp tốt và có khả năng truyền cảm hứng.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị phân tán, thiếu kiên trì và có xu hướng ưu tiên niềm vui ngắn hạn.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách duy trì sự tập trung và kiên trì theo đuổi mục tiêu lâu dài, đồng thời phát huy tối đa năng lực sáng tạo của mình.</p>",
   },
   4: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Biểu Đạt 4 - Người tổ chức và có trách nhiệm</h4> <p>Người có chỉ số biểu đạt 4 thường thể hiện tính cách thực tế, có tổ chức và có trách nhiệm cao. Họ luôn đề cao tính kỷ luật và làm việc có kế hoạch, tạo nên nền tảng vững chắc cho sự nghiệp cũng như các mối quan hệ cá nhân. Họ là người có tư duy logic, luôn chú trọng vào chi tiết để đảm bảo sự ổn định.</p> <p><strong>💡 Điểm mạnh:</strong> Tổ chức tốt, cẩn thận, kiên trì và đáng tin cậy.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị bảo thủ, cứng nhắc và không linh hoạt khi đối mặt với thay đổi.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách linh hoạt hơn, chấp nhận sáng tạo và điều chỉnh quan điểm khi cần thiết để phát triển bền vững.</p>",
+      "<h4 class='my-3'>Chỉ Số Biểu Đạt 4 - Người tổ chức và có trách nhiệm</h4> <p>Người có chỉ số biểu đạt 4 thường thể hiện tính cách thực tế, có tổ chức và có trách nhiệm cao. Họ luôn đề cao tính kỷ luật và làm việc có kế hoạch, tạo nên nền tảng vững chắc cho sự nghiệp cũng như các mối quan hệ cá nhân. Họ là người có tư duy logic, luôn chú trọng vào chi tiết để đảm bảo sự ổn định.</p> <p><strong>🌱  Điểm mạnh:</strong> Tổ chức tốt, cẩn thận, kiên trì và đáng tin cậy.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị bảo thủ, cứng nhắc và không linh hoạt khi đối mặt với thay đổi.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách linh hoạt hơn, chấp nhận sáng tạo và điều chỉnh quan điểm khi cần thiết để phát triển bền vững.</p>",
   },
   5: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Biểu Đạt 5 - Người năng động, thích tự do và khám phá</h4> <p>Người có chỉ số biểu đạt 5 luôn tìm kiếm sự tự do và không ngại thử thách. Họ là những người thích khám phá, phiêu lưu và luôn mở rộng trải nghiệm sống của mình. Tài năng biểu đạt của họ được thể hiện qua cách giao tiếp, sáng tạo và khả năng thích ứng với mọi tình huống. Họ luôn khao khát đổi mới và không muốn bị ràng buộc bởi những giới hạn cũ kỹ.</p> <p><strong>💡 Điểm mạnh:</strong> Linh hoạt, năng động, sáng tạo và thích nghi tốt với môi trường thay đổi.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị mất phương hướng, thiếu sự ổn định và có xu hướng dao động trong cảm xúc.</p> <p><strong>🚀 Định hướng phát triển:</strong> Xây dựng mục tiêu rõ ràng, rèn luyện sự kiên trì và duy trì sự ổn định để phát huy tối đa tiềm năng sáng tạo.</p>",
+      "<h4 class='my-3'>Chỉ Số Biểu Đạt 5 - Người năng động, thích tự do và khám phá</h4> <p>Người có chỉ số biểu đạt 5 luôn tìm kiếm sự tự do và không ngại thử thách. Họ là những người thích khám phá, phiêu lưu và luôn mở rộng trải nghiệm sống của mình. Tài năng biểu đạt của họ được thể hiện qua cách giao tiếp, sáng tạo và khả năng thích ứng với mọi tình huống. Họ luôn khao khát đổi mới và không muốn bị ràng buộc bởi những giới hạn cũ kỹ.</p> <p><strong>🌱  Điểm mạnh:</strong> Linh hoạt, năng động, sáng tạo và thích nghi tốt với môi trường thay đổi.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị mất phương hướng, thiếu sự ổn định và có xu hướng dao động trong cảm xúc.</p> <p><strong>🚀 Định hướng phát triển:</strong> Xây dựng mục tiêu rõ ràng, rèn luyện sự kiên trì và duy trì sự ổn định để phát huy tối đa tiềm năng sáng tạo.</p>",
   },
   6: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Biểu Đạt 6 - Người chăm sóc và tình cảm</h4> <p>Người có chỉ số biểu đạt 6 là những người có trái tim ấm áp, luôn đặt giá trị gia đình và tình cảm lên hàng đầu. Họ có khả năng tạo dựng mối quan hệ gắn bó và luôn mong muốn mang lại sự an toàn, yêu thương cho người thân và bạn bè. Họ là người có tính cách chu đáo và luôn muốn chăm sóc, bảo vệ những người xung quanh.</p> <p><strong>💡 Điểm mạnh:</strong> Tận tâm, nhân hậu, biết quan tâm và xây dựng mối quan hệ bền chặt.</p> <p><strong>⚠️ Thách thức:</strong> Có thể dễ bị quá tải vì luôn đặt lợi ích của người khác lên trên bản thân.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách phân chia thời gian, năng lượng giữa việc chăm sóc người khác và tự chăm sóc bản thân để duy trì sự cân bằng.</p>",
+      "<h4 class='my-3'>Chỉ Số Biểu Đạt 6 - Người chăm sóc và tình cảm</h4> <p>Người có chỉ số biểu đạt 6 là những người có trái tim ấm áp, luôn đặt giá trị gia đình và tình cảm lên hàng đầu. Họ có khả năng tạo dựng mối quan hệ gắn bó và luôn mong muốn mang lại sự an toàn, yêu thương cho người thân và bạn bè. Họ là người có tính cách chu đáo và luôn muốn chăm sóc, bảo vệ những người xung quanh.</p> <p><strong>🌱  Điểm mạnh:</strong> Tận tâm, nhân hậu, biết quan tâm và xây dựng mối quan hệ bền chặt.</p> <p><strong>⚠️ Thách thức:</strong> Có thể dễ bị quá tải vì luôn đặt lợi ích của người khác lên trên bản thân.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách phân chia thời gian, năng lượng giữa việc chăm sóc người khác và tự chăm sóc bản thân để duy trì sự cân bằng.</p>",
   },
   7: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Biểu Đạt 7 - Người tư duy sâu sắc và triết lý</h4> <p>Người có chỉ số biểu đạt 7 thường có tâm hồn sâu sắc, yêu thích nghiên cứu, chiêm nghiệm và luôn tìm kiếm ý nghĩa đích thực của cuộc sống. Họ có triết lý sống riêng biệt và không dễ bị ảnh hưởng bởi số đông. Sự độc lập trong tư duy giúp họ có cái nhìn sâu sắc về bản chất của sự việc, nhưng cũng khiến họ đôi khi trở nên kín đáo và khó giao tiếp.</p> <p><strong>💡 Điểm mạnh:</strong> Sâu sắc, thông thái, có khả năng phân tích và trực giác mạnh mẽ.</p> <p><strong>⚠️ Thách thức:</strong> Dễ rơi vào cô lập, thiếu giao tiếp và khó chia sẻ cảm xúc với người khác.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách mở lòng, giao tiếp và chia sẻ kiến thức để làm phong phú thêm các mối quan hệ.</p>",
+      "<h4 class='my-3'>Chỉ Số Biểu Đạt 7 - Người tư duy sâu sắc và triết lý</h4> <p>Người có chỉ số biểu đạt 7 thường có tâm hồn sâu sắc, yêu thích nghiên cứu, chiêm nghiệm và luôn tìm kiếm ý nghĩa đích thực của cuộc sống. Họ có triết lý sống riêng biệt và không dễ bị ảnh hưởng bởi số đông. Sự độc lập trong tư duy giúp họ có cái nhìn sâu sắc về bản chất của sự việc, nhưng cũng khiến họ đôi khi trở nên kín đáo và khó giao tiếp.</p> <p><strong>🌱  Điểm mạnh:</strong> Sâu sắc, thông thái, có khả năng phân tích và trực giác mạnh mẽ.</p> <p><strong>⚠️ Thách thức:</strong> Dễ rơi vào cô lập, thiếu giao tiếp và khó chia sẻ cảm xúc với người khác.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách mở lòng, giao tiếp và chia sẻ kiến thức để làm phong phú thêm các mối quan hệ.</p>",
   },
   8: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Biểu Đạt 8 - Người lãnh đạo và hiện thực</h4> <p>Người có chỉ số biểu đạt 8 thường có khả năng lãnh đạo và có tầm nhìn rõ ràng về thành công. Họ có khả năng quản lý tốt và luôn theo đuổi mục tiêu một cách quyết đoán. Tinh thần thực tiễn và khả năng tổ chức của họ giúp định hướng sự nghiệp một cách hiệu quả, nhưng họ cũng cần chú ý không để lòng tham và áp lực làm lu mờ giá trị cảm xúc.</p> <p><strong>💡 Điểm mạnh:</strong> Quyết đoán, tham vọng, có khả năng lãnh đạo và định hướng sự nghiệp xuất sắc.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị cuốn vào quyền lực, thiếu sự linh hoạt và có xu hướng chỉ tập trung vào vật chất.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách cân bằng giữa thành công cá nhân và trách nhiệm với xã hội, cũng như lắng nghe ý kiến từ người khác để hoàn thiện bản thân.</p>",
+      "<h4 class='my-3'>Chỉ Số Biểu Đạt 8 - Người lãnh đạo và hiện thực</h4> <p>Người có chỉ số biểu đạt 8 thường có khả năng lãnh đạo và có tầm nhìn rõ ràng về thành công. Họ có khả năng quản lý tốt và luôn theo đuổi mục tiêu một cách quyết đoán. Tinh thần thực tiễn và khả năng tổ chức của họ giúp định hướng sự nghiệp một cách hiệu quả, nhưng họ cũng cần chú ý không để lòng tham và áp lực làm lu mờ giá trị cảm xúc.</p> <p><strong>🌱  Điểm mạnh:</strong> Quyết đoán, tham vọng, có khả năng lãnh đạo và định hướng sự nghiệp xuất sắc.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị cuốn vào quyền lực, thiếu sự linh hoạt và có xu hướng chỉ tập trung vào vật chất.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách cân bằng giữa thành công cá nhân và trách nhiệm với xã hội, cũng như lắng nghe ý kiến từ người khác để hoàn thiện bản thân.</p>",
   },
   9: {
     noidung:
-      "<h4 class='my-3'>Chỉ Số Biểu Đạt 9 - Người nhân đạo và truyền cảm hứng</h4> <p>Người có chỉ số biểu đạt 9 có tấm lòng rộng lớn và luôn mong muốn cống hiến vì cộng đồng. Họ mang trong mình niềm tin vào những lý tưởng cao đẹp và luôn nỗ lực để lan tỏa yêu thương, giúp đỡ người khác. Sự biểu đạt của họ thường mang tính nhân văn, truyền cảm hứng mạnh mẽ, giúp cải thiện cuộc sống của những người xung quanh.</p> <p><strong>💡 Điểm mạnh:</strong> Nhân hậu, bao dung, có tầm nhìn sâu rộng và khả năng truyền cảm hứng.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị lợi dụng vì lòng tốt, cần học cách tự bảo vệ bản thân trong quá trình cống hiến.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách duy trì sự cân bằng giữa lý tưởng và thực tế, bảo vệ năng lượng cá nhân trong khi vẫn cống hiến cho cộng đồng.</p>",
+      "<h4 class='my-3'>Chỉ Số Biểu Đạt 9 - Người nhân đạo và truyền cảm hứng</h4> <p>Người có chỉ số biểu đạt 9 có tấm lòng rộng lớn và luôn mong muốn cống hiến vì cộng đồng. Họ mang trong mình niềm tin vào những lý tưởng cao đẹp và luôn nỗ lực để lan tỏa yêu thương, giúp đỡ người khác. Sự biểu đạt của họ thường mang tính nhân văn, truyền cảm hứng mạnh mẽ, giúp cải thiện cuộc sống của những người xung quanh.</p> <p><strong>🌱  Điểm mạnh:</strong> Nhân hậu, bao dung, có tầm nhìn sâu rộng và khả năng truyền cảm hứng.</p> <p><strong>⚠️ Thách thức:</strong> Dễ bị lợi dụng vì lòng tốt, cần học cách tự bảo vệ bản thân trong quá trình cống hiến.</p> <p><strong>🚀 Định hướng phát triển:</strong> Học cách duy trì sự cân bằng giữa lý tưởng và thực tế, bảo vệ năng lượng cá nhân trong khi vẫn cống hiến cho cộng đồng.</p>",
   },
 };
 export const ARROW = {
@@ -1128,8 +1128,7 @@ export const WEAK_NUMB = {
   9: {
     noidung: `
     <p><strong class='text-danger'>Thiếu sự đồng cảm và lòng trắc ẩn với người khác</strong>, khó bao dung và dễ để bụng những chuyện nhỏ nhặt.</p>
-    <p><strong class='text-danger'>Sống thực dụng</strong>, dễ bỏ qua các giá trị nhân văn.</p>`
-
+    <p><strong class='text-danger'>Sống thực dụng</strong>, dễ bỏ qua các giá trị nhân văn.</p>`,
   },
 };
 
@@ -1487,205 +1486,219 @@ export const NUMERLOGY_JOB = {
 export const SOLUTION_NUMB = {
   1: {
     noidung: `
-   <div class='text-danger'><i class="icon">💡</i><strong>Điểm yếu:</strong></div>
+      <div class="weak-title">🎯 Điểm cần cải thiện</div>
       <ul>
-        <li>Thiếu quyết đoán,</li>
-        <li>Thiếu chính kiến,</li>
+        <li>Chưa đủ quyết đoán trong lựa chọn</li>
+        <li>Dễ dao động, thiếu chính kiến cá nhân</li>
       </ul>
-    </p>
-      <div class="subtitle">✨ Giải pháp khắc phục:</div>
-    <ul>
-      <li>Rèn luyện tư duy phản biện.</li>
-      <li>Tập nói “không” và đưa ra ý kiến cá nhân.</li>
-      <li>Tham gia các khoá học lãnh đạo hoặc phát triển bản thân.</li>
-    </ul>
-     <div class="subtitle">🚫 Tính chất công việc nên hạn chế:</div>
-    <ul>
-      <li>CEO, quản lý cấp cao.</li>
-      <li>Founder startup, chỉ huy trưởng.</li>
-      <li>Đầu tư, tài chính, đàm phán cạnh tranh.</li>
-    </ul>
+
+      <div class="subtitle">✨ Hướng phát triển</div>
+      <ul>
+        <li>Rèn tư duy phản biện và tự đặt câu hỏi “vì sao” trước quyết định</li>
+        <li>Tập nói “không” một cách điềm tĩnh và rõ ràng</li>
+        <li>Tham gia khóa học về lãnh đạo hoặc phát triển bản thân</li>
+      </ul>
+
+      <div class="subtitle">🚫 Nên cân nhắc với công việc</div>
+      <ul>
+        <li>Vai trò lãnh đạo cao nhất (CEO, Founder)</li>
+        <li>Công việc đòi hỏi quyết định nhanh, áp lực lớn</li>
+        <li>Đầu tư, tài chính mang tính cạnh tranh cao</li>
+      </ul>
     `,
   },
+
   2: {
     noidung: `
-   <div class='text-danger'><i class="icon">💡</i><strong>Điểm yếu:</strong></div>
+      <div class="weak-title">🎯 Điểm cần cải thiện</div>
       <ul>
-        <li>Khó kết nối,</li>
-        <li>Khó bày tỏ cảm xúc,</li>
-        <li>Dễ cô lập.</li>
+        <li>Khó kết nối cảm xúc với người khác</li>
+        <li>Ngại bộc lộ suy nghĩ và cảm xúc cá nhân</li>
+        <li>Dễ thu mình, cảm giác cô lập</li>
       </ul>
-    </p>
-      <div class="subtitle">✨ Giải pháp khắc phục:</div>
-    <ul>
-      <li>Học cách giao tiếp phi bạo lực, kỹ năng lắng nghe chủ động.</li>
-      <li>Tham gia hoạt động nhóm, rèn khả năng chia sẻ.</li>
-      <li>Viết nhật ký cảm xúc mỗi ngày.</li>
-    </ul>
-     <div class="subtitle">🚫 Tính chất công việc nên hạn chế:</div>
-    <ul>
-      <li>Nhân sự, chăm sóc khách hàng, tư vấn tâm lý.</li>
-      <li>Giáo viên mầm non, điều dưỡng.</li>
-      <li>Công việc đòi hỏi hợp tác nhóm cao.</li>
-    </ul>
+
+      <div class="subtitle">✨ Hướng phát triển</div>
+      <ul>
+        <li>Học giao tiếp phi bạo lực và lắng nghe chủ động</li>
+        <li>Tham gia hoạt động nhóm an toàn, không phán xét</li>
+        <li>Viết nhật ký cảm xúc để hiểu bản thân sâu hơn</li>
+      </ul>
+
+      <div class="subtitle">🚫 Nên cân nhắc với công việc</div>
+      <ul>
+        <li>Nhân sự, chăm sóc khách hàng chuyên sâu</li>
+        <li>Tư vấn tâm lý, công việc đòi hỏi đồng cảm cao</li>
+        <li>Vai trò cần tương tác xã hội liên tục</li>
+      </ul>
     `,
   },
+
   3: {
     noidung: `
-   <div class='text-danger'><i class="icon">💡</i><strong>Điểm yếu:</strong></div>
+      <div class="weak-title">🎯 Điểm cần cải thiện</div>
       <ul>
-        <li>Thiếu sáng tạo,</li>
-        <li>Khó thể hiện bản thân,</li>
-        <li>Dễ tiêu cực.</li>
+        <li>Khó bộc lộ cá tính và cảm xúc</li>
+        <li>Thiếu tự tin trong sáng tạo</li>
+        <li>Dễ bị cảm xúc tiêu cực chi phối</li>
       </ul>
-    </p>
-      <div class="subtitle">✨ Giải pháp khắc phục:</div>
-    <ul>
-      <li>Tham gia hoạt động nghệ thuật, sáng tạo (vẽ, viết, múa).</li>
-      <li>Tập viết blog, trình bày quan điểm cá nhân.</li>
-      <li>Hạn chế môi trường tiêu cực, nhiều rập khuôn.</li>
-    </ul>
-     <div class="subtitle">🚫 Tính chất công việc nên hạn chế:</div>
-    <ul>
-      <li>Diễn viên, ca sĩ.</li>
-      <li>MC, phát thanh viên.</li>
-      <li>Content Creator.</li>
-    </ul>
+
+      <div class="subtitle">✨ Hướng phát triển</div>
+      <ul>
+        <li>Tham gia hoạt động nghệ thuật để giải phóng cảm xúc</li>
+        <li>Viết blog, nhật ký hoặc chia sẻ quan điểm cá nhân</li>
+        <li>Chủ động tránh môi trường tiêu cực, áp lực</li>
+      </ul>
+
+      <div class="subtitle">🚫 Nên cân nhắc với công việc</div>
+      <ul>
+        <li>Nghề biểu diễn trước công chúng</li>
+        <li>MC, Content Creator áp lực cao</li>
+        <li>Công việc đòi hỏi thể hiện cá tính liên tục</li>
+      </ul>
     `,
   },
+
   4: {
     noidung: `
-   <div class='text-danger'><i class="icon">💡</i><strong>Điểm yếu:</strong></div>
+      <div class="weak-title">🎯 Điểm cần cải thiện</div>
       <ul>
-        <li>Thiếu kỷ luật,</li>
-        <li>Trì hoãn,</li>
-        <li>Thiếu kế hoạch.</li>
+        <li>Dễ trì hoãn, thiếu kỷ luật cá nhân</li>
+        <li>Chưa có thói quen lập kế hoạch rõ ràng</li>
       </ul>
-    </p>
-      <div class="subtitle">✨ Giải pháp khắc phục:</div>
-    <ul>
-      <li>Áp dụng phương pháp quản lý thời gian (Pomodoro, Eisenhower).</li>
-      <li>Lên kế hoạch tuần/ngày rõ ràng.</li>
-      <li>Cam kết với người khác để có trách nhiệm hơn.</li>
-    </ul>
-     <div class="subtitle">🚫 Tính chất công việc nên hạn chế:</div>
-    <ul>
-       <li>Các vị trí đòi hỏi kỷ luật cao & quy trình nghiêm ngặt.</li>
-      <li>Công việc kỹ thuật – sản xuất (yêu cầu chi tiết và ổn định).</li>
-      <li>Hành chính – pháp lý – kiểm toán (đòi hỏi xử lý chính xác & quy trình cao).</li>
-    </ul>
+
+      <div class="subtitle">✨ Hướng phát triển</div>
+      <ul>
+        <li>Áp dụng Pomodoro, Eisenhower để quản lý thời gian</li>
+        <li>Lập kế hoạch ngày – tuần – tháng cụ thể</li>
+        <li>Cam kết mục tiêu với người khác để tăng trách nhiệm</li>
+      </ul>
+
+      <div class="subtitle">🚫 Nên cân nhắc với công việc</div>
+      <ul>
+        <li>Công việc đòi hỏi kỷ luật và quy trình nghiêm ngặt</li>
+        <li>Hành chính, pháp lý, kiểm toán</li>
+        <li>Sản xuất, kỹ thuật chi tiết cao</li>
+      </ul>
     `,
   },
+
   5: {
     noidung: `
-   <div class='text-danger'><i class="icon">💡</i><strong>Điểm yếu:</strong></div>
+      <div class="weak-title">🎯 Điểm cần cải thiện</div>
       <ul>
-        <li>Ngại thay đổi,</li>
-        <li>Thiếu linh hoạt,</li>
-        <li>Khó thích nghi.</li>
+        <li>Ngại thay đổi môi trường</li>
+        <li>Thiếu linh hoạt khi đối diện cái mới</li>
       </ul>
-    </p>
-      <div class="subtitle">✨ Giải pháp khắc phục:</div>
-    <ul>
-      <li>Tập tiếp xúc với môi trường mới (du lịch, học hỏi đa lĩnh vực).</li>
-      <li>Thiền hoặc viết nhật ký để quan sát nỗi sợ thay đổi.</li>
-      <li>Thử thách bản thân với những thay đổi nhỏ hằng tuần.</li>
-    </ul>
-     <div class="subtitle">🚫 Tính chất công việc nên hạn chế:</div>
-    <ul>
-      <li>Sales năng động.</li>
-      <li>Nghề nhiều công tác.</li>
-      <li>Hướng dẫn viên du lịch, freelancer.</li>
-    </ul>
+
+      <div class="subtitle">✨ Hướng phát triển</div>
+      <ul>
+        <li>Chủ động trải nghiệm môi trường mới, lĩnh vực mới</li>
+        <li>Thiền hoặc viết để quan sát nỗi sợ thay đổi</li>
+        <li>Thử những thay đổi nhỏ mỗi tuần</li>
+      </ul>
+
+      <div class="subtitle">🚫 Nên cân nhắc với công việc</div>
+      <ul>
+        <li>Sales năng động, biến động cao</li>
+        <li>Nghề thường xuyên công tác</li>
+        <li>Freelancer, hướng dẫn viên du lịch</li>
+      </ul>
     `,
   },
+
   6: {
     noidung: `
-   <div class='text-danger'><i class="icon">💡</i><strong>Điểm yếu:</strong></div>
+      <div class="weak-title">🎯 Điểm cần cải thiện</div>
       <ul>
-        <li>Khó thể hiện yêu thương,</li>
-        <li>Áp lực khi chịu trách nhiệm.</li>
+        <li>Khó thể hiện sự quan tâm và yêu thương</li>
+        <li>Dễ áp lực khi gánh trách nhiệm cho người khác</li>
       </ul>
-    </p>
-      <div class="subtitle">✨ Giải pháp khắc phục:</div>
-    <ul>
-      <li>Làm việc nội tâm về tình cảm và trách nhiệm cá nhân.</li>
-      <li>Tập nói lời yêu thương một cách đơn giản, chân thành.</li>
-      <li>Nhận nhiệm vụ nhỏ có yếu tố chăm sóc để rèn dần.</li>
-    </ul>
-     <div class="subtitle">🚫 Tính chất công việc nên hạn chế:</div>
-    <ul>
-      <li>Y tá, giáo viên tiểu học, điều dưỡng.</li>
-      <li>Luật sư, giám đốc nhân sự.</li>
-      <li>Tư vấn viên, quản lý gia đình.</li>
-    </ul>
+
+      <div class="subtitle">✨ Hướng phát triển</div>
+      <ul>
+        <li>Làm việc nội tâm về trách nhiệm và cảm xúc</li>
+        <li>Tập thể hiện sự quan tâm bằng hành động nhỏ</li>
+        <li>Nhận nhiệm vụ chăm sóc ở mức độ vừa phải</li>
+      </ul>
+
+      <div class="subtitle">🚫 Nên cân nhắc với công việc</div>
+      <ul>
+        <li>Nghề chăm sóc cường độ cao (y tá, điều dưỡng)</li>
+        <li>Nhân sự, tư vấn trách nhiệm lớn</li>
+        <li>Quản lý gia đình, giáo dục trẻ nhỏ</li>
+      </ul>
     `,
   },
+
   7: {
     noidung: `
-   <div class='text-danger'><i class="icon">💡</i><strong>Điểm yếu:</strong></div>
+      <div class="weak-title">🎯 Điểm cần cải thiện</div>
       <ul>
-        <li>Thiếu thực tế,</li>
-        <li>Dễ bị chi phối bởi môi trường bên ngoài</li>
-        <li>Thiếu khả năng suy nghĩ sâu sắc và chiêm nghiệm.</li>
+        <li>Thiếu tính thực tế</li>
+        <li>Dễ bị tác động bởi môi trường bên ngoài</li>
+        <li>Chưa có chiều sâu trong suy ngẫm và chiêm nghiệm</li>
       </ul>
-    </p>
-      <div class="subtitle">✨ Giải pháp khắc phục:</div>
-    <ul>
-      <li>Rèn luyện khả năng tập trung và suy ngẫm bằng viết nhật ký hoặc thiền nhẹ mỗi ngày.</li>
-      <li>Tham gia các hoạt động giúp phát triển tư duy sâu như đọc sách phân tích, học triết lý sống.</li>
-      <li>Hạn chế lối sống vội vàng – nên dành thời gian ở một mình để hiểu bản thân.</li>
-    </ul>
-     <div class="subtitle">🚫 Tính chất công việc nên hạn chế:</div>
-    <ul>
-     <li>Trị liệu tâm lý hoặc nghề đòi hỏi chiều sâu cảm xúc nội tâm.</li>
-      <li>Nghiên cứu học thuật chuyên sâu (triết học, tư tưởng trừu tượng).</li>
-      <li>Công việc thiên về tâm linh hoặc đòi hỏi khả năng chiêm nghiệm cao.</li>
-    </ul>
+
+      <div class="subtitle">✨ Hướng phát triển</div>
+      <ul>
+        <li>Rèn thói quen viết nhật ký hoặc thiền nhẹ mỗi ngày</li>
+        <li>Đọc sách phân tích, triết lý sống</li>
+        <li>Dành thời gian ở một mình để hiểu bản thân</li>
+      </ul>
+
+      <div class="subtitle">🚫 Nên cân nhắc với công việc</div>
+      <ul>
+        <li>Trị liệu tâm lý chuyên sâu</li>
+        <li>Nghiên cứu học thuật trừu tượng</li>
+        <li>Công việc thiên về chiêm nghiệm tâm linh</li>
+      </ul>
     `,
   },
+
   8: {
     noidung: `
-   <div class='text-danger'><i class="icon">💡</i><strong>Điểm yếu:</strong></div>
+      <div class="weak-title">🎯 Điểm cần cải thiện</div>
       <ul>
-        <li>Quản lý tài chính kém,</li>
-        <li>Thiếu quyết đoán,</li>
-        <li>Dễ bị ảnh hưởng.</li>
+        <li>Quản lý tài chính chưa hiệu quả</li>
+        <li>Thiếu quyết đoán trong quyết định quan trọng</li>
       </ul>
-    </p>
-      <div class="subtitle">✨ Giải pháp khắc phục:</div>
-    <ul>
-      <li>Tập lập ngân sách cá nhân.</li>
-      <li>Rèn luyện kỹ năng ra quyết định theo nguyên tắc.</li>
-      <li>Làm việc với mentor hoặc huấn luyện viên tài chính.</li>
-    </ul>
-     <div class="subtitle">🚫 Tính chất công việc nên hạn chế:</div>
-    <ul>
-      <li>Giám đốc tài chính.</li>
-      <li>Quản lý ngân sách, đầu tư.</li>
-      <li>Chính trị, đấu tranh quyền lực.</li>
-    </ul>
+
+      <div class="subtitle">✨ Hướng phát triển</div>
+      <ul>
+        <li>Lập ngân sách cá nhân rõ ràng</li>
+        <li>Ra quyết định dựa trên nguyên tắc cụ thể</li>
+        <li>Làm việc cùng mentor hoặc coach tài chính</li>
+      </ul>
+
+      <div class="subtitle">🚫 Nên cân nhắc với công việc</div>
+      <ul>
+        <li>Giám đốc tài chính</li>
+        <li>Quản lý đầu tư, ngân sách lớn</li>
+        <li>Chính trị, môi trường đấu trí quyền lực</li>
+      </ul>
     `,
   },
+
   9: {
     noidung: `
-   <div class='text-danger'><i class="icon">💡</i><strong>Điểm yếu:</strong></div>
+      <div class="weak-title">🎯 Điểm cần cải thiện</div>
       <ul>
-        <li>Thiếu lòng trắc ẩn, không dễ bao dung</li>
-        <li>Thiếu tinh thần cộng đồng.</li>
+        <li>Khó đồng cảm sâu với người khác</li>
+        <li>Thiếu kết nối cộng đồng</li>
       </ul>
-    </p>
-      <div class="subtitle">✨ Giải pháp khắc phục:</div>
-    <ul>
-      <li>Tham gia thiện nguyện hoặc hoạt động vì cộng đồng.</li>
-      <li>Tập lòng biết ơn, viết “3 điều biết ơn mỗi ngày”.</li>
-      <li>Quan sát và học từ những người giàu lòng nhân ái.</li>
-    </ul>
-     <div class="subtitle">🚫 Tính chất công việc nên hạn chế:</div>
-    <ul>
-      <li>Công tác xã hội, hướng đạo</li>
-      <li> Vai trò dẫn dắt đạo đức, tâm linh.</li>
-    </ul>
+
+      <div class="subtitle">✨ Hướng phát triển</div>
+      <ul>
+        <li>Tham gia hoạt động thiện nguyện</li>
+        <li>Viết 3 điều biết ơn mỗi ngày</li>
+        <li>Quan sát và học từ người giàu lòng nhân ái</li>
+      </ul>
+
+      <div class="subtitle">🚫 Nên cân nhắc với công việc</div>
+      <ul>
+        <li>Công tác xã hội chuyên sâu</li>
+        <li>Vai trò dẫn dắt đạo đức – tâm linh</li>
+      </ul>
     `,
   },
 };
