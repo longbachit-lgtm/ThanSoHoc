@@ -44,7 +44,7 @@ const ArrowNumb = ({ wRightPanel, arr, typeArrow, stroke }) => {
       calculatedNumberY = calculatedArrowY + 25; // Below arrow on mobile
     } else {
       // On desktop: text just above arrow
-      calculatedTextY = calculatedArrowY - 15; // Just above arrow
+      calculatedTextY = calculatedArrowY - 30; // Just above arrow
       calculatedNumberY = 10; // Above arrow on desktop
     }
     
