@@ -22,7 +22,7 @@ export default function DailyAdvicePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  
+
   // Handler để chuyển sang trang TodoList sau khi lưu thành công
   const handleSaveToTodoSuccess = () => {
     // Delay một chút để đảm bảo dữ liệu đã được lưu
@@ -41,7 +41,7 @@ export default function DailyAdvicePage() {
   useEffect(() => {
     const loadNumerologyData = async () => {
       if (!isAuthenticated) return;
-      
+
       // Check if we have data in Redux by checking fullName or birthDayList
       // (since 0 is a valid numerology number, we can't use it to check)
       if (fullName || birthDayList) {
@@ -98,7 +98,7 @@ export default function DailyAdvicePage() {
   useEffect(() => {
     // Get birth date
     let day, month, year;
-    
+
     if (birthDay) {
       // Parse from birthDay string (format: "29081999")
       const birthStr = birthDay.toString();
@@ -108,7 +108,7 @@ export default function DailyAdvicePage() {
         year = parseInt(birthStr.substring(4, 8));
       }
     }
-    
+
     // Try to get from localStorage if not found in Redux
     if (!day || !month || !year) {
       const userBirthDate = localStorage.getItem('userBirthDate');
@@ -127,7 +127,7 @@ export default function DailyAdvicePage() {
     if (day && month && year) {
       // Calculate date based on selected period
       let dateToCalculate = new Date();
-      
+
       switch (selectedPeriod) {
         case 'today':
           // Use current date
@@ -153,13 +153,13 @@ export default function DailyAdvicePage() {
         default:
           dateToCalculate = new Date();
       }
-      
+
       setTargetDate(dateToCalculate);
-      
+
       // Calculate personal numbers
       const numbers = calculateAllPersonalNumbers(day, month, year, dateToCalculate);
       setPersonalNumbers(numbers);
-      
+
       // Get energy number based on period
       let energyNumber;
       switch (selectedPeriod) {
@@ -179,17 +179,17 @@ export default function DailyAdvicePage() {
         default:
           energyNumber = numbers.personalDay;
       }
-      
+
       // Get advice data based on period type
-      const adviceType = selectedPeriod === 'week' ? 'week' 
+      const adviceType = selectedPeriod === 'week' ? 'week'
         : selectedPeriod === 'month' ? 'month'
-        : selectedPeriod === 'year' ? 'year'
-        : 'day';
+          : selectedPeriod === 'year' ? 'year'
+            : 'day';
       let advice = getAdviceByNumber(energyNumber, adviceType);
-      
+
       // Adjust content based on period (including today to fix "Ngày mai" → "Hôm nay")
       advice = adjustAdviceForPeriod(advice, selectedPeriod);
-      
+
       setAdviceData(advice);
     }
   }, [selectedPeriod, birthDay]);
@@ -213,17 +213,17 @@ export default function DailyAdvicePage() {
   // Adjust advice content for different periods
   const adjustAdviceForPeriod = (advice, period) => {
     const adjusted = JSON.parse(JSON.stringify(advice)); // Deep clone
-    
+
     const periodMap = {
       'today': {
-        content: { 
+        content: {
           'Ngày mai': 'Hôm nay',
           'ngày mai': 'hôm nay'
         }
       },
       'tomorrow': {
         title: { 'ngày mới': 'ngày mai' },
-        content: { 
+        content: {
           'Hôm nay': 'Ngày mai',
           'hôm nay': 'ngày mai',
           'Ngày hôm nay': 'Ngày mai',
@@ -232,8 +232,8 @@ export default function DailyAdvicePage() {
       },
       'week': {
         title: { 'ngày mới': 'tuần mới', 'ngày': 'tuần' },
-        content: { 
-          'Hôm nay': 'Tuần này', 
+        content: {
+          'Hôm nay': 'Tuần này',
           'hôm nay': 'tuần này',
           'Ngày mai': 'Tuần này',
           'ngày mai': 'tuần này',
@@ -246,8 +246,8 @@ export default function DailyAdvicePage() {
       },
       'month': {
         title: { 'ngày mới': 'tháng mới', 'ngày': 'tháng' },
-        content: { 
-          'Hôm nay': 'Tháng này', 
+        content: {
+          'Hôm nay': 'Tháng này',
           'hôm nay': 'tháng này',
           'Ngày mai': 'Tháng này',
           'ngày mai': 'tháng này',
@@ -260,8 +260,8 @@ export default function DailyAdvicePage() {
       },
       'year': {
         title: { 'ngày mới': 'năm mới', 'ngày': 'năm' },
-        content: { 
-          'Hôm nay': 'Năm này', 
+        content: {
+          'Hôm nay': 'Năm này',
           'hôm nay': 'năm này',
           'Ngày mai': 'Năm này',
           'ngày mai': 'năm này',
@@ -281,7 +281,7 @@ export default function DailyAdvicePage() {
     if (adjusted.preparation && adjusted.preparation.title && replacements.title) {
       Object.keys(replacements.title).forEach(key => {
         adjusted.preparation.title = adjusted.preparation.title.replace(
-          new RegExp(key, 'gi'), 
+          new RegExp(key, 'gi'),
           replacements.title[key]
         );
       });
@@ -292,7 +292,7 @@ export default function DailyAdvicePage() {
       let content = adjusted.preparation.content;
       Object.keys(replacements.content).forEach(key => {
         content = content.replace(
-          new RegExp(key, 'g'), 
+          new RegExp(key, 'g'),
           replacements.content[key]
         );
       });
@@ -304,7 +304,7 @@ export default function DailyAdvicePage() {
       let quickTip = adjusted.preparation.quickTip;
       Object.keys(replacements.content).forEach(key => {
         quickTip = quickTip.replace(
-          new RegExp(key, 'g'), 
+          new RegExp(key, 'g'),
           replacements.content[key]
         );
       });
@@ -317,7 +317,7 @@ export default function DailyAdvicePage() {
         let challenge = adjusted.challenge.challenge;
         Object.keys(replacements.content).forEach(key => {
           challenge = challenge.replace(
-            new RegExp(key, 'g'), 
+            new RegExp(key, 'g'),
             replacements.content[key]
           );
         });
@@ -327,7 +327,7 @@ export default function DailyAdvicePage() {
         let opportunity = adjusted.challenge.opportunity;
         Object.keys(replacements.content).forEach(key => {
           opportunity = opportunity.replace(
-            new RegExp(key, 'g'), 
+            new RegExp(key, 'g'),
             replacements.content[key]
           );
         });
@@ -342,7 +342,7 @@ export default function DailyAdvicePage() {
           let content = item;
           Object.keys(replacements.content).forEach(key => {
             content = content.replace(
-              new RegExp(key, 'g'), 
+              new RegExp(key, 'g'),
               replacements.content[key]
             );
           });
@@ -352,7 +352,7 @@ export default function DailyAdvicePage() {
         let content = adjusted.mistakes.content;
         Object.keys(replacements.content).forEach(key => {
           content = content.replace(
-            new RegExp(key, 'g'), 
+            new RegExp(key, 'g'),
             replacements.content[key]
           );
         });
@@ -365,7 +365,7 @@ export default function DailyAdvicePage() {
       let content = adjusted.motivation.content;
       Object.keys(replacements.content).forEach(key => {
         content = content.replace(
-          new RegExp(key, 'g'), 
+          new RegExp(key, 'g'),
           replacements.content[key]
         );
       });
@@ -380,29 +380,156 @@ export default function DailyAdvicePage() {
         'month': { 'Sáng': 'Đầu tháng', 'Trưa': 'Giữa tháng', 'Chiều': 'Cuối tháng', 'Tối': 'Cuối tháng' },
         'year': { 'Sáng': 'Đầu năm', 'Trưa': 'Giữa năm', 'Chiều': 'Cuối năm', 'Tối': 'Cuối năm' }
       };
-      
+
       adjusted.suggestedActions.actions = adjusted.suggestedActions.actions.map(action => {
         let text = action.text;
         let time = action.time;
-        
+
         // Adjust time label (only for week/month/year)
         if (timeMap[period] && timeMap[period][time]) {
           time = timeMap[period][time];
         }
-        
+
         // Adjust text content
         Object.keys(replacements.content).forEach(key => {
           text = text.replace(
-            new RegExp(key, 'g'), 
+            new RegExp(key, 'g'),
             replacements.content[key]
           );
         });
-        
+
         return { ...action, text, time };
       });
     }
 
     return adjusted;
+  };
+
+  // --- SAVING LOGIC ---
+  const [isSavingMistakes, setIsSavingMistakes] = useState(false);
+  const [isSavingActions, setIsSavingActions] = useState(false);
+
+  const handleSaveMistakesToTodo = async () => {
+    if (!isAuthenticated) return alert("Vui lòng đăng nhập!");
+
+    // Check content
+    const content = adviceData.mistakes?.content;
+    if (!content) return alert("Không có dữ liệu để lưu!");
+
+    try {
+      setIsSavingMistakes(true);
+      // 1. Get or Create Todo List
+      let todoList = await getOrCreateTodoList();
+
+      // 2. Add Section
+      const items = Array.isArray(content)
+        ? content.map((text, i) => ({ text, completed: false, order: i }))
+        : [{ text: content, completed: false, order: 0 }];
+
+      await addSectionToTodoList(todoList, "Hướng dẫn tránh sai lầm", items);
+
+      alert("Đã lưu vào TODO List thành công!");
+      handleSaveToTodoSuccess();
+    } catch (err) {
+      console.error(err);
+      alert("Lỗi khi lưu: " + (err.message || "Unknown error"));
+    } finally {
+      setIsSavingMistakes(false);
+    }
+  };
+
+  const handleSaveActionsToTodo = async () => {
+    if (!isAuthenticated) return alert("Vui lòng đăng nhập!");
+
+    const actions = adviceData.suggestedActions?.actions;
+    if (!actions || actions.length === 0) return alert("Không có hành động để lưu!");
+
+    try {
+      setIsSavingActions(true);
+      // 1. Get or Create Todo List
+      let todoList = await getOrCreateTodoList();
+
+      // 2. Add Section
+      const items = actions.map((action, i) => ({
+        text: `${action.time}: ${action.text}`,
+        completed: false,
+        order: i
+      }));
+
+      await addSectionToTodoList(todoList, adviceData.suggestedActions.title || "Hành động gợi ý", items);
+
+      alert("Đã lưu hành động thành công!");
+      handleSaveToTodoSuccess();
+    } catch (err) {
+      console.error(err);
+      alert("Lỗi khi lưu: " + (err.message || "Unknown error"));
+    } finally {
+      setIsSavingActions(false);
+    }
+  };
+
+  // Helper: Get or Create Todo List
+  const getOrCreateTodoList = async () => {
+    let todoList;
+    try {
+      // Try fetching existing
+      if (selectedPeriod && selectedPeriod !== 'custom') {
+        const res = await api.todo.getByPeriod(selectedPeriod, targetDate);
+        todoList = res.data;
+      } else {
+        const res = await api.todo.getActive();
+        todoList = res.data;
+      }
+    } catch (e) { /* ignore 404 */ }
+
+    // Create if not exists
+    if (!todoList || !todoList._id) {
+      const newTodo = {
+        title: "Danh sách việc cần làm",
+        sections: [],
+        period: selectedPeriod || 'custom',
+        targetDate: targetDate ? (targetDate instanceof Date ? targetDate.toISOString() : targetDate) : null
+      };
+      const res = await api.todo.create(newTodo);
+      todoList = res.data;
+    }
+    return todoList;
+  };
+
+  // Helper: Add Section
+  const addSectionToTodoList = async (todoList, sectionTitle, items) => {
+    // Check existence
+    const existIdx = todoList.sections.findIndex(s => s.title === sectionTitle);
+
+    if (existIdx !== -1) {
+      // Merge items
+      const existingSection = todoList.sections[existIdx];
+      const existingTexts = new Set(existingSection.items.map(i => i.text));
+      items.forEach(newItem => {
+        if (!existingTexts.has(newItem.text)) {
+          existingSection.items.push({ ...newItem, order: existingSection.items.length });
+        }
+      });
+      todoList.sections[existIdx] = existingSection;
+    } else {
+      // Create new section
+      todoList.sections.push({
+        title: sectionTitle,
+        items,
+        isExpanded: true,
+        order: todoList.sections.length
+      });
+    }
+
+    // Update API
+    const updateData = {
+      title: todoList.title,
+      sections: todoList.sections,
+      period: todoList.period,
+      targetDate: todoList.targetDate ? (todoList.targetDate instanceof Date ? todoList.targetDate.toISOString() : todoList.targetDate) : null,
+      isActive: true
+    };
+    await api.todo.update(todoList._id, updateData);
   };
 
   const handlePeriodChange = (period) => {
@@ -425,7 +552,7 @@ export default function DailyAdvicePage() {
 
   if (!personalNumbers || !adviceData) {
     return (
-      <div 
+      <div
         className="min-vh-100 d-flex align-items-center justify-content-center p-3"
         style={{
           background: "#FDFBF6",
@@ -436,7 +563,7 @@ export default function DailyAdvicePage() {
         }}
       >
         <div className="text-center">
-          <div 
+          <div
             className="spinner-border mb-3"
             role="status"
             style={{
@@ -456,252 +583,188 @@ export default function DailyAdvicePage() {
     );
   }
 
-  const energyNumber = selectedPeriod === 'today' || selectedPeriod === 'tomorrow' 
-    ? personalNumbers.personalDay 
+  const energyNumber = selectedPeriod === 'today' || selectedPeriod === 'tomorrow'
+    ? personalNumbers.personalDay
     : selectedPeriod === 'week'
-    ? personalNumbers.personalWeek
-    : selectedPeriod === 'month'
-    ? personalNumbers.personalMonth
-    : personalNumbers.personalYear;
+      ? personalNumbers.personalWeek
+      : selectedPeriod === 'month'
+        ? personalNumbers.personalMonth
+        : personalNumbers.personalYear;
+
+  // ... (previous logic stays, just update return)
 
   return (
-    <div 
-      className="min-vh-100 p-3"
-      style={{
-        background: "#FDFBF6",
-        backgroundImage: `
-          radial-gradient(circle at 20% 20%, rgba(232, 199, 140, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 40% 60%, rgba(232, 199, 140, 0.05) 0%, transparent 50%)
-        `
-      }}
-    >
-      {/* Background astrological elements */}
-      <div className="position-absolute w-100 h-100" style={{ pointerEvents: 'none', top: 0, left: 0 }}>
-        {/* Stars and constellations */}
-        {[...Array(15)].map((_, i) => (
-          <div
-            key={i}
-            className="position-absolute"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              width: `${2 + Math.random() * 3}px`,
-              height: `${2 + Math.random() * 3}px`,
-              backgroundColor: '#E8C78C',
-              borderRadius: '50%',
-              opacity: 0.2 + Math.random() * 0.3
-            }}
-          />
-        ))}
-      </div>
+    <div className="daily-advice-page">
+      <div className="daily-advice-container">
+        {/* HEADER & NAV */}
+        <UserNumerologyHeader />
+        <PageNavigationMenu />
 
-      {/* Main container */}
-      <div className="container-fluid position-relative">
-        <div className="row justify-content-center">
-          <div className="col-12 col-md-10 col-lg-8 col-xl-7" style={{ maxWidth: '900px' }}>
-            {/* Header */}
-            <div className="mb-4">
-              <UserNumerologyHeader />
-            </div>
-            
-            {/* Page Navigation Menu */}
-            <div className="mb-4">
-              <PageNavigationMenu />
-            </div>
-            
-            {/* Period Navigation */}
-            <div className="mb-5">
-              <PeriodNavigationTabs 
-              selectedPeriod={selectedPeriod}
-              onPeriodChange={handlePeriodChange}
-              weekNumber={getWeekNumber(targetDate)}
-              monthNumber={targetDate.getMonth() + 1}
-              yearNumber={targetDate.getFullYear()}
-              />
-            </div>
+        <PeriodNavigationTabs
+          selectedPeriod={selectedPeriod}
+          onPeriodChange={handlePeriodChange}
+          weekNumber={getWeekNumber(targetDate)}
+          monthNumber={targetDate.getMonth() + 1}
+          yearNumber={targetDate.getFullYear()}
+        />
 
-            {/* Energy Summary */}
+        {/* ENERGY CARD */}
+        <div className="da-energy-card">
+          <div className="da-energy-date">
+            <i className="fa-regular fa-calendar" />
+            {selectedPeriod === 'today' && `Hôm nay, ${formatDate(targetDate)}`}
+            {selectedPeriod === 'tomorrow' && `Ngày mai, ${formatDate(targetDate)}`}
+            {selectedPeriod === 'week' && `Tuần ${getWeekNumber(targetDate)}, ${targetDate.getFullYear()}`}
+            {selectedPeriod === 'month' && `Tháng ${targetDate.getMonth() + 1}/${targetDate.getFullYear()}`}
+            {selectedPeriod === 'year' && `Năm ${targetDate.getFullYear()}`}
+          </div>
 
+          <div className="da-energy-circle">
+            {energyNumber}
+          </div>
 
-            {/* Main Energy Number Card - Enhanced */}
-            <div 
-              className="card border-0 mb-5"
-              style={{
-                background: 'linear-gradient(135deg, rgba(232, 199, 140, 0.15) 0%, rgba(252, 248, 240, 0.95) 100%)',
-                borderRadius: '20px',
-                border: '2px solid #E8C78C',
-                boxShadow: '0 8px 24px rgba(160, 122, 74, 0.15)',
-                transition: 'all 0.3s ease',
-                overflow: 'hidden',
-                position: 'relative'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 12px 32px rgba(160, 122, 74, 0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 8px 24px rgba(160, 122, 74, 0.15)';
-              }}
-            >
-              {/* Decorative corner elements */}
-              <div 
-                className="position-absolute"
-                style={{
-                  top: 0,
-                  left: 0,
-                  width: '80px',
-                  height: '80px',
-                  background: 'radial-gradient(circle, rgba(232, 199, 140, 0.2) 0%, transparent 70%)',
-                  borderRadius: '0 0 100% 0'
-                }}
-              />
-              <div 
-                className="position-absolute"
-                style={{
-                  bottom: 0,
-                  right: 0,
-                  width: '80px',
-                  height: '80px',
-                  background: 'radial-gradient(circle, rgba(232, 199, 140, 0.2) 0%, transparent 70%)',
-                  borderRadius: '100% 0 0 0'
-                }}
-              />
-              
-              <div className="card-body p-4 position-relative" style={{ zIndex: 1 }}>
-                <div className="text-center mb-3">
-                  <span 
-                    style={{
-                      color: '#8B6F47',
-                      fontSize: '14px',
-                      fontStyle: 'italic',
-                      fontWeight: '500',
-                      letterSpacing: '0.5px'
-                    }}
-                  >
-                    {selectedPeriod === 'today' && `📅 Hôm nay, ${formatDate(targetDate)}`}
-                    {selectedPeriod === 'tomorrow' && `📅 Ngày mai, ${formatDate(targetDate)}`}
-                    {selectedPeriod === 'week' && `📅 Tuần ${getWeekNumber(targetDate)}, ${targetDate.getFullYear()}`}
-                    {selectedPeriod === 'month' && `📅 Tháng ${targetDate.getMonth() + 1}/${targetDate.getFullYear()}`}
-                    {selectedPeriod === 'year' && `📅 Năm ${targetDate.getFullYear()}`}
-                  </span>
+          <div className="da-energy-title">CON SỐ NĂNG LƯỢNG</div>
+          <p className="da-energy-desc">
+            {getEnergyDescription(energyNumber)}
+          </p>
+        </div>
+
+        {/* ADVICE CARDS */}
+        <div>
+          {/* 1. Preparation */}
+          {adviceData.preparation && (
+            <div className="da-content-card">
+              <div className="da-card-header">
+                <span className="da-card-icon">🧘</span>
+                {adviceData.preparation.title || "Chuẩn bị cho ngày mới"}
+              </div>
+              <div className="da-card-text">
+                {adviceData.preparation.content}
+              </div>
+              {adviceData.preparation.quickTip && (
+                <div className="da-quote-box">
+                  <span className="da-quote-label">MỤC TIÊU NHANH</span>
+                  <div className="da-quote-content">"{adviceData.preparation.quickTip}"</div>
                 </div>
-                
-                {/* Energy Number - Large and Bold */}
-                <div className="text-center mb-3">
-                  <div 
-                    className="d-inline-flex align-items-center justify-content-center mb-2"
-                    style={{
-                      width: '80px',
-                      height: '80px',
-                      borderRadius: '50%',
-                      background: 'linear-gradient(135deg, #A07A4A 0%, #B8860B 100%)',
-                      boxShadow: '0 4px 12px rgba(160, 122, 74, 0.3)',
-                      marginBottom: '8px'
-                    }}
-                  >
-                    <span 
-                      style={{
-                        color: '#fff',
-                        fontSize: '36px',
-                        fontWeight: 'bold'
-                      }}
-                    >
-                      {energyNumber}
-                    </span>
-                  </div>
-                </div>
-                
-                <h3 
-                  className="fw-bold text-center mb-2"
-                  style={{
-                    color: '#332211',
-                    fontSize: '20px',
-                    lineHeight: '1.4'
-                  }}
-                >
-                  CON SỐ NĂNG LƯỢNG
-                </h3>
-                <p 
-                  className="text-center mb-0"
-                  style={{
-                    color: '#6e645b',
-                    fontSize: '16px',
-                    fontWeight: '500',
-                    lineHeight: '1.5'
-                  }}
-                >
-                  {getEnergyDescription(energyNumber)}
+              )}
+            </div>
+          )}
+
+          {/* 2. Challenge & Opportunity */}
+          {adviceData.challenge && (
+            <div className="da-content-card">
+              <div className="da-card-header">
+                <span className="da-card-icon">⚖️</span>
+                {adviceData.challenge.title || "Thách thức & Cơ hội"}
+              </div>
+
+              <div className="mb-3">
+                <strong style={{ color: '#A07A4A', fontSize: '13px' }}>Thách thức:</strong>
+                <p style={{ fontSize: '13px', color: '#555', marginTop: '4px' }}>
+                  {adviceData.challenge.challenge}
+                </p>
+              </div>
+
+              <div>
+                <strong style={{ color: '#A07A4A', fontSize: '13px' }}>Cơ hội:</strong>
+                <p style={{ fontSize: '13px', color: '#555', marginTop: '4px' }}>
+                  {adviceData.challenge.opportunity}
                 </p>
               </div>
             </div>
+          )}
 
-            {/* Advice Cards Section */}
-            <div style={{ marginTop: '32px' }}>
-              {adviceData.preparation && (
-                <div className="mb-4">
-                  <AdviceCard
-                    type="preparation"
-                    title={adviceData.preparation.title}
-                    content={adviceData.preparation.content}
-                    quickTip={adviceData.preparation.quickTip}
-                    actions={adviceData.preparation.actions}
-                  />
-                </div>
-              )}
+          {/* 3. Mistakes / "Huong Dan Tranh Sai Lam" */}
+          {adviceData.mistakes && adviceData.mistakes.content && (
+            <div className="da-content-card">
+              <div className="da-card-header">
+                <span className="da-card-icon">⚠️</span>
+                {adviceData.mistakes.title || "Hướng dẫn tránh sai lầm"}
+              </div>
+              <ul className="da-list">
+                {Array.isArray(adviceData.mistakes.content)
+                  ? adviceData.mistakes.content.map((item, i) => <li key={i}>{item}</li>)
+                  : <li>{adviceData.mistakes.content}</li>
+                }
+              </ul>
 
-              {adviceData.challenge && (
-                <div className="mb-4">
-                  <AdviceCard
-                    type="challenge"
-                    title={adviceData.challenge.title}
-                    challenge={adviceData.challenge.challenge}
-                    opportunity={adviceData.challenge.opportunity}
-                    reminders={adviceData.challenge.reminders}
-                  />
-                </div>
-              )}
+              <div className="da-breath-pill">
+                Hít thở 4-4-4
+              </div>
 
-              {adviceData.mistakes && (
-                <div className="mb-4">
-                  <AdviceCard
-                    type="mistakes"
-                    title={adviceData.mistakes.title}
-                    content={adviceData.mistakes.content}
-                    actions={adviceData.mistakes.actions}
-                    period={selectedPeriod}
-                    targetDate={targetDate}
-                    onSaveSuccess={handleSaveToTodoSuccess}
-                  />
-                </div>
-              )}
-
-              {adviceData.motivation && (
-                <div className="mb-4">
-                  <AdviceCard
-                    type="motivation"
-                    title={adviceData.motivation.title}
-                    content={adviceData.motivation.content}
-                  />
-                </div>
-              )}
-
-              {/* Suggested Actions Card */}
-              {adviceData.suggestedActions && (
-                <div className="mb-4">
-                  <SuggestedActionsCard
-                    title={adviceData.suggestedActions.title}
-                    actions={adviceData.suggestedActions.actions}
-                    period={selectedPeriod}
-                    targetDate={targetDate}
-                    onSaveSuccess={handleSaveToTodoSuccess}
-                  />
-                </div>
-              )}
+              <button
+                className="da-todo-btn"
+                onClick={handleSaveMistakesToTodo}
+                disabled={isSavingMistakes}
+              >
+                {isSavingMistakes ? (
+                  <>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Đang lưu...
+                  </>
+                ) : (
+                  <>
+                    <i className="fa-solid fa-list-check"></i>
+                    Lưu vào TODO List
+                  </>
+                )}
+              </button>
             </div>
-          </div>
+          )}
+
+          {/* 4. Motivation */}
+          {adviceData.motivation && (
+            <div className="da-content-card">
+              <div className="da-card-header">
+                <span className="da-card-icon">❝❞</span>
+                Câu nói động viên
+              </div>
+              <div className="da-quote-content" style={{ textAlign: 'center', fontSize: '14px' }}>
+                "{adviceData.motivation.content}"
+              </div>
+            </div>
+          )}
+
+          {/* 5. Actions */}
+          {adviceData.suggestedActions && adviceData.suggestedActions.actions && (
+            <div className="da-content-card">
+              <div className="da-card-header">
+                <span className="da-card-icon">✅</span>
+                Hành động gợi ý
+              </div>
+
+              {adviceData.suggestedActions.actions.map((action, idx) => (
+                <div key={idx} className="da-action-item">
+                  <div className="da-action-num">{idx + 1}</div>
+                  <div className="da-action-text">
+                    <span className="da-action-label">{action.time}:</span>
+                    {action.text}
+                  </div>
+                </div>
+              ))}
+
+              <button
+                className="da-todo-btn"
+                onClick={handleSaveActionsToTodo}
+                disabled={isSavingActions}
+              >
+                {isSavingActions ? (
+                  <>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Đang lưu...
+                  </>
+                ) : (
+                  <>
+                    <i className="fa-solid fa-floppy-disk"></i>
+                    Lưu hành động
+                  </>
+                )}
+              </button>
+            </div>
+          )}
+
         </div>
+
       </div>
     </div>
   );

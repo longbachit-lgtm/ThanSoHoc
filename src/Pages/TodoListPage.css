@@ -1,0 +1,339 @@
+/* TodoList Page Styling - Matching DailyAdvicePage Design */
+
+.da-todo-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Main Card */
+.da-todo-card {
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    border: 1px solid #F5F5F5;
+}
+
+/* Header */
+.da-todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.da-todo-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #332211;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.da-add-section-btn {
+    background: #D4AF37;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25);
+}
+
+.da-add-section-btn:hover {
+    background: #C5A028;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35);
+}
+
+.da-add-section-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Add Section Form */
+.da-add-section-form {
+    background: #FAFAFA;
+    border: 1px solid #E8E8E8;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.da-add-section-input {
+    width: 100%;
+    border: 1px solid #D4D4D4;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    margin-bottom: 12px;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.da-add-section-input:focus {
+    border-color: #D4AF37;
+}
+
+.da-add-section-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.da-btn-confirm {
+    background: #D4AF37;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.da-btn-cancel {
+    background: #E0E0E0;
+    color: #555;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Section */
+.da-todo-section {
+    border-bottom: 1px solid #F0F0F0;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.da-todo-section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.da-section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding: 8px 4px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.da-section-header:hover {
+    background: #FAFAFA;
+}
+
+.da-section-chevron {
+    color: #888;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px;
+    transition: transform 0.2s;
+}
+
+.da-section-title {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 700;
+    color: #332211;
+    margin: 0;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.da-section-title:hover {
+    background: rgba(212, 175, 55, 0.08);
+}
+
+.da-section-title-input {
+    flex: 1;
+    border: 2px solid #D4AF37;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #332211;
+    outline: none;
+}
+
+.da-section-actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.da-section-header:hover .da-section-actions {
+    opacity: 1;
+}
+
+.da-icon-btn {
+    background: transparent;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 4px;
+    color: #999;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.da-icon-btn:hover {
+    background: #F0F0F0;
+    color: #D4AF37;
+}
+
+.da-icon-btn.delete:hover {
+    color: #dc3545;
+}
+
+/* Items */
+.da-todo-items {
+    padding-left: 28px;
+}
+
+.da-todo-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
+    background: #FAFAFA;
+    border: 1px solid #ECECEC;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.da-todo-item:hover {
+    background: #F5F5F5;
+    border-color: #D4AF37;
+}
+
+.da-todo-item.completed {
+    opacity: 0.6;
+    background: #F8F8F8;
+}
+
+.da-todo-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #D4AF37;
+    flex-shrink: 0;
+}
+
+.da-todo-item-text {
+    flex: 1;
+    color: #332211;
+    font-size: 14px;
+    line-height: 1.5;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.da-todo-item-text:hover {
+    background: rgba(212, 175, 55, 0.05);
+}
+
+.da-todo-item-text.completed {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.da-todo-item-input {
+    flex: 1;
+    border: 1px solid #D4AF37;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 14px;
+    color: #332211;
+    outline: none;
+}
+
+.da-item-delete {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.da-todo-item:hover .da-item-delete {
+    opacity: 1;
+}
+
+/* Add Item Form */
+.da-add-item-form {
+    background: #F9F9F9;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.da-add-item-input {
+    width: 100%;
+    border: 1px solid #D4D4D4;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    margin-bottom: 10px;
+    outline: none;
+}
+
+.da-add-item-input:focus {
+    border-color: #D4AF37;
+}
+
+/* Empty State */
+.da-todo-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+    font-size: 14px;
+    font-style: italic;
+}
+
+/* Saving Indicator */
+.da-todo-saving {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #D4AF37;
+    font-weight: 500;
+}
+
+/* Loading/Error States */
+.da-todo-loading,
+.da-todo-error {
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 40px 24px;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.da-todo-error {
+    border: 1px solid #ffcccc;
+    background: #fff5f5;
+    color: #dc3545;
+}

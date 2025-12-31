@@ -1,0 +1,398 @@
+/* Define local variables for the page scope */
+.daily-advice-page {
+    --da-gold: #A07A4A;
+    --da-gold-light: #E8C78C;
+    --da-cream: #FDFBF6;
+    --da-cream-dark: #FCF8F0;
+    --da-text-dark: #332211;
+    --da-text-light: #6E645B;
+    --da-white: #FFFFFF;
+    /* font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; */
+    /* Remove specific font to inherit from global/common form like SummaryAll */
+    min-height: 100vh;
+    padding: 24px;
+    background-color: var(--da-cream);
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(232, 199, 140, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+}
+
+.daily-advice-container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* --- HEADER SECTION --- */
+.da-header {
+    text-align: center;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.da-life-path-pill {
+    display: inline-block;
+    background: #FFFFFF;
+    border: 1px solid #E8C78C;
+    border-radius: 50px;
+    padding: 4px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #332211;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: -15px;
+    /* Overlap nicely with circle */
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.da-avatar-circle {
+    width: 80px;
+    height: 80px;
+    background: #FFFFFF;
+    border: 1px solid #D4B08C;
+    /* Gold border */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    color: #A07A4A;
+    font-size: 32px;
+    font-weight: 400;
+    /* Serif look usually lighter or bold serif */
+    /* font-family: 'Playfair Display', serif; */
+    /* Or fallback serif */
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 12px rgba(160, 122, 74, 0.1);
+}
+
+.da-user-name {
+    /* font-family: 'Playfair Display', serif; */
+    font-size: 24px;
+    font-weight: 700;
+    color: #332211;
+    margin-bottom: 4px;
+}
+
+.da-user-dob {
+    font-size: 13px;
+    color: #8C8C8C;
+    margin-bottom: 16px;
+}
+
+.da-badges {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.da-badge {
+    background: #FFFFFF;
+    border: 1px solid #EAEaea;
+    border-radius: 50px;
+    padding: 6px 16px;
+    font-size: 12px;
+    color: #555;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    font-weight: 500;
+}
+
+.da-badge strong {
+    color: #A07A4A;
+    font-weight: 700;
+}
+
+/* --- NAVIGATION TOGGLE --- */
+.da-nav-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    background: #EEE9DE;
+    /* Slightly darker pill bg container maybe? Or just transparent */
+    padding: 4px;
+    border-radius: 50px;
+    width: fit-content;
+    margin: 0 auto 24px;
+}
+
+/* If the design is just buttons floating: */
+.da-nav-btn {
+    background: transparent;
+    border: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 50px;
+    color: #6E645B;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.da-nav-btn.active {
+    background: #A07A4A;
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(160, 122, 74, 0.25);
+}
+
+.da-nav-btn-outline {
+    /* For TODOLIST button visual if not active */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* --- PERIOD TABS --- */
+.da-period-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 32px;
+    font-size: 14px;
+    color: #999;
+    border-bottom: 1px solid transparent;
+    /* Or no border */
+}
+
+.da-period-tab {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding-bottom: 4px;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    color: #888;
+}
+
+.da-period-tab:hover {
+    color: #A07A4A;
+}
+
+.da-period-tab.active {
+    color: #A07A4A;
+    font-weight: 700;
+    /* Option: underline or pill style. Image shows Pill style for 'Hôm nay'? 
+     Actually image shows 'Lời khuyên hôm nay' as main toggle, 
+     and 'Hôm nay | Ngày mai | Tuần 1...' as sub text tabs. 
+     Let's follow the image: Text tabs. */
+}
+
+
+/* --- ENERGY CARD --- */
+.da-energy-card {
+    background: #FFFFFF;
+    border-radius: 24px;
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(160, 122, 74, 0.08);
+    /* Soft gold shadow */
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #FDF5E6;
+}
+
+.da-energy-date {
+    font-size: 12px;
+    color: #8C8C8C;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.da-energy-circle {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #C5A065 0%, #A07A4A 100%);
+    border-radius: 50%;
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    box-shadow: 0 4px 12px rgba(160, 122, 74, 0.3);
+    /* font-family: 'Playfair Display', serif; */
+}
+
+.da-energy-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #332211;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.da-energy-desc {
+    font-size: 13px;
+    color: #6E645B;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* --- CONTENT CARDS --- */
+.da-content-card {
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+    border: 1px solid #F9F9F9;
+}
+
+.da-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-weight: 700;
+    color: #332211;
+    font-size: 15px;
+}
+
+.da-card-icon {
+    color: #A07A4A;
+    font-size: 16px;
+}
+
+.da-card-text {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    text-align: justify;
+}
+
+/* Quote Box Style */
+.da-quote-box {
+    background: #FCF8F0;
+    /* Creamy beige */
+    border: 1px solid #F0E6D2;
+    border-radius: 12px;
+    padding: 16px;
+    position: relative;
+}
+
+.da-quote-label {
+    font-size: 10px;
+    font-weight: 800;
+    color: #A07A4A;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.da-quote-content {
+    font-size: 13px;
+    font-style: italic;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* List Style */
+.da-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.da-list li {
+    position: relative;
+    padding-left: 18px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #444;
+}
+
+.da-list li::before {
+    content: "•";
+    color: #A07A4A;
+    position: absolute;
+    left: 4px;
+    font-weight: bold;
+}
+
+/* Todo Button */
+.da-todo-btn {
+    width: 100%;
+    background: #3E3025;
+    /* Dark brown */
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.da-todo-btn:hover {
+    background: #2A2018;
+}
+
+/* Breathing exercise pill */
+.da-breath-pill {
+    border: 1px solid #EAEAEA;
+    background: #FFFFFF;
+    color: #333;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    margin: 12px 0;
+    font-weight: 500;
+}
+
+/* Action Steps (Numbered) */
+.da-action-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    background: #FFFFFF;
+    border: 1px solid #F5F5F5;
+    padding: 12px;
+    border-radius: 12px;
+    align-items: center;
+}
+
+.da-action-num {
+    width: 24px;
+    height: 24px;
+    background: #A07A4A;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.da-action-text {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.4;
+}
+
+.da-action-label {
+    font-weight: 700;
+    color: #A07A4A;
+    margin-right: 4px;
+}

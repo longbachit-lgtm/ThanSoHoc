@@ -141,7 +141,7 @@ export default function JobInputPage() {
         mainField: mainField.trim(),
         role: role.trim()
       }));
-      
+
       // Navigate to /about
       navigate("/about");
 
