@@ -25,17 +25,18 @@
 }
 
 .da-todo-title {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 22px;
+    font-weight: 800;
     color: #332211;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     margin: 0;
+    letter-spacing: 0.3px;
 }
 
 .da-add-section-btn {
-    background: #D4AF37;
+    background: #c9a46a;
     color: #FFFFFF;
     border: none;
     border-radius: 50px;
@@ -51,9 +52,9 @@
 }
 
 .da-add-section-btn:hover {
-    background: #C5A028;
+    background: #b8945d;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35);
+    box-shadow: 0 4px 12px rgba(201, 164, 106, 0.35);
 }
 
 .da-add-section-btn:disabled {
@@ -64,8 +65,8 @@
 
 /* Add Section Form */
 .da-add-section-form {
-    background: #FAFAFA;
-    border: 1px solid #E8E8E8;
+    background: #faf6f0;
+    border: 1px solid #eadfcf;
     border-radius: 12px;
     padding: 16px;
     margin-bottom: 20px;
@@ -83,7 +84,7 @@
 }
 
 .da-add-section-input:focus {
-    border-color: #D4AF37;
+    border-color: #c9a46a;
 }
 
 .da-add-section-actions {
@@ -92,7 +93,7 @@
 }
 
 .da-btn-confirm {
-    background: #D4AF37;
+    background: #c9a46a;
     color: white;
     border: none;
     border-radius: 8px;
@@ -150,26 +151,27 @@
 
 .da-section-title {
     flex: 1;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 800;
     color: #332211;
     margin: 0;
     cursor: pointer;
     padding: 4px 8px;
     border-radius: 6px;
+    letter-spacing: 0.2px;
 }
 
 .da-section-title:hover {
-    background: rgba(212, 175, 55, 0.08);
+    background: rgba(201, 164, 106, 0.08);
 }
 
 .da-section-title-input {
     flex: 1;
-    border: 2px solid #D4AF37;
+    border: 2px solid #c9a46a;
     border-radius: 6px;
     padding: 6px 10px;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 800;
     color: #332211;
     outline: none;
 }
@@ -200,7 +202,7 @@
 
 .da-icon-btn:hover {
     background: #F0F0F0;
-    color: #D4AF37;
+    color: #c9a46a;
 }
 
 .da-icon-btn.delete:hover {
@@ -218,15 +220,15 @@
     gap: 12px;
     padding: 12px;
     margin-bottom: 8px;
-    background: #FAFAFA;
-    border: 1px solid #ECECEC;
+    background: #faf6f0;
+    border: 1px solid #eadfcf;
     border-radius: 8px;
     transition: all 0.2s;
 }
 
 .da-todo-item:hover {
     background: #F5F5F5;
-    border-color: #D4AF37;
+    border-color: #c9a46a;
 }
 
 .da-todo-item.completed {
@@ -238,15 +240,16 @@
     width: 18px;
     height: 18px;
     cursor: pointer;
-    accent-color: #D4AF37;
+    accent-color: #c9a46a;
     flex-shrink: 0;
 }
 
 .da-todo-item-text {
     flex: 1;
     color: #332211;
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.6;
     cursor: pointer;
     padding: 4px 8px;
     border-radius: 4px;
@@ -254,17 +257,18 @@
 }
 
 .da-todo-item-text:hover {
-    background: rgba(212, 175, 55, 0.05);
+    background: rgba(201, 164, 106, 0.05);
 }
 
 .da-todo-item-text.completed {
     text-decoration: line-through;
     color: #999;
+    font-weight: 400;
 }
 
 .da-todo-item-input {
     flex: 1;
-    border: 1px solid #D4AF37;
+    border: 1px solid #c9a46a;
     border-radius: 6px;
     padding: 6px 10px;
     font-size: 14px;
@@ -283,8 +287,8 @@
 
 /* Add Item Form */
 .da-add-item-form {
-    background: #F9F9F9;
-    border: 1px solid #E0E0E0;
+    background: #faf6f0;
+    border: 1px solid #eadfcf;
     border-radius: 8px;
     padding: 12px;
     margin-bottom: 12px;
@@ -301,7 +305,7 @@
 }
 
 .da-add-item-input:focus {
-    border-color: #D4AF37;
+    border-color: #c9a46a;
 }
 
 /* Empty State */
@@ -318,7 +322,7 @@
     text-align: center;
     margin-top: 12px;
     font-size: 13px;
-    color: #D4AF37;
+    color: #c9a46a;
     font-weight: 500;
 }
 
