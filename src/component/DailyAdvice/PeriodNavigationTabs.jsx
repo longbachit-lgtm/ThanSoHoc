@@ -3,9 +3,9 @@ import "../../Pages/DailyAdvicePage.css";
 export default function PeriodNavigationTabs({ selectedPeriod, onPeriodChange, weekNumber, monthNumber, yearNumber }) {
   const periods = [
     { id: 'today', label: 'Hôm nay' },
-    { id: 'tomorrow', label: 'Ngày mai' },
-    { id: 'week', label: weekNumber ? `Tuần ${weekNumber}` : 'Tuần' },
-    { id: 'month', label: monthNumber ? `Tháng ${monthNumber}` : 'Tháng' },
+    // { id: 'tomorrow', label: 'Ngày mai' },
+    { id: 'week', label: weekNumber ? `Tuần ` : 'Tuần' },
+    { id: 'month', label: monthNumber ? `Tháng ` : 'Tháng' },
     { id: 'year', label: yearNumber ? `Năm ${yearNumber}` : 'Năm' }
   ];
 

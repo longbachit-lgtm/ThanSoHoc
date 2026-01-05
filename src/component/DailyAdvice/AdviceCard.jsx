@@ -8,7 +8,7 @@ export default function AdviceCard({ type, title, content, quickTip, challenge, 
   const [saved, setSaved] = useState(false);
   const [completedTasks, setCompletedTasks] = useState({});
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  
+
   const handleTaskToggle = (index) => {
     setCompletedTasks(prev => ({
       ...prev,
@@ -92,7 +92,7 @@ export default function AdviceCard({ type, title, content, quickTip, challenge, 
         // Update existing section - merge items (avoid duplicates)
         const existingSection = todoList.sections[existingSectionIndex];
         const existingTexts = new Set(existingSection.items.map(item => item.text));
-        
+
         items.forEach(newItem => {
           if (!existingTexts.has(newItem.text)) {
             existingSection.items.push({
@@ -101,7 +101,7 @@ export default function AdviceCard({ type, title, content, quickTip, challenge, 
             });
           }
         });
-        
+
         todoList.sections[existingSectionIndex] = existingSection;
       } else {
         // Add new section
@@ -124,7 +124,7 @@ export default function AdviceCard({ type, title, content, quickTip, challenge, 
 
       // Save updated todo list
       await api.todo.update(todoList._id, updateData);
-      
+
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
 
@@ -135,9 +135,9 @@ export default function AdviceCard({ type, title, content, quickTip, challenge, 
       alert("Đã lưu vào danh sách việc cần làm thành công! 📝");
     } catch (error) {
       console.error("Save mistakes actions to todo error:", error);
-      
+
       let errorMessage = "Có lỗi xảy ra khi lưu. Vui lòng thử lại!";
-      
+
       if (error.message) {
         if (error.message.includes("Endpoint không tồn tại") || error.message.includes("404")) {
           errorMessage = "Backend chưa sẵn sàng. Vui lòng đảm bảo backend server đang chạy tại http://localhost:5000";
@@ -147,7 +147,7 @@ export default function AdviceCard({ type, title, content, quickTip, challenge, 
           errorMessage = error.message;
         }
       }
-      
+
       alert(errorMessage);
     } finally {
       setSaving(false);
@@ -164,7 +164,7 @@ export default function AdviceCard({ type, title, content, quickTip, challenge, 
   };
 
   return (
-    <div 
+    <div
       className="card border-0 shadow-sm mb-4"
       style={{
         backgroundColor: '#FCF8F0',
@@ -176,7 +176,7 @@ export default function AdviceCard({ type, title, content, quickTip, challenge, 
         {/* Title with Icon */}
         <div className="d-flex align-items-center gap-2 mb-3">
           {getIcon()}
-          <h3 
+          <h3
             className="fw-bold mb-0"
             style={{
               color: '#332211',
@@ -206,7 +206,7 @@ export default function AdviceCard({ type, title, content, quickTip, challenge, 
 
         {/* Quick Tip */}
         {quickTip && (
-          <div 
+          <div
             className="mb-3 p-3 rounded"
             style={{
               backgroundColor: '#fff',
@@ -336,7 +336,7 @@ export default function AdviceCard({ type, title, content, quickTip, challenge, 
         )}
 
 
- 
+
       </div>
     </div>
   );

@@ -613,7 +613,7 @@ export default function DailyAdvicePage() {
           <div className="da-energy-date">
             <i className="fa-regular fa-calendar" />
             {selectedPeriod === 'today' && `Hôm nay, ${formatDate(targetDate)}`}
-            {selectedPeriod === 'tomorrow' && `Ngày mai, ${formatDate(targetDate)}`}
+            {/* {selectedPeriod === 'tomorrow' && `Ngày mai, ${formatDate(targetDate)}`} */}
             {selectedPeriod === 'week' && `Tuần ${getWeekNumber(targetDate)}, ${targetDate.getFullYear()}`}
             {selectedPeriod === 'month' && `Tháng ${targetDate.getMonth() + 1}/${targetDate.getFullYear()}`}
             {selectedPeriod === 'year' && `Năm ${targetDate.getFullYear()}`}
@@ -688,11 +688,11 @@ export default function DailyAdvicePage() {
                 }
               </ul>
 
-              <div className="da-breath-pill">
+              {/* <div className="da-breath-pill">
                 Hít thở 4-4-4
-              </div>
+              </div> */}
 
-              <button
+              {/* <button
                 className="da-todo-btn"
                 onClick={handleSaveMistakesToTodo}
                 disabled={isSavingMistakes}
@@ -708,7 +708,7 @@ export default function DailyAdvicePage() {
                     Lưu vào TODO List
                   </>
                 )}
-              </button>
+              </button> */}
             </div>
           )}
 
@@ -716,11 +716,13 @@ export default function DailyAdvicePage() {
           {adviceData.motivation && (
             <div className="da-content-card">
               <div className="da-card-header">
-                <span className="da-card-icon">❝❞</span>
+                <span className="da-card-icon">❝</span>
                 Câu nói động viên
+                <span className="da-card-icon">❞</span>
               </div>
+
               <div className="da-quote-content" style={{ textAlign: 'center', fontSize: '14px' }}>
-                "{adviceData.motivation.content}"
+                {adviceData.motivation.content}
               </div>
             </div>
           )}

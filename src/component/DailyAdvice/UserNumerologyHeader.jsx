@@ -75,9 +75,9 @@ export default function UserNumerologyHeader({ onLogout }) {
       </button>
 
       {/* 1. Life Path Pill */}
-      <div className="da-life-path-pill">
+      {/* <div className="da-life-path-pill">
         Đường đời {displayMainNumber}
-      </div>
+      </div> */}
 
       {/* 2. Main Circle */}
       <div
@@ -95,7 +95,7 @@ export default function UserNumerologyHeader({ onLogout }) {
       </div>
 
       {/* 4. Badges (Soul, Express, Destiny) */}
-      <div className="da-badges">
+      {/* <div className="da-badges">
         <div className="da-badge" onClick={() => navigate('/numerology-detail')}>
           Linh hồn: <strong>{soulNumber || '?'}</strong>
         </div>
@@ -105,7 +105,7 @@ export default function UserNumerologyHeader({ onLogout }) {
         <div className="da-badge" onClick={() => navigate('/numerology-detail')}>
           Sứ mệnh: <strong>{destinyNumber || '?'}</strong>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
