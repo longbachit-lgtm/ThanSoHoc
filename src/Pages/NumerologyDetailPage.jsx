@@ -24,7 +24,7 @@ export default function NumerologyDetailPage() {
   // Load dữ liệu trực tiếp từ Database
   useEffect(() => {
     const loadData = async () => {
-      // Nếu đã có data trong Redux, không cần load
+      // Nếu đã có data trong Redux, không cần load lại
       if (mainNumber && birthDay) {
         setHasData(true);
         setIsLoading(false);
@@ -38,60 +38,91 @@ export default function NumerologyDetailPage() {
         return;
       }
 
-      // Load dữ liệu từ Database
-      try {
-        const response = await api.numerology.getMyData();
+      // Load dữ liệu từ Database với retry logic
+      let retries = 3;
+      let lastError = null;
 
-        if (response.data) {
-          const data = response.data;
+      while (retries > 0) {
+        try {
+          console.log(`Đang load dữ liệu từ DB (attempt ${4 - retries}/3)...`);
+          const response = await api.numerology.getMyData();
 
-          // Dispatch dữ liệu vào Redux store
-          // Number Karma
-          dispatch(numberKarmaActions.setKamarNumeroMain(data.number || 0));
-          dispatch(
-            numberKarmaActions.setKamarNumeroAtitute(data.atitute || 0)
-          );
-          dispatch(
-            numberKarmaActions.setKamarNumeroDayBirth(data.day_birth || 0)
-          );
-          dispatch(
-            numberKarmaActions.setBirthDayNumber(data.birthDayString || "")
-          );
-          dispatch(
-            numberKarmaActions.setBirthDayList(data.birthDayList || "")
-          );
-          dispatch(numberKarmaActions.setArrow(data.arrow || []));
-          dispatch(numberKarmaActions.setLackArrow(data.lack_arrow || []));
-          dispatch(numberKarmaActions.setTop4Peak(data.top4 || {}));
-          dispatch(
-            numberKarmaActions.setStrongListNumb(data.strong_list || [])
-          );
-          dispatch(numberKarmaActions.setWeakListNumb(data.weak_list || []));
+          if (response.data) {
+            const data = response.data;
+            console.log("✅ Load dữ liệu thành công:", data);
 
-          // Number Name
-          dispatch(numberNameActions.setNumberDestiny(data.destiny || 0));
-          dispatch(numberNameActions.setNumberName(data.name || 0));
-          dispatch(numberNameActions.setNumberSoul(data.soul || 0));
-          dispatch(numberNameActions.setNumberInner(data.inner || "0"));
-          dispatch(numberNameActions.setNumberExpress(data.express || 0));
-          dispatch(numberNameActions.setNumberMature(data.mature || 0));
-          dispatch(
-            numberNameActions.setFullNameNumber(data.full_name_number || "")
-          );
-          dispatch(
-            numberNameActions.setFullNameList(data.full_name_list || "")
-          );
+            // Dispatch dữ liệu vào Redux store
+            // Number Karma
+            dispatch(numberKarmaActions.setKamarNumeroMain(data.number || 0));
+            dispatch(
+              numberKarmaActions.setKamarNumeroAtitute(data.atitute || 0)
+            );
+            dispatch(
+              numberKarmaActions.setKamarNumeroDayBirth(data.day_birth || 0)
+            );
+            dispatch(
+              numberKarmaActions.setBirthDayNumber(data.birthDayString || "")
+            );
+            dispatch(
+              numberKarmaActions.setBirthDayList(data.birthDayList || "")
+            );
+            dispatch(numberKarmaActions.setArrow(data.arrow || []));
+            dispatch(numberKarmaActions.setLackArrow(data.lack_arrow || []));
+            dispatch(numberKarmaActions.setTop4Peak(data.top4 || {}));
+            dispatch(
+              numberKarmaActions.setStrongListNumb(data.strong_list || [])
+            );
+            dispatch(numberKarmaActions.setWeakListNumb(data.weak_list || []));
 
-          setHasData(true);
-        } else {
-          // Không có data trong DB
-          setHasData(false);
+            // Number Name
+            dispatch(numberNameActions.setNumberDestiny(data.destiny || 0));
+            dispatch(numberNameActions.setNumberName(data.name || 0));
+            dispatch(numberNameActions.setNumberSoul(data.soul || 0));
+            dispatch(numberNameActions.setNumberInner(data.inner || "0"));
+            dispatch(numberNameActions.setNumberExpress(data.express || 0));
+            dispatch(numberNameActions.setNumberMature(data.mature || 0));
+            dispatch(
+              numberNameActions.setFullNameNumber(data.full_name_number || "")
+            );
+            dispatch(
+              numberNameActions.setFullNameList(data.full_name_list || "")
+            );
+
+            setHasData(true);
+            setIsLoading(false);
+            return; // Success - exit the retry loop
+          } else {
+            // Không có data trong DB
+            console.warn("Không tìm thấy dữ liệu trong DB");
+            setHasData(false);
+            setIsLoading(false);
+            return;
+          }
+        } catch (err) {
+          lastError = err;
+          console.error(`❌ Lỗi khi load dữ liệu (attempt ${4 - retries}/3):`, err);
+
+          // Nếu là lỗi 404 (không có data), không retry
+          if (err.response && err.response.status === 404) {
+            console.warn("User chưa có dữ liệu trong DB");
+            setHasData(false);
+            setIsLoading(false);
+            return;
+          }
+
+          retries--;
+
+          // Nếu còn retries, đợi một chút rồi thử lại
+          if (retries > 0) {
+            console.log(`Đợi 1 giây trước khi thử lại...`);
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
         }
-      } catch (err) {
-        console.error("Lỗi khi load dữ liệu từ DB:", err);
-        setHasData(false);
       }
 
+      // Nếu hết retries mà vẫn lỗi
+      console.error("❌ Không thể load dữ liệu sau 3 lần thử:", lastError);
+      setHasData(false);
       setIsLoading(false);
     };
 

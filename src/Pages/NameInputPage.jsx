@@ -1,34 +1,82 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../service/api";
 
 export default function NameInputPage() {
   const [fullName, setFullName] = useState("");
+  const [isChecking, setIsChecking] = useState(true);
   const navigate = useNavigate();
+
+  // Check if user already has numerology data
+  useEffect(() => {
+    const checkExistingData = async () => {
+      try {
+        const response = await api.numerology.getMyData();
+        if (response.data && response.data.fullName) {
+          // User already has data, redirect to detail page
+          navigate("/numerology-detail", { replace: true });
+          return;
+        }
+      } catch (error) {
+        // If 404 or error, user doesn't have data yet - continue to input
+        console.log("No existing data, showing input form");
+      } finally {
+        setIsChecking(false);
+      }
+    };
+
+    checkExistingData();
+  }, [navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (!fullName.trim()) {
       alert("Vui lòng nhập họ và tên!");
       return;
     }
-    
+
     // TODO: Lưu tên vào store hoặc localStorage
     localStorage.setItem('userFullName', fullName.trim());
-    
+
     // Chuyển đến trang nhập ngày sinh hoặc trang tiếp theo
     navigate("/birth-date");
   };
 
+  // Show loading while checking for existing data
+  if (isChecking) {
+    return (
+      <div className="min-vh-100 d-flex align-items-center justify-content-center p-3">
+        <div className="text-center">
+          <div
+            className="spinner-border mb-3"
+            role="status"
+            style={{
+              width: '3rem',
+              height: '3rem',
+              color: '#A07A4A',
+              borderWidth: '4px'
+            }}
+          >
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p style={{ color: '#332211', fontSize: '16px', fontWeight: '500' }}>
+            Đang kiểm tra dữ liệu...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div 
+    <div
       className="min-vh-100 d-flex align-items-center justify-content-center p-3"
-  
+
     >
       {/* Background astrological elements */}
       <div className="position-absolute w-100 h-100" style={{ pointerEvents: 'none' }}>
         {/* Constellation patterns */}
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '10%',
@@ -39,7 +87,7 @@ export default function NameInputPage() {
             opacity: 0.3
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '20%',
@@ -51,7 +99,7 @@ export default function NameInputPage() {
             opacity: 0.2
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             bottom: '25%',
@@ -62,7 +110,7 @@ export default function NameInputPage() {
             opacity: 0.25
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             bottom: '15%',
@@ -75,7 +123,7 @@ export default function NameInputPage() {
           }}
         />
         {/* Individual stars */}
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '30%',
@@ -87,7 +135,7 @@ export default function NameInputPage() {
             opacity: 0.4
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             top: '40%',
@@ -99,7 +147,7 @@ export default function NameInputPage() {
             opacity: 0.5
           }}
         />
-        <div 
+        <div
           className="position-absolute"
           style={{
             bottom: '40%',
@@ -120,8 +168,8 @@ export default function NameInputPage() {
             {/* Progress Dots */}
             <div className="text-center mb-4">
               <div className="d-flex justify-content-center align-items-center gap-2">
-      
-                <span 
+
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -130,7 +178,7 @@ export default function NameInputPage() {
                     opacity: 0.6
                   }}
                 />
-                          <span 
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -138,7 +186,7 @@ export default function NameInputPage() {
                     backgroundColor: '#B8860B'
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -147,7 +195,7 @@ export default function NameInputPage() {
                     opacity: 0.6
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle"
                   style={{
                     width: '12px',
@@ -156,7 +204,7 @@ export default function NameInputPage() {
                     opacity: 0.6
                   }}
                 />
-                <span 
+                <span
                   className="rounded-circle border"
                   style={{
                     width: '24px',
@@ -170,7 +218,7 @@ export default function NameInputPage() {
             </div>
 
             {/* Name Input Card */}
-            <div 
+            <div
               className="card border-0 shadow-sm"
               style={{
                 backgroundColor: '#FCF8F0',
@@ -179,7 +227,7 @@ export default function NameInputPage() {
               }}
             >
               <div className="card-body p-4 p-md-5">
-                <h2 
+                <h2
                   className="text-center fw-bold mb-4"
                   style={{
                     color: '#A07A4A',
@@ -213,7 +261,7 @@ export default function NameInputPage() {
 
                   {/* Descriptive Text */}
                   <div className="text-center mb-4">
-                    <p 
+                    <p
                       className="fst-italic mb-0"
                       style={{
                         color: '#6e645b',
@@ -242,7 +290,7 @@ export default function NameInputPage() {
                         boxShadow: '0 4px 12px rgba(160, 122, 74, 0.3)'
                       }}
                     >
-                      <span 
+                      <span
                         style={{
                           width: '20px',
                           height: '20px',
@@ -260,7 +308,7 @@ export default function NameInputPage() {
 
             {/* Logo */}
             <div className="text-center mt-4">
-              <h1 
+              <h1
                 className="display-4 fw-bold mb-0"
                 style={{
                   fontFamily: "'Charm', cursive",
@@ -270,7 +318,7 @@ export default function NameInputPage() {
                 }}
               >
                 Chạm
-                <span 
+                <span
                   className="position-absolute"
                   style={{
                     top: '-5px',

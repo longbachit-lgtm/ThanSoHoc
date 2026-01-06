@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaMars, FaVenus, FaTransgender } from "react-icons/fa";
 import { useDispatch } from "react-redux";
@@ -21,10 +21,30 @@ export default function GenderSelectionPage() {
   const [role, setRole] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // Check if user already has numerology data
+  useEffect(() => {
+    const checkExistingData = async () => {
+      try {
+        const response = await api.numerology.getMyData();
+        if (response.data && response.data.fullName) {
+          navigate("/numerology-detail", { replace: true });
+          return;
+        }
+      } catch (error) {
+        console.log("No existing data, showing input form");
+      } finally {
+        setIsChecking(false);
+      }
+    };
+
+    checkExistingData();
+  }, [navigate]);
 
   const handleGenderSelect = (gender) => {
     setSelectedGender(gender);
@@ -168,6 +188,31 @@ export default function GenderSelectionPage() {
   const handleBack = () => {
     navigate("/birth-date");
   };
+
+  // Show loading while checking for existing data
+  if (isChecking) {
+    return (
+      <div className="min-vh-100 d-flex align-items-center justify-content-center p-3">
+        <div className="text-center">
+          <div
+            className="spinner-border mb-3"
+            role="status"
+            style={{
+              width: '3rem',
+              height: '3rem',
+              color: '#A07A4A',
+              borderWidth: '4px'
+            }}
+          >
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p style={{ color: '#332211', fontSize: '16px', fontWeight: '500' }}>
+            Đang kiểm tra dữ liệu...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-vh-100 d-flex align-items-center justify-content-center p-3">

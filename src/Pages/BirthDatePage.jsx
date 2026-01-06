@@ -1,14 +1,35 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../service/api";
 
 export default function BirthDatePage() {
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
+  const [isChecking, setIsChecking] = useState(true);
   const dayRef = useRef(null);
   const monthRef = useRef(null);
   const yearRef = useRef(null);
   const navigate = useNavigate();
+
+  // Check if user already has numerology data
+  useEffect(() => {
+    const checkExistingData = async () => {
+      try {
+        const response = await api.numerology.getMyData();
+        if (response.data && response.data.fullName) {
+          navigate("/numerology-detail", { replace: true });
+          return;
+        }
+      } catch (error) {
+        console.log("No existing data, showing input form");
+      } finally {
+        setIsChecking(false);
+      }
+    };
+
+    checkExistingData();
+  }, [navigate]);
 
   const handleDayChange = (increment) => {
     const currentDay = parseInt(day) || 1;
@@ -98,6 +119,31 @@ export default function BirthDatePage() {
   const handleBack = () => {
     navigate("/name-input");
   };
+
+  // Show loading while checking for existing data
+  if (isChecking) {
+    return (
+      <div className="min-vh-100 d-flex align-items-center justify-content-center p-3">
+        <div className="text-center">
+          <div
+            className="spinner-border mb-3"
+            role="status"
+            style={{
+              width: '3rem',
+              height: '3rem',
+              color: '#A07A4A',
+              borderWidth: '4px'
+            }}
+          >
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p style={{ color: '#332211', fontSize: '16px', fontWeight: '500' }}>
+            Đang kiểm tra dữ liệu...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
