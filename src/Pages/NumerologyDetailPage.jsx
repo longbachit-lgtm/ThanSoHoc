@@ -7,7 +7,6 @@ import NumerologyNumbersGrid from "../component/NumerologyDetail/NumerologyNumbe
 import ChartsSection from "../component/NumerologyDetail/ChartsSection";
 import OverviewNumber from "../component/OverviewNumber";
 import DetailNumber from "../component/DetailNumber";
-import { initializeNumerologyData } from "../service/initializeNumerologyData";
 import { useAuthStore } from "../store/useAuthStore";
 import api from "../service/api";
 import { numberKarmaActions } from "../store/numberKarma";
@@ -22,7 +21,7 @@ export default function NumerologyDetailPage() {
   const [hasData, setHasData] = useState(false);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
-  // Load dữ liệu từ DB hoặc localStorage
+  // Load dữ liệu trực tiếp từ Database
   useEffect(() => {
     const loadData = async () => {
       // Nếu đã có data trong Redux, không cần load
@@ -32,67 +31,65 @@ export default function NumerologyDetailPage() {
         return;
       }
 
-      // Nếu user đã đăng nhập, ưu tiên load từ DB
-      if (isAuthenticated()) {
-        try {
-          const response = await api.numerology.getMyData();
+      // Kiểm tra user đã đăng nhập chưa
+      if (!isAuthenticated()) {
+        setHasData(false);
+        setIsLoading(false);
+        return;
+      }
 
-          if (response.data) {
-            const data = response.data;
+      // Load dữ liệu từ Database
+      try {
+        const response = await api.numerology.getMyData();
 
-            // Dispatch dữ liệu vào Redux store
-            // Number Karma
-            dispatch(numberKarmaActions.setKamarNumeroMain(data.number || 0));
-            dispatch(
-              numberKarmaActions.setKamarNumeroAtitute(data.atitute || 0)
-            );
-            dispatch(
-              numberKarmaActions.setKamarNumeroDayBirth(data.day_birth || 0)
-            );
-            dispatch(
-              numberKarmaActions.setBirthDayNumber(data.birthDayString || "")
-            );
-            dispatch(
-              numberKarmaActions.setBirthDayList(data.birthDayList || "")
-            );
-            dispatch(numberKarmaActions.setArrow(data.arrow || []));
-            dispatch(numberKarmaActions.setLackArrow(data.lack_arrow || []));
-            dispatch(numberKarmaActions.setTop4Peak(data.top4 || {}));
-            dispatch(
-              numberKarmaActions.setStrongListNumb(data.strong_list || [])
-            );
-            dispatch(numberKarmaActions.setWeakListNumb(data.weak_list || []));
+        if (response.data) {
+          const data = response.data;
 
-            // Number Name
-            dispatch(numberNameActions.setNumberDestiny(data.destiny || 0));
-            dispatch(numberNameActions.setNumberName(data.name || 0));
-            dispatch(numberNameActions.setNumberSoul(data.soul || 0));
-            dispatch(numberNameActions.setNumberInner(data.inner || "0"));
-            dispatch(numberNameActions.setNumberExpress(data.express || 0));
-            dispatch(numberNameActions.setNumberMature(data.mature || 0));
-            dispatch(
-              numberNameActions.setFullNameNumber(data.full_name_number || "")
-            );
-            dispatch(
-              numberNameActions.setFullNameList(data.full_name_list || "")
-            );
+          // Dispatch dữ liệu vào Redux store
+          // Number Karma
+          dispatch(numberKarmaActions.setKamarNumeroMain(data.number || 0));
+          dispatch(
+            numberKarmaActions.setKamarNumeroAtitute(data.atitute || 0)
+          );
+          dispatch(
+            numberKarmaActions.setKamarNumeroDayBirth(data.day_birth || 0)
+          );
+          dispatch(
+            numberKarmaActions.setBirthDayNumber(data.birthDayString || "")
+          );
+          dispatch(
+            numberKarmaActions.setBirthDayList(data.birthDayList || "")
+          );
+          dispatch(numberKarmaActions.setArrow(data.arrow || []));
+          dispatch(numberKarmaActions.setLackArrow(data.lack_arrow || []));
+          dispatch(numberKarmaActions.setTop4Peak(data.top4 || {}));
+          dispatch(
+            numberKarmaActions.setStrongListNumb(data.strong_list || [])
+          );
+          dispatch(numberKarmaActions.setWeakListNumb(data.weak_list || []));
 
-            setHasData(true);
-          } else {
-            // Không có data trong DB, thử load từ localStorage
-            const success = initializeNumerologyData(dispatch);
-            setHasData(success);
-          }
-        } catch (err) {
-          console.error("Lỗi khi load dữ liệu từ DB:", err);
-          // Nếu lỗi, thử load từ localStorage
-          const success = initializeNumerologyData(dispatch);
-          setHasData(success);
+          // Number Name
+          dispatch(numberNameActions.setNumberDestiny(data.destiny || 0));
+          dispatch(numberNameActions.setNumberName(data.name || 0));
+          dispatch(numberNameActions.setNumberSoul(data.soul || 0));
+          dispatch(numberNameActions.setNumberInner(data.inner || "0"));
+          dispatch(numberNameActions.setNumberExpress(data.express || 0));
+          dispatch(numberNameActions.setNumberMature(data.mature || 0));
+          dispatch(
+            numberNameActions.setFullNameNumber(data.full_name_number || "")
+          );
+          dispatch(
+            numberNameActions.setFullNameList(data.full_name_list || "")
+          );
+
+          setHasData(true);
+        } else {
+          // Không có data trong DB
+          setHasData(false);
         }
-      } else {
-        // Chưa đăng nhập, load từ localStorage
-        const success = initializeNumerologyData(dispatch);
-        setHasData(success);
+      } catch (err) {
+        console.error("Lỗi khi load dữ liệu từ DB:", err);
+        setHasData(false);
       }
 
       setIsLoading(false);
@@ -152,20 +149,43 @@ export default function NumerologyDetailPage() {
             Chưa có dữ liệu
           </h2>
           <p className="mb-4" style={{ color: "#332211" }}>
-            Vui lòng quay lại nhập <strong>Họ Tên</strong> &{" "}
-            <strong>Ngày Tháng Năm Sinh</strong> để tiếp tục.
+            {!isAuthenticated() ? (
+              <>
+                Vui lòng <strong>đăng nhập</strong> để xem dữ liệu thần số học của bạn.
+              </>
+            ) : (
+              <>
+                Vui lòng nhập <strong>Họ Tên</strong> &{" "}
+                <strong>Ngày Tháng Năm Sinh</strong> để lưu dữ liệu vào hệ thống.
+              </>
+            )}
           </p>
-          <Link
-            to="/name-input"
-            className="btn rounded-pill px-4 py-2"
-            style={{
-              backgroundColor: "#A07A4A",
-              color: "#fff",
-              textDecoration: "none",
-            }}
-          >
-            Quay lại nhập thông tin
-          </Link>
+          <div className="d-flex gap-3 justify-content-center flex-wrap">
+            {!isAuthenticated() && (
+              <Link
+                to="/login"
+                className="btn rounded-pill px-4 py-2"
+                style={{
+                  background: "linear-gradient(135deg, #B8860B 0%, #A07A4A 100%)",
+                  color: "#fff",
+                  textDecoration: "none",
+                }}
+              >
+                Đăng nhập
+              </Link>
+            )}
+            <Link
+              to="/name-input"
+              className="btn rounded-pill px-4 py-2"
+              style={{
+                backgroundColor: "#A07A4A",
+                color: "#fff",
+                textDecoration: "none",
+              }}
+            >
+              Nhập thông tin
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -225,9 +245,8 @@ export default function NumerologyDetailPage() {
               backgroundColor: "#E8C78C",
               borderRadius: "50%",
               opacity: 0.3 + Math.random() * 0.5,
-              animation: `twinkle ${
-                2 + Math.random() * 3
-              }s ease-in-out infinite`,
+              animation: `twinkle ${2 + Math.random() * 3
+                }s ease-in-out infinite`,
               animationDelay: `${Math.random() * 2}s`,
               boxShadow: "0 0 4px rgba(232, 199, 140, 0.5)",
             }}
