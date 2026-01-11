@@ -25,9 +25,25 @@ export default function RegistrationCodeAdminPage() {
 
   // Check authentication on mount
   useEffect(() => {
+    // Check if user is authenticated
     if (!isAuthenticated()) {
       navigate("/login", { replace: true });
       return;
+    }
+
+    // Check if user is admin
+    const authData = localStorage.getItem('auth');
+    if (authData) {
+      try {
+        const parsed = JSON.parse(authData);
+        if (parsed.user?.role !== 'admin') {
+          alert("Bạn không có quyền truy cập trang này!");
+          navigate("/", { replace: true });
+          return;
+        }
+      } catch (e) {
+        navigate("/login", { replace: true });
+      }
     }
   }, [isAuthenticated, navigate]);
 

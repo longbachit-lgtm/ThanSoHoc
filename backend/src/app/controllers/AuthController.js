@@ -33,8 +33,8 @@ class AuthController {
 
       // Check email if provided
       if (email) {
-        const existingEmail = await User.findOne({ 
-          email: email.toLowerCase().trim() 
+        const existingEmail = await User.findOne({
+          email: email.toLowerCase().trim()
         });
         if (existingEmail) {
           return sendError(res, "Email đã được sử dụng.", 409);
@@ -43,7 +43,7 @@ class AuthController {
 
       // Hash password
       const hashPassword = bcrypt.hashSync(password, SALT_ROUNDS);
-      
+
       // Create user
       const newUser = new User({
         username,
@@ -56,7 +56,7 @@ class AuthController {
 
       // Mark registration code as used
       await RegistrationCode.markAsUsed(registrationCode.trim(), newUser._id);
-      
+
       return sendSuccess(
         res,
         {
@@ -69,7 +69,7 @@ class AuthController {
       );
     } catch (error) {
       console.error("Register error:", error);
-      
+
       // Handle duplicate key error
       if (error.code === 11000) {
         const field = Object.keys(error.keyPattern)[0];
@@ -79,7 +79,7 @@ class AuthController {
           409
         );
       }
-      
+
       return sendError(
         res,
         "Có lỗi trong quá trình tạo tài khoản, vui lòng thử lại.",
@@ -114,7 +114,7 @@ class AuthController {
         userId: user._id.toString(),
         role: user.role || 'user',
       };
-      
+
       const accessToken = await authMethod.generateToken(
         dataForAccessToken,
         accessTokenSecret,
@@ -151,6 +151,7 @@ class AuthController {
             username: user.username,
             fullname: user.fullname,
             email: user.email,
+            role: user.role || 'user',
           },
         },
         "Đăng nhập thành công."
@@ -163,8 +164,8 @@ class AuthController {
 
   refreshToken = async (req, res) => {
     try {
-      const accessTokenFromHeader = req.headers.x_authorization || 
-                                    req.headers.authorization?.replace('Bearer ', '');
+      const accessTokenFromHeader = req.headers.x_authorization ||
+        req.headers.authorization?.replace('Bearer ', '');
 
       if (!accessTokenFromHeader) {
         return sendError(res, "Không tìm thấy access token.", 400);
@@ -184,14 +185,14 @@ class AuthController {
         accessTokenFromHeader,
         accessTokenSecret
       );
-      
+
       if (!decoded) {
         return sendError(res, "Access token không hợp lệ.", 400);
       }
 
       const username = decoded.payload.username;
       const user = await User.getUser(username);
-      
+
       if (!user) {
         return sendError(res, "User không tồn tại.", 401);
       }
@@ -210,7 +211,7 @@ class AuthController {
         accessTokenSecret,
         accessTokenLife
       );
-      
+
       if (!accessToken) {
         return sendError(
           res,
@@ -218,7 +219,7 @@ class AuthController {
           500
         );
       }
-      
+
       return sendSuccess(res, { accessToken }, "Refresh token thành công.");
     } catch (error) {
       console.error("Refresh token error:", error);

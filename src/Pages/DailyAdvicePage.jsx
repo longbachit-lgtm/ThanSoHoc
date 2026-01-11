@@ -728,7 +728,7 @@ export default function DailyAdvicePage() {
           )}
 
           {/* 5. Actions */}
-          {adviceData.suggestedActions && adviceData.suggestedActions.actions && (
+          {adviceData.suggestedActions && adviceData.suggestedActions.actions && !['week', 'month', 'year'].includes(selectedPeriod) && (
             <div className="da-content-card">
               <div className="da-card-header">
                 <span className="da-card-icon">✅</span>
