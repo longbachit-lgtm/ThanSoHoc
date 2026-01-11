@@ -26,14 +26,14 @@ app.use(cors({
     }
 
     // Production mode: strict origin checking
-    const allowedOrigins = process.env.FRONTEND_URL
-      ? [process.env.FRONTEND_URL]
+      ?[process.env.FRONTEND_URL]
       : [
-        "http://localhost:5173",
-        "http://localhost:3000",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:3000"
-      ];
+      "http://localhost:5173",
+      "https://thansocham.netlify.app",
+      "http://localhost:3000",
+      "http://127.0.0.1:5173",
+      "http://127.0.0.1:3000"
+    ];
 
     // Allow requests with no origin (like mobile apps, Postman, etc.)
     if (!origin) {
