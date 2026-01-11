@@ -26,3 +26,21 @@ body {
   position: relative;
   top: 20px;
 }
+
+/* Responsive Utilities */
+@media (max-width: 767.98px) {
+  body {
+    font-size: 15px;
+  }
+  
+  h1 { font-size: 2rem !important; }
+  h2 { font-size: 1.75rem !important; }
+  h3 { font-size: 1.5rem !important; }
+  h4 { font-size: 1.25rem !important; }
+  h5 { font-size: 1.1rem !important; }
+
+  .container, .container-fluid {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}

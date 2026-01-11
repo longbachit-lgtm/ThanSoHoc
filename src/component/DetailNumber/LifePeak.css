@@ -62,7 +62,7 @@
   box-sizing: border-box;
 }
 
-.lifepeak-card__canvas > div {
+.lifepeak-card__canvas>div {
   width: 100%;
   max-width: 100%;
   display: flex;
@@ -238,6 +238,22 @@
   }
 }
 
+@media (max-width: 576px) {
+  .lifepeak-card {
+    padding: 1rem;
+    border-radius: 20px;
+  }
+
+  .lifepeak-card__heading h4 {
+    font-size: 1.15rem;
+  }
+
+  .lifepeak-card__canvas {
+    padding: 0;
+    margin: 0 -0.5rem;
+  }
+}
+
 @media (max-width: 767.98px) {
   .lifepeak-card__canvas {
     padding: 1rem;
@@ -254,7 +270,7 @@
     padding: 0.5rem;
   }
 
-  .lifepeak-card__canvas > div > div {
+  .lifepeak-card__canvas>div>div {
     width: 100% !important;
     max-width: 100% !important;
   }
@@ -300,4 +316,3 @@
     justify-content: center;
   }
 }
-

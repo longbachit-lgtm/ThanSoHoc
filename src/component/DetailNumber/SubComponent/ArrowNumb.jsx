@@ -8,26 +8,26 @@ const ArrowNumb = ({ wRightPanel, arr, typeArrow, stroke }) => {
   // Improved responsive calculation consistent with DrawCellDateName
   const stageWidth = useMemo(() => {
     if (widthWindow < 576) {
-      return Math.min(wRightPanel * 0.85, 280);
+      return Math.min(wRightPanel * 0.95, 340); // Increased width usage on mobile
     } else if (widthWindow < 768) {
-      return Math.min(wRightPanel * 0.8, 320);
+      return Math.min(wRightPanel * 0.9, 380);
     } else if (widthWindow < 992) {
-      return Math.min(wRightPanel * 0.75, 380);
+      return Math.min(wRightPanel * 0.85, 420);
     } else if (widthWindow < 1200) {
-      return Math.min(wRightPanel * 0.7, 420);
+      return Math.min(wRightPanel * 0.8, 450);
     } else {
-      return Math.min(wRightPanel * 0.65, 450);
+      return Math.min(wRightPanel * 0.75, 480);
     }
   }, [wRightPanel, widthWindow]);
 
   // Responsive height - taller on mobile to prevent overlap
   const stageHeight = useMemo(() => {
     if (widthWindow < 576) {
-      return 110; // More space on mobile
+      return 130; // Increased height for mobile
     } else if (widthWindow < 768) {
-      return 100;
+      return 110;
     } else {
-      return 80;
+      return 90;
     }
   }, [widthWindow]);
   
@@ -40,12 +40,12 @@ const ArrowNumb = ({ wRightPanel, arr, typeArrow, stroke }) => {
     
     if (widthWindow < 576) {
       // On mobile: text closer to arrow, just above it
-      calculatedTextY = calculatedArrowY - 20; // Just above arrow
-      calculatedNumberY = calculatedArrowY + 25; // Below arrow on mobile
+      calculatedTextY = calculatedArrowY - 25; // Just above arrow
+      calculatedNumberY = calculatedArrowY + 30; // Below arrow on mobile
     } else {
       // On desktop: text just above arrow
-      calculatedTextY = calculatedArrowY - 30; // Just above arrow
-      calculatedNumberY = 10; // Above arrow on desktop
+      calculatedTextY = calculatedArrowY - 35; // Just above arrow
+      calculatedNumberY = 15; // Above arrow on desktop
     }
     
     return {
@@ -71,20 +71,20 @@ const ArrowNumb = ({ wRightPanel, arr, typeArrow, stroke }) => {
     });
   }, [arrowStartX, arrowLength, numberCount]);
 
-  // Font sizes based on stage width - smaller on mobile
+  // Font sizes based on stage width - slightly larger for readability
   const titleFontSize = useMemo(() => {
     if (widthWindow < 576) {
-      return Math.max(stageWidth * 0.035, 12);
+      return Math.max(stageWidth * 0.045, 13);
     } else {
-      return Math.max(stageWidth * 0.04, 14);
+      return Math.max(stageWidth * 0.045, 15);
     }
   }, [stageWidth, widthWindow]);
   
   const numberFontSize = useMemo(() => {
     if (widthWindow < 576) {
-      return Math.max(stageWidth * 0.04, 14);
+      return Math.max(stageWidth * 0.05, 15);
     } else {
-      return Math.max(stageWidth * 0.045, 16);
+      return Math.max(stageWidth * 0.05, 17);
     }
   }, [stageWidth, widthWindow]);
 

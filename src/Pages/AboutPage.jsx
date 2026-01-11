@@ -202,7 +202,7 @@ export default function AboutPage() {
         </div>
 
         {/* Main container */}
-        <div className="container-fluid">
+        <div className="container-fluid px-3 px-md-4">
           <div className="row justify-content-center">
             <div className="col-12 col-lg-10 col-xl-8">
               {/* Header */}
@@ -216,6 +216,7 @@ export default function AboutPage() {
                     position: "relative",
                     textShadow: "2px 2px 4px rgba(0,0,0,0.1)",
                     letterSpacing: "2px",
+                    lineHeight: "1.2",
                   }}
                 >
                   Chạm.
@@ -248,7 +249,7 @@ export default function AboutPage() {
                 <div className="col-12 col-md-10 col-lg-9">
                   {/* Introductory Quote */}
                   <div
-                    className="card border-0 shadow-sm mb-5 card-hover"
+                    className="card border-0 shadow-sm mb-4 mb-md-5 card-hover"
                     style={{
                       background:
                         "linear-gradient(135deg, #FFF9F0 0%, #FCF8F0 100%)",
@@ -270,7 +271,7 @@ export default function AboutPage() {
                     >
                       <FaQuoteLeft />
                     </div>
-                    <div className="card-body p-5">
+                    <div className="card-body p-4 p-md-5">
                       <p
                         className="mb-0 text-center"
                         style={{
@@ -280,6 +281,7 @@ export default function AboutPage() {
                           fontStyle: "italic",
                           position: "relative",
                           zIndex: 1,
+                          fontSize: "clamp(15px, 2vw, 17px)",
                         }}
                       >
                         "CHẠM được sinh ra từ mong muốn giúp con người kết nối
