@@ -141,27 +141,15 @@ function SummaryAll() {
                 }}
               >
                 <span
-                  className="main-number__value"
-                  style={{
-                    fontSize: "3.4rem",
-                    fontWeight: 800,
-                    color: "#fffff7",
-                    textShadow: "0 5px 18px #885d168a, 0 2px 4px #fff9eb71",
-                    letterSpacing: "1.8px",
-                  }}
+                  className="main-number__value summary-all__hero-icon"
+                  style={{}}
                 >
                   📋
                 </span>
               </div>
               <p
-                className="main-number__subtitle"
-                style={{
-                  fontSize: "1.11rem",
-                  lineHeight: 1.55,
-                  margin: 0,
-                  color: "#fffbe8",
-                  textShadow: "0 2px 10px rgba(0,24,53,0.10)",
-                }}
+                className="main-number__subtitle summary-all__hero-subtitle"
+                style={{}}
               >
                 Nếu <strong>số ngày sinh</strong> giúp bạn hiểu rõ năng lực tự
                 nhiên,
