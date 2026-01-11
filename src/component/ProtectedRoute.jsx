@@ -1,8 +1,12 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuthStore } from "../store/useAuthStore";
+import useNumerologyData from "../hooks/useNumerologyData";
 
 export default function ProtectedRoute({ children }) {
   const location = useLocation();
+  
+  // Ensure numerology data is loaded
+  useNumerologyData();
+
   
   // Check authentication from localStorage FIRST (source of truth)
   // This ensures we catch logout immediately even before Zustand updates

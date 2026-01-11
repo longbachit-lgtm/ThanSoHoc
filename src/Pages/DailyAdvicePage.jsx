@@ -37,64 +37,8 @@ export default function DailyAdvicePage() {
   const fullName = useSelector((state) => state.numberName.full_name_list);
   const mainNumber = useSelector((state) => state.numberKarmaMain.number);
 
-  // Load numerology data from backend if authenticated but Redux is empty
-  useEffect(() => {
-    const loadNumerologyData = async () => {
-      if (!isAuthenticated) return;
+  // Data loading is now handled by useNumerologyData hook via ProtectedRoute
 
-      // Check if we have data in Redux by checking fullName or birthDayList
-      // (since 0 is a valid numerology number, we can't use it to check)
-      if (fullName || birthDayList) {
-        return; // Already have data
-      }
-
-      try {
-        const response = await api.numerology.getMyData();
-        const data = response.data || response;
-        if (data) {
-          // Populate Redux store
-          dispatch(numberKarmaActions.setKamarNumeroMain(data.number || 0));
-          dispatch(numberKarmaActions.setKamarNumeroAtitute(data.atitute || 0));
-          dispatch(numberKarmaActions.setKamarNumeroDayBirth(data.day_birth || 0));
-          dispatch(numberKarmaActions.setBirthDayNumber(data.birthDayString || ""));
-          dispatch(numberKarmaActions.setBirthDayList(data.birthDayList || ""));
-          dispatch(numberKarmaActions.setArrow(data.arrow || []));
-          dispatch(numberKarmaActions.setLackArrow(data.lack_arrow || []));
-          dispatch(numberKarmaActions.setTop4Peak(data.top4 || {}));
-          dispatch(numberKarmaActions.setStrongListNumb(data.strong_list || []));
-          dispatch(numberKarmaActions.setWeakListNumb(data.weak_list || []));
-
-          dispatch(numberNameActions.setNumberDestiny(data.destiny || 0));
-          dispatch(numberNameActions.setNumberName(data.name || 0));
-          dispatch(numberNameActions.setNumberSoul(data.soul || 0));
-          dispatch(numberNameActions.setNumberInner(data.inner || "0"));
-          dispatch(numberNameActions.setNumberExpress(data.express || 0));
-          dispatch(numberNameActions.setNumberMature(data.mature || 0));
-          dispatch(numberNameActions.setFullNameNumber(data.full_name_number || ""));
-          dispatch(numberNameActions.setFullNameList(data.full_name_list || ""));
-
-          // Also save to localStorage for fallback
-          if (data.full_name_list) {
-            localStorage.setItem('userFullName', data.full_name_list);
-          }
-          if (data.birthDayList) {
-            const parts = data.birthDayList.split("/");
-            if (parts.length === 3) {
-              const [day, month, year] = parts.map((part) => parseInt(part, 10));
-              if (!Number.isNaN(day) && !Number.isNaN(month) && !Number.isNaN(year)) {
-                localStorage.setItem('userBirthDate', JSON.stringify({ day, month, year }));
-              }
-            }
-          }
-        }
-      } catch (err) {
-        console.error("Error loading numerology data:", err);
-        // Silently fail - user might not have data yet
-      }
-    };
-
-    loadNumerologyData();
-  }, [isAuthenticated, fullName, birthDayList, dispatch]);
 
   useEffect(() => {
     // Get birth date
