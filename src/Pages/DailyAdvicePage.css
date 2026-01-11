@@ -11,10 +11,7 @@
     /* Remove specific font to inherit from global/common form like SummaryAll */
     min-height: 100vh;
     padding: 24px;
-    background-color: var(--da-cream);
-    background-image:
-        radial-gradient(circle at 20% 20%, rgba(232, 199, 140, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+    background: transparent;
 }
 
 .daily-advice-container {

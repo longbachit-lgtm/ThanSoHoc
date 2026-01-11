@@ -50,34 +50,35 @@ export default function DailyAdvicePage() {
 
       try {
         const response = await api.numerology.getMyData();
-        if (response.data) {
+        const data = response.data || response;
+        if (data) {
           // Populate Redux store
-          dispatch(numberKarmaActions.setKamarNumeroMain(response.data.number || 0));
-          dispatch(numberKarmaActions.setKamarNumeroAtitute(response.data.atitute || 0));
-          dispatch(numberKarmaActions.setKamarNumeroDayBirth(response.data.day_birth || 0));
-          dispatch(numberKarmaActions.setBirthDayNumber(response.data.birthDayString || ""));
-          dispatch(numberKarmaActions.setBirthDayList(response.data.birthDayList || ""));
-          dispatch(numberKarmaActions.setArrow(response.data.arrow || []));
-          dispatch(numberKarmaActions.setLackArrow(response.data.lack_arrow || []));
-          dispatch(numberKarmaActions.setTop4Peak(response.data.top4 || {}));
-          dispatch(numberKarmaActions.setStrongListNumb(response.data.strong_list || []));
-          dispatch(numberKarmaActions.setWeakListNumb(response.data.weak_list || []));
+          dispatch(numberKarmaActions.setKamarNumeroMain(data.number || 0));
+          dispatch(numberKarmaActions.setKamarNumeroAtitute(data.atitute || 0));
+          dispatch(numberKarmaActions.setKamarNumeroDayBirth(data.day_birth || 0));
+          dispatch(numberKarmaActions.setBirthDayNumber(data.birthDayString || ""));
+          dispatch(numberKarmaActions.setBirthDayList(data.birthDayList || ""));
+          dispatch(numberKarmaActions.setArrow(data.arrow || []));
+          dispatch(numberKarmaActions.setLackArrow(data.lack_arrow || []));
+          dispatch(numberKarmaActions.setTop4Peak(data.top4 || {}));
+          dispatch(numberKarmaActions.setStrongListNumb(data.strong_list || []));
+          dispatch(numberKarmaActions.setWeakListNumb(data.weak_list || []));
 
-          dispatch(numberNameActions.setNumberDestiny(response.data.destiny || 0));
-          dispatch(numberNameActions.setNumberName(response.data.name || 0));
-          dispatch(numberNameActions.setNumberSoul(response.data.soul || 0));
-          dispatch(numberNameActions.setNumberInner(response.data.inner || "0"));
-          dispatch(numberNameActions.setNumberExpress(response.data.express || 0));
-          dispatch(numberNameActions.setNumberMature(response.data.mature || 0));
-          dispatch(numberNameActions.setFullNameNumber(response.data.full_name_number || ""));
-          dispatch(numberNameActions.setFullNameList(response.data.full_name_list || ""));
+          dispatch(numberNameActions.setNumberDestiny(data.destiny || 0));
+          dispatch(numberNameActions.setNumberName(data.name || 0));
+          dispatch(numberNameActions.setNumberSoul(data.soul || 0));
+          dispatch(numberNameActions.setNumberInner(data.inner || "0"));
+          dispatch(numberNameActions.setNumberExpress(data.express || 0));
+          dispatch(numberNameActions.setNumberMature(data.mature || 0));
+          dispatch(numberNameActions.setFullNameNumber(data.full_name_number || ""));
+          dispatch(numberNameActions.setFullNameList(data.full_name_list || ""));
 
           // Also save to localStorage for fallback
-          if (response.data.full_name_list) {
-            localStorage.setItem('userFullName', response.data.full_name_list);
+          if (data.full_name_list) {
+            localStorage.setItem('userFullName', data.full_name_list);
           }
-          if (response.data.birthDayList) {
-            const parts = response.data.birthDayList.split("/");
+          if (data.birthDayList) {
+            const parts = data.birthDayList.split("/");
             if (parts.length === 3) {
               const [day, month, year] = parts.map((part) => parseInt(part, 10));
               if (!Number.isNaN(day) && !Number.isNaN(month) && !Number.isNaN(year)) {
@@ -555,11 +556,7 @@ export default function DailyAdvicePage() {
       <div
         className="min-vh-100 d-flex align-items-center justify-content-center p-3"
         style={{
-          background: "#FDFBF6",
-          backgroundImage: `
-            radial-gradient(circle at 20% 20%, rgba(232, 199, 140, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%)
-          `
+          background: "transparent",
         }}
       >
         <div className="text-center">
@@ -717,7 +714,7 @@ export default function DailyAdvicePage() {
             <div className="da-content-card">
               <div className="da-card-header">
                 <span className="da-card-icon">❝</span>
-                Câu nói động viên
+                Lời nhắn gửi bạn
                 <span className="da-card-icon">❞</span>
               </div>
 

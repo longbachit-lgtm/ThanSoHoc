@@ -1,6 +1,6 @@
 .date-to-known {
   padding: 3rem 0;
-  background: linear-gradient(180deg, #fff9f1 0%, #f5ede2 100%);
+  background: transparent;
 }
 
 .date-to-known__container {
@@ -43,7 +43,7 @@
   justify-content: center;
   margin: 2rem 0;
   padding: 2rem;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(253, 244, 230, 0.92) 100%);
+  background: #ffffff;
   border-radius: 24px;
   border: 1px solid rgba(232, 199, 140, 0.3);
   box-shadow: 0 20px 40px rgba(184, 134, 11, 0.14);
@@ -61,14 +61,14 @@
   color: #3a2a0e;
   margin: 0 0 1rem 0;
   padding: 1rem 1.5rem;
-  background: linear-gradient(135deg, rgba(232, 199, 140, 0.15) 0%, rgba(255, 248, 240, 0.8) 100%);
+  background: #ffffff;
   border-radius: 16px;
   border-left: 4px solid #b8860b;
   letter-spacing: 0.5px;
 }
 
 .date-to-known__arrow-item {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 247, 232, 0.92) 100%);
+  background: #ffffff;
   border-radius: 20px;
   padding: 1.5rem;
   border: 1px solid rgba(232, 199, 140, 0.28);
@@ -183,4 +183,3 @@
     padding: 0;
   }
 }
-

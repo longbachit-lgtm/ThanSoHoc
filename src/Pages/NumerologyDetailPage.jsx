@@ -228,6 +228,7 @@ export default function NumerologyDetailPage() {
       style={{
         position: "relative",
         overflow: "hidden",
+        background: "linear-gradient(to bottom, #F7F3E8, #EFDEC5)",
       }}
     >
       {/* Enhanced Background Elements */}
@@ -615,29 +616,19 @@ export default function NumerologyDetailPage() {
 
             {/* Detail Numbers - Chi tiết từng số */}
             <div
-              className="card border-0 mb-5 card-hover"
+              className="mb-5"
               style={{
-                background: "rgba(255, 255, 255, 0.9)",
-                backdropFilter: "blur(10px)",
+                background: "rgba(255, 255, 255, 0.4)",
+                border: "1px solid rgba(232, 199, 140, 0.5)",
                 borderRadius: "24px",
-                border: "1px solid rgba(232, 199, 140, 0.3)",
-                boxShadow: "0 8px 32px rgba(184, 134, 11, 0.1)",
-                overflow: "hidden",
+                boxShadow: "0 4px 24px rgba(184, 134, 11, 0.08)",
+                backdropFilter: "blur(8px)",
+                padding: "2rem",
                 position: "relative",
               }}
             >
               {/* Decorative top border */}
-              <div
-                style={{
-                  height: "4px",
-                  background:
-                    "linear-gradient(90deg, #B8860B, #E8C78C, #B8860B)",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                }}
-              />
+
 
               <div className="card-body p-4 p-md-5">
                 {/* Section Title with icon */}

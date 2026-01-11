@@ -51,11 +51,11 @@
 }
 
 .summary-all__section {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 2rem 1.5rem;
-  border: 1px solid #e5e5e5;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  background: transparent;
+  border-radius: 0;
+  padding: 1rem 0;
+  border: none;
+  box-shadow: none;
   margin-bottom: 2rem;
   transition: all 0.3s ease;
 }
@@ -109,12 +109,10 @@
 .summary-all__groups-divider {
   margin: 2.5rem 0;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(232, 199, 140, 0.5),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(232, 199, 140, 0.5),
+      transparent);
 }
 
 .summary-all__career-grid {
@@ -125,11 +123,7 @@
 }
 
 .summary-all__career-item {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(252, 248, 240, 0.9) 100%
-  );
+  background: #ffffff;
   border-radius: 16px;
   padding: 1.75rem 1.5rem;
   padding-top: 2rem;
@@ -152,31 +146,19 @@
   padding: 1.75rem 1.5rem;
   padding-left: 2rem;
   border-radius: 16px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(252, 248, 240, 0.85) 100%
-  );
+  background: #ffffff;
   border: 1px solid rgba(232, 199, 140, 0.25);
   box-shadow: 0 2px 8px rgba(232, 199, 140, 0.1);
 }
 
 .summary-all__solution-item:nth-child(even) {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 247, 232, 0.9) 0%,
-    rgba(255, 255, 255, 0.85) 100%
-  );
+  background: #fafafa;
 }
 
 .summary-all__note-box {
   margin-top: 2rem;
   padding: 1.5rem;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 243, 224, 0.8) 0%,
-    rgba(255, 235, 205, 0.6) 100%
-  );
+  background: #fff9ed;
   border-radius: 16px;
   border-left: 4px solid #dc3545;
 }
@@ -283,10 +265,12 @@
 .summary-all__career-item-modern:hover .career-card li {
   color: #2b1e12;
 }
+
 .career-card li::before {
   content: "✦";
   color: #c9a46a;
 }
+
 .career-card h3 {
   font-size: 15px;
   font-weight: 700;
@@ -300,6 +284,7 @@
   margin-bottom: 6px;
   color: #6b4f2d;
 }
+
 /*  */
 
 /* ===============================
@@ -462,6 +447,7 @@
   line-height: 1.7;
   color: #5f5346;
 }
+
 /*  */
 .weak-title,
 .subtitle {

@@ -119,7 +119,7 @@ function OverviewNumber() {
     },
     {
       label: "Số Nội Cảm",
-      value: numberInner ? numberInner : "Không có",
+      value: numberInner || 0,
       gradient: "linear-gradient(135deg, #C9A9D9 0%, #9370DB 100%)",
       id: "inner_number",
       description: "Cảm nhận đặc biệt"

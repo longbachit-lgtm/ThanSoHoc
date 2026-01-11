@@ -65,7 +65,7 @@ export default function SignupPage() {
       const response = await api.auth.register(
         formData.username.trim(),
         formData.password,
-        formData.fullName.trim() || null,
+        null,
         formData.email.trim() || null,
         formData.registrationCode.trim()
       );

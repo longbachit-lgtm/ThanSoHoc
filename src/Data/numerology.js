@@ -880,123 +880,135 @@ export const ARROW = {
     1: {
       TEN: "Kế hoạch",
       Y_NGHIA:
-        "Sáng tạo, nhiều ý tưởng, tính trật tự, lên kế hoạch (nghĩ được chưa chắc đã làm được)",
+        "Tư duy logic, có khả năng sắp xếp, lên kế hoạch rõ ràng, sáng tạo nhiều ý tưởng và biết định hướng con đường đi.",
       KET_LUAN:
-        "<p><strong class='text-primary'>Sáng tạo, nhiều ý tưởng, tính trật tự, lên kế hoạch </strong>(nghĩ được chưa chắc đã làm được)<p>",
+        "<p><strong class='text-primary'>Bạn có khả năng tư duy hệ thống và lập kế hoạch tốt</strong>, nếu kết hợp thêm hành động thực tế sẽ đạt hiệu quả cao.</p>",
     },
     0: {
-      TEN: "Trống kế hoạch",
-      Y_NGHIA: "Thiếu trật tự, lộn xộn, cuộc sống vô lối…",
+      TEN: "Thiếu kế hoạch",
+      Y_NGHIA:
+        "Thiếu trật tự, dễ lộn xộn trong suy nghĩ và hành động, cuộc sống thiếu định hướng rõ ràng.",
       KET_LUAN:
-        "<p class=''><strong class='text-danger'>Thiếu trật tự, lộn xộn, </strong></p>",
+        "<p><strong class='text-danger'>Bạn cần rèn luyện khả năng tổ chức và lập kế hoạch</strong> để tránh sống tùy hứng.</p>",
     },
   },
+
   456: {
     1: {
       TEN: "Ý chí",
       Y_NGHIA:
-        "Lý tưởng, khát vọng theo đuổi mục tiêu, năng lượng vượt khổ mạnh mẽ",
+        "Ý chí mạnh mẽ, kỷ luật cao, có khả năng chịu áp lực và theo đuổi mục tiêu đến cùng.",
       KET_LUAN:
-        "<p><strong class='text-danger'>Cảm xúc bất ổn, khó kiểm soát, nhạy cảm, dễ bộc lộ</strong></p>",
+        "<p><strong class='text-primary'>Bạn có nội lực bền bỉ</strong>, phù hợp với các mục tiêu dài hạn và vai trò dẫn dắt.</p>",
     },
     0: {
-      TEN: "Sân hận",
+      TEN: "Thiếu ý chí",
       Y_NGHIA:
-        "<p><b>Trống mũi tên Ý Chí</b></p><p>Không có tham vọng, bùng nhanh chóng tắt, cả thèm chóng chán (cần có đội nhóm để bù khuyết)</p><p>Cần học cách rèn luyện tính kỷ luật, kiên trì và chịu trách nhiệm với bản thân.</p>",
+        "Dễ bỏ cuộc, thiếu kỷ luật, cảm hứng đến nhanh nhưng cũng tắt nhanh.",
       KET_LUAN:
-        "<p ><strong class='text-danger'>Khó khăn trong việc giải quyết cảm xúc tiêu cực,</strong> có thể gặp khó khăn trong việc tha thứ",
+        "<p><strong class='text-danger'>Bạn cần rèn luyện tính kỷ luật và cam kết</strong> để không bỏ lỡ cơ hội.</p>",
     },
   },
+
   789: {
     1: {
       TEN: "Hoạt động",
       Y_NGHIA:
-        "Tâm huyết, nhiệt tình, có trách nhiệm cao, trải nghiệm học hỏi thực tế nhanh",
+        "Năng lượng hành động mạnh, nhiệt huyết, có trách nhiệm và học hỏi nhanh qua trải nghiệm thực tế.",
       KET_LUAN:
-        "<p><strong class='text-danger'>Cảm xúc bất ổn, khó kiểm soát, nhạy cảm, dễ bộc lộ</strong></p>",
+        "<p><strong class='text-primary'>Bạn là người hành động</strong>, càng trải nghiệm thực tế càng trưởng thành.</p>",
     },
     0: {
       TEN: "Thụ động",
       Y_NGHIA:
-        "Thiếu năng lượng, sinh khí, thụ động, thiếu kỷ luật (tìm người có kỷ cương, lý tưởng mà chơi)",
+        "Thiếu động lực hành động, dễ trì hoãn, thiếu sinh khí và quyết liệt.",
       KET_LUAN:
-        "<p><strong class='text-danger'>Cảm xúc bất ổn, khó kiểm soát, nhạy cảm, dễ bộc lộ</strong></p>",
+        "<p><strong class='text-danger'>Bạn cần chủ động vận động và tạo mục tiêu rõ ràng</strong> để kích hoạt năng lượng.</p>",
     },
   },
+
   147: {
     1: {
       TEN: "Thực tế",
       Y_NGHIA:
-        "Trục thân thể nên thiên về điểm mạnh trải nghiệm và giá trị thực tế, kỹ thuật, thực hành, khéo léo",
+        "Thiên về thực hành, kỹ thuật, trải nghiệm thực tế và giá trị bền vững.",
       KET_LUAN:
-        "<p><strong class='text-danger'>Cảm xúc bất ổn, khó kiểm soát, nhạy cảm, dễ bộc lộ</strong></p>",
+        "<p><strong class='text-primary'>Bạn phù hợp với các công việc mang tính thực tiễn</strong>, xây dựng nền tảng vững chắc.</p>",
     },
     0: {
-      TEN: "Hỗn hợp",
+      TEN: "Thiếu thực tế",
       Y_NGHIA:
-        "Làm việc không có kế hoạch nên rủi ro cao, tùy hứng, thiếu logic",
+        "Dễ làm việc tùy hứng, thiếu kế hoạch dài hạn, rủi ro cao.",
       KET_LUAN:
-        "<p><strong class='text-danger'>Cảm xúc bất ổn, khó kiểm soát, nhạy cảm dễ bộc lộ</strong></p>",
+        "<p><strong class='text-danger'>Bạn cần học cách bám sát thực tế</strong> và giảm quyết định cảm tính.</p>",
     },
   },
+
   258: {
     1: {
       TEN: "Cân bằng cảm xúc",
       Y_NGHIA:
-        "<p><b>Ôn hòa điềm tĩnh, biết lo nghĩ trước sau</b></p> <p>Bạn đại diện cho những gì liên quan đến cảm xúc, cảm giác của con người bao gồm: Trực giác, tình yêu thương, sự tự do, các cảm xúc tích cực, các biểu đạt nghệ thuật, sự độc lập về tinh thần, và trí tuệ/sự thông thái. Nhờ đó họ luôn giữ được bình tĩnh trong mọi tình huống, không để cảm xúc của bản thân làm ảnh hưởng đến công việc cũng như các mối quan hệ trong cuộc sống.</p>",
+        "Điềm tĩnh, kiểm soát cảm xúc tốt, trực giác mạnh và biết suy xét trước sau.",
       KET_LUAN:
-        "<p><strong class='text-danger'>Cảm xúc bất ổn, khó kiểm soát, nhạy cảm, dễ bộc lộ</strong></p>",
+        "<p><strong class='text-primary'>Bạn giữ được sự ổn định cảm xúc</strong>, dễ tạo niềm tin trong các mối quan hệ.</p>",
     },
     0: {
-      TEN: "Nhạy cảm",
+      TEN: "Mất cân bằng cảm xúc",
       Y_NGHIA:
-        "<p><b>Cảm xúc bất ổn, khó kiểm soát, nhạy cảm, dễ bộc lộ (nên tập chánh niệm)</b></p><p>Bạn thường hay mơ mộng, bay bổng trong thế giới riêng của mình mà vô tình quên mất những giá trị thực tế khác cần có trong đời sống. Người sống trọng cảm xúc thường nhạy cảm và dễ tổn thương.</p>",
+        "Nhạy cảm quá mức, dễ bị cảm xúc chi phối, dễ tổn thương.",
       KET_LUAN:
-        "<p ><strong class='text-danger'>Cảm xúc bất ổn, khó kiểm soát, </strong>nhạy cảm dễ bộc lộ</p>",
+        "<p><strong class='text-danger'>Bạn cần rèn luyện chánh niệm</strong> để làm chủ cảm xúc.</p>",
     },
   },
+
   369: {
     1: {
       TEN: "Sáng trí",
-      Y_NGHIA: "Phán đoán tốt, có tầm nhìn, sáng tạo, hiểu biết",
+      Y_NGHIA:
+        "Tư duy sắc bén, phán đoán tốt, có tầm nhìn và khả năng sáng tạo.",
       KET_LUAN:
-        "<p><strong class='text-danger'>Cảm xúc bất ổn, khó kiểm soát, nhạy cảm, dễ bộc lộ</strong></p>",
+        "<p><strong class='text-primary'>Bạn có năng lực trí tuệ nổi bật</strong>, phù hợp với vai trò chiến lược.</p>",
     },
     0: {
-      TEN: "Trí nhớ ngắn hạn",
-      Y_NGHIA: "Tầm nhìn ngắn hạn, tham bát bỏ mâm, trí nhớ kém",
+      TEN: "Thiếu tầm nhìn",
+      Y_NGHIA:
+        "Tư duy ngắn hạn, dễ phân tán, thiếu định hướng lâu dài.",
       KET_LUAN:
-        "<p><strong class='text-danger'>Cảm xúc bất ổn, khó kiểm soát, nhạy cảm, dễ bộc lộ</strong></p>",
+        "<p><strong class='text-danger'>Bạn cần rèn luyện khả năng nhìn xa</strong> và tập trung mục tiêu.</p>",
     },
   },
+
   159: {
     1: {
       TEN: "Quyết tâm",
       Y_NGHIA:
-        "Bền bỉ, kiên định, có trách nhiệm, thúc đẩy dẫn dắt người khác phát triển",
+        "Kiên định, bền bỉ, có trách nhiệm và khả năng truyền động lực cho người khác.",
       KET_LUAN:
-        "<p><strong class='text-danger'>Cảm xúc bất ổn, khó kiểm soát, nhạy cảm, dễ bộc lộ</strong></p>",
+        "<p><strong class='text-primary'>Bạn là người không dễ bỏ cuộc</strong>, rất phù hợp vai trò dẫn dắt.</p>",
     },
     0: {
-      TEN: "Trì hoãn",
-      Y_NGHIA: "phân tâm, bất an, thiếu quyết đoán",
+      TEN: "Thiếu quyết tâm",
+      Y_NGHIA:
+        "Dễ trì hoãn, thiếu kiên định, hay dao động trước lựa chọn.",
       KET_LUAN:
-        "<p><strong class='text-danger'>Cảm xúc bất ổn, khó kiểm soát, nhạy cảm, dễ bộc lộ</strong></p>",
+        "<p><strong class='text-danger'>Bạn cần rèn luyện sự cam kết</strong> với mục tiêu đã chọn.</p>",
     },
   },
+
   357: {
     1: {
-      TEN: "Nhạy bén tâm linh",
+      TEN: "Trực giác tâm linh",
       Y_NGHIA:
-        "<p><b>Tư duy tốt, tự học nhanh, niềm tin đến từ sự hiểu biết, có khả năng phản biện</b></p><p>Khả năng thấu hiểu con người và nhạy bén trong việc nắm bắt tâm lý của người khác. Những người có mũi tên 357 này cũng có sự nhạy bén tâm linh nhất định, họ có đức tin để theo đuổi và dùng nó làm lý tưởng sống. Không thể phủ nhận nhờ đó mà họ giác quan thứ 6 của họ cực phát triển và nhạy bén trước mọi sự việc.</p>",
+        "Khả năng tự học cao, tư duy phản biện tốt, trực giác và niềm tin dựa trên hiểu biết.",
       KET_LUAN:
-        "<p><strong class='text-danger'>Cảm xúc bất ổn, khó kiểm soát, nhạy cảm, dễ bộc lộ</strong></p>",
+        "<p><strong class='text-primary'>Bạn có chiều sâu nhận thức</strong> và khả năng thấu hiểu con người.</p>",
     },
     0: {
-      TEN: "Hoài nghi ",
+      TEN: "Hoài nghi",
       Y_NGHIA:
-        "<p><b>Đa nghi, đòi hỏi mọi thứ phải có bằng chứng (Hoặc ngược lại dễ tin người)</b></p> <p>Thường hay hoài nghi nhiều việc hoặc người khác, không tin tưởng bất kỳ ai. Đa nghi dẫn đến rất nhiều hệ lụy trong cuộc sống. Hay soi mói mọi vấn đề khiến cuộc sống khá mệt mỏi, nóng nảy và dễ rơi vào thế bị động.</p>",
-      KET_LUAN: "",
+        "Dễ đa nghi, thiếu niềm tin hoặc ngược lại dễ tin người quá mức.",
+      KET_LUAN:
+        "<p><strong class='text-danger'>Bạn cần cân bằng giữa lý trí và niềm tin</strong> để tránh cực đoan.</p>",
     },
   },
 };

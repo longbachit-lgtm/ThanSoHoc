@@ -19,22 +19,7 @@ function InnerNumber() {
       .filter(Boolean);
   }, [numberInner]);
 
-  if (!numberInner || innerDataList.length === 0) {
-    return (
-      <div id="inner_number" className="inner-number">
-        <div className="inner-number__container">
-          <div className="inner-number__empty">
-            <div className="inner-number__empty-icon">🔍</div>
-            <h3>Chưa có dữ liệu chỉ số nội cảm</h3>
-            <p>
-              Vui lòng nhập đầy đủ thông tin để hệ thống phân tích chỉ số nội
-              cảm của bạn.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+
 
   return (
     <div id="inner_number" className="inner-number">
@@ -101,7 +86,7 @@ function InnerNumber() {
                     letterSpacing: "1.8px",
                   }}
                 >
-                  {numberInner}
+                  {numberInner || 0}
                 </span>
               </div>
               <p
@@ -133,10 +118,16 @@ function InnerNumber() {
         </div>
 
         <div className="inner-number__content">
-          {innerDataList.map((data, index) =>
-            data.noidung ? (
-              <div key={index}>{parse(data.noidung)}</div>
-            ) : null
+          {innerDataList.length > 0 ? (
+            innerDataList.map((data, index) =>
+              data.noidung ? (
+                <div key={index}>{parse(data.noidung)}</div>
+              ) : null
+            )
+          ) : (
+            <div className="text-center mt-4">
+              <h4 className="fw-bold">Họ tên bạn ko có chỉ số Nội cảm</h4>
+            </div>
           )}
         </div>
       </div>

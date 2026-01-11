@@ -27,11 +27,11 @@ export const dailyAdviceData = {
           "Đừng bốc đồng – trước mỗi quyết định, đếm chậm 3 hơi thở.",
         ],
         actions: [
-          { label: "Hít thở 3 nhịp", primary: false, onClick: () => {} },
+          { label: "Hít thở 3 nhịp", primary: false, onClick: () => { } },
         ],
       },
       motivation: {
-        title: "Câu nói động viên",
+        title: "Lời nhắn gửi bạn",
         content:
           "Mỗi khởi đầu đều cần một người dám đứng lên trước - hôm nay, người đó chính là bạn.",
       },
@@ -81,11 +81,11 @@ export const dailyAdviceData = {
           "Đừng để cảm xúc che mờ lý trí – cân bằng giữa tim và đầu.",
         ],
         actions: [
-          { label: "Thiền 5 phút", primary: false, onClick: () => {} },
+          { label: "Thiền 5 phút", primary: false, onClick: () => { } },
         ],
       },
       motivation: {
-        title: "Câu nói động viên",
+        title: "Lời nhắn gửi bạn",
         content:
           "Trong sự nhẹ nhàng và kiên nhẫn, bạn tìm thấy sức mạnh thực sự của mình.",
       },
@@ -139,11 +139,11 @@ export const dailyAdviceData = {
           "Đừng nuốt lời hứa với chính mình – hãy hoàn thành ít nhất một việc nhỏ tạo niềm vui.",
         ],
         actions: [
-          { label: "Viết/vẽ 5 phút", primary: false, onClick: () => {} },
+          { label: "Viết/vẽ 5 phút", primary: false, onClick: () => { } },
         ],
       },
       motivation: {
-        title: "Câu nói động viên",
+        title: "Lời nhắn gửi bạn",
         content:
           "Khi bạn vui vẻ thể hiện, thế giới sẽ lắng nghe và hưởng ứng bạn.",
       },
@@ -199,12 +199,12 @@ export const dailyAdviceData = {
           {
             label: "Viết checklist từng việc trong ngày",
             primary: false,
-            onClick: () => {},
+            onClick: () => { },
           },
         ],
       },
       motivation: {
-        title: "Câu nói động viên",
+        title: "Lời nhắn gửi bạn",
         content:
           "Chặng đường ngàn dặm bắt đầu bằng một bước chân vững chãi.",
       },
@@ -260,12 +260,12 @@ export const dailyAdviceData = {
           {
             label: "Chọn 1 điều mới để thử",
             primary: false,
-            onClick: () => {},
+            onClick: () => { },
           },
         ],
       },
       motivation: {
-        title: "Câu nói động viên",
+        title: "Lời nhắn gửi bạn",
         content:
           "Trải nghiệm chính là cách bạn mở rộng giới hạn của bản thân.",
       },
@@ -322,12 +322,12 @@ export const dailyAdviceData = {
           {
             label: "Tự hỏi hôm nay chăm sóc gì cho bản thân?",
             primary: false,
-            onClick: () => {},
+            onClick: () => { },
           },
         ],
       },
       motivation: {
-        title: "Câu nói động viên",
+        title: "Lời nhắn gửi bạn",
         content:
           "Sự cân bằng là khi bạn cho đi bằng tấm lòng rộng mở - nhưng vẫn biết lắng nghe nhu cầu chính mình.",
       },
@@ -383,12 +383,12 @@ export const dailyAdviceData = {
           {
             label: "Thiền hoặc viết nhật ký 10 phút",
             primary: false,
-            onClick: () => {},
+            onClick: () => { },
           },
         ],
       },
       motivation: {
-        title: "Câu nói động viên",
+        title: "Lời nhắn gửi bạn",
         content:
           "Trí tuệ bên trong bạn là ánh sáng soi đường cho hành trình phía trước.",
       },
@@ -445,12 +445,12 @@ export const dailyAdviceData = {
           {
             label: "Viết mục tiêu/nguyên tắc thành công quan trọng",
             primary: false,
-            onClick: () => {},
+            onClick: () => { },
           },
         ],
       },
       motivation: {
-        title: "Câu nói động viên",
+        title: "Lời nhắn gửi bạn",
         content:
           "Bạn mạnh mẽ hơn khi kết quả của bạn giúp ích được cho người khác.",
       },
@@ -498,7 +498,7 @@ export const dailyAdviceData = {
           {
             label:
               "Mẹo giữ cân bằng: Dành 10-15' yên tĩnh, không màn hình, hít thở 4-4-6 trước quyết định quan trọng",
-            onClick: () => {},
+            onClick: () => { },
           },
         ],
       },
@@ -510,11 +510,11 @@ export const dailyAdviceData = {
           "Đừng khép lại với sự miễn cưỡng – hãy khép lại với lòng biết ơn.",
         ],
         actions: [
-          { label: "Hít thở 4-4-6", primary: false, onClick: () => {} },
+          { label: "Hít thở 4-4-6", primary: false, onClick: () => { } },
         ],
       },
       motivation: {
-        title: "Câu nói động viên",
+        title: "Lời nhắn gửi bạn",
         content:
           "Tôi biết ơn hành trình đã qua, nhẹ nhàng buông điều cũ và mở lòng đón điều mới.",
       },
@@ -549,7 +549,7 @@ export const dailyAdviceData = {
  */
 const generateSuggestedActions = (advice) => {
   const actions = [];
-  
+
   // Extract from preparation
   if (advice.preparation && advice.preparation.content) {
     const prepContent = advice.preparation.content;
@@ -561,7 +561,7 @@ const generateSuggestedActions = (advice) => {
       }
     }
   }
-  
+
   // If we don't have enough actions, create generic ones
   if (actions.length < 4) {
     const defaultActions = [
@@ -570,13 +570,13 @@ const generateSuggestedActions = (advice) => {
       { time: "Chiều", text: "Hoàn thành ít nhất một nhiệm vụ quan trọng." },
       { time: "Tối", text: "Viết nhật ký về những điều bạn biết ơn hôm nay." }
     ];
-    
+
     // Fill missing actions
     for (let i = actions.length; i < 4; i++) {
       actions.push(defaultActions[i]);
     }
   }
-  
+
   return {
     title: "Hành động gợi ý",
     actions: actions.slice(0, 4)
@@ -589,12 +589,12 @@ const generateSuggestedActions = (advice) => {
 export const getAdviceByNumber = (number, period = 'day') => {
   const numberData = dailyAdviceData[number] || dailyAdviceData[1];
   const advice = numberData[period] || numberData.day;
-  
+
   // If no suggestedActions, generate them
   if (!advice.suggestedActions) {
     advice.suggestedActions = generateSuggestedActions(advice);
   }
-  
+
   return advice;
 };
 

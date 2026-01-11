@@ -1,6 +1,6 @@
 .main-number {
   padding: 3rem 0;
-  background: linear-gradient(180deg, #fff9f1 0%, #f5ede2 100%);
+  background: transparent;
 }
 
 .main-number__container {
@@ -124,7 +124,7 @@
 }
 
 .main-number__card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(253, 244, 230, 0.92) 100%);
+  background: #ffffff;
   border-radius: 24px;
   padding: 2rem 1.75rem;
   border: 1px solid rgba(232, 199, 140, 0.3);
@@ -177,7 +177,7 @@
 }
 
 .main-number__detail-card {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 247, 232, 0.92) 100%);
+  background: #ffffff;
   border-radius: 24px;
   padding: 1.8rem 1.6rem;
   border: 1px solid rgba(232, 199, 140, 0.28);
@@ -275,6 +275,7 @@
 }
 
 @media (max-width: 575.98px) {
+
   .main-number__cards,
   .main-number__details {
     gap: 1.25rem;

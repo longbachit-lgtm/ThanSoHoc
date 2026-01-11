@@ -1,6 +1,6 @@
 .atitute-number {
   padding: 3rem 0;
-  background: linear-gradient(180deg, #fff9f1 0%, #f5ede2 100%);
+  background: transparent;
 }
 
 .atitute-number__container {
@@ -45,7 +45,7 @@
 }
 
 .atitute-number__content {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 247, 232, 0.92) 100%);
+  background: #ffffff;
   border-radius: 24px;
   padding: 2.5rem 2rem;
   border: 1px solid rgba(232, 199, 140, 0.28);
@@ -133,5 +133,3 @@
     padding: 1.6rem 1.25rem;
   }
 }
-
-

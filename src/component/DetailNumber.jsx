@@ -31,6 +31,18 @@ const sampleAges = {
   topRight: "54 tuổi - (2050)",
 };
 
+const Divider = () => (
+  <div
+    style={{
+      height: "1px",
+      background:
+        "linear-gradient(90deg, transparent, rgba(232, 199, 140, 0.5), transparent)",
+      margin: "2rem auto",
+      width: "80%",
+    }}
+  />
+);
+
 function DetailNumber() {
   const top4 = useSelector((state) => state.numberKarmaMain.top4);
 
@@ -49,16 +61,11 @@ function DetailNumber() {
               <Fragment>
                 <div
                   id="lifepeak"
-                  className="border rounded-4 shadow-sm bg-white p-1 p-md-4 m-1 m-md-3 flex-column flex-md-row justify-content-center align-items-stretch gap-1 gap-md-4"
+                  className="p-1 p-md-4 m-1 m-md-3 flex-column flex-md-row justify-content-center align-items-stretch gap-1 gap-md-4"
                   style={{
-                    background:
-                      "linear-gradient(135deg, #fff8e7 0%, #f9f3ec 100%)",
-                    border: "2px solid #e8c78c44",
-                    boxShadow: "0 6px 32px 0 rgba(232, 199, 140, 0.12)",
                     width: "100%",
                     maxWidth: "100%",
-                    boxSizing: "border-box",
-                    overflow: "hidden",
+                    marginBottom: '2rem'
                   }}
                 >
                   <div
@@ -105,23 +112,36 @@ function DetailNumber() {
               </Fragment>
             )}
 
+            <Divider />
             <MainNumber />
+            <Divider />
             <DateToKnown
               numbersData={birth_day}
               color="red"
               buttonText="BIỂU ĐỒ NGÀY SINH"
               buttonColor="green"
             />
+            <Divider />
             <NameNumber />
+            <Divider />
             <DestinyNumber />
+            <Divider />
             <AtituteNumber />
+            <Divider />
             <MatureNumber />
+            <Divider />
             <BirthNumber />
+            <Divider />
             <SoulNumber />
+            <Divider />
             <ExpressNumber />
+            <Divider />
             <InnerNumber />
+            <Divider />
             <FourPeak topFour={top4.top4_peak} />
+            <Divider />
             <FourChallenge topFour={top4.top4_challenge} />
+            <Divider />
             <SummaryAll />
           </Fragment>
         )}
