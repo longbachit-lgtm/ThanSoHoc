@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const compression = require("compression");
@@ -23,22 +24,22 @@ app.use(cors({
     if (isDevelopment) {
       return callback(null, true);
     }
-    
+
     // Production mode: strict origin checking
-    const allowedOrigins = process.env.FRONTEND_URL 
+    const allowedOrigins = process.env.FRONTEND_URL
       ? [process.env.FRONTEND_URL]
       : [
-          "http://localhost:5173",
-          "http://localhost:3000",
-          "http://127.0.0.1:5173",
-          "http://127.0.0.1:3000"
-        ];
-    
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:3000"
+      ];
+
     // Allow requests with no origin (like mobile apps, Postman, etc.)
     if (!origin) {
       return callback(null, true);
     }
-    
+
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
@@ -58,7 +59,7 @@ route(app);
 
 // Health check endpoint
 app.get("/", (req, res) => {
-  res.json({ 
+  res.json({
     message: "Than So Hoc API is running!",
     version: "1.0.0",
     timestamp: new Date().toISOString()

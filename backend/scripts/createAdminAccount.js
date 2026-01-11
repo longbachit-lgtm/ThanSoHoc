@@ -17,6 +17,8 @@
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../.env') }); // Load .env from backend root
 const User = require('../src/app/models/User');
 const readline = require('readline');
 const { SALT_ROUNDS } = require('../src/variables/auth');
@@ -83,7 +85,7 @@ async function createAdminAccount(userData) {
 
     // Kiểm tra email đã tồn tại chưa (nếu có email)
     if (email) {
-      const existingEmail = await User.findOne({ 
+      const existingEmail = await User.findOne({
         email: email.toLowerCase().trim(),
         deletedAt: null
       });
@@ -138,7 +140,7 @@ async function getAdminDataFromInput() {
   while (!username || !isValidUsername(username)) {
     username = await question('Username (3-30 ký tự, chữ thường, số, dấu gạch dưới): ');
     username = username.trim();
-    
+
     if (!username) {
       console.log('⚠️  Username là bắt buộc!');
       continue;
@@ -154,7 +156,7 @@ async function getAdminDataFromInput() {
   while (!password || password.length < 6) {
     password = await question('Password (ít nhất 6 ký tự): ');
     password = password.trim();
-    
+
     if (!password || password.length < 6) {
       console.log('⚠️  Mật khẩu phải có ít nhất 6 ký tự!');
     }
@@ -162,7 +164,7 @@ async function getAdminDataFromInput() {
 
   const email = await question('Email (optional, Enter để bỏ qua): ');
   const emailValue = email.trim() || null;
-  
+
   if (emailValue && !isValidEmail(emailValue)) {
     console.log('⚠️  Email không hợp lệ, sẽ bỏ qua email này.');
   }
@@ -182,7 +184,7 @@ async function main() {
   try {
     console.log('🔗 Đang kết nối database...');
     console.log(`   URI: ${MONGODB_URI}\n`);
-    
+
     // Kết nối database
     await mongoose.connect(MONGODB_URI);
     console.log('✅ Đã kết nối database thành công\n');
@@ -195,7 +197,7 @@ async function main() {
       const adminCount = await User.countDocuments({ role: 'admin', deletedAt: null });
       console.log(`⚠️  Đã có ${adminCount} tài khoản admin trong hệ thống.`);
       console.log('⚠️  Bạn vẫn có thể tạo thêm admin mới.\n');
-      
+
       // Hỏi xác nhận nếu chạy ở interactive mode
       if (!process.argv[2] || !process.argv[3]) {
         const confirm = await question('Bạn có muốn tiếp tục tạo admin mới? (y/n): ');
@@ -213,7 +215,7 @@ async function main() {
 
     // Lấy thông tin admin
     let adminData = await getAdminDataFromArgs();
-    
+
     if (!adminData) {
       adminData = await getAdminDataFromInput();
     }
@@ -236,7 +238,7 @@ async function main() {
 
     await mongoose.disconnect();
     console.log('\n✅ Đã đóng kết nối database');
-    
+
     rl.close();
     process.exit(0);
   } catch (error) {
@@ -244,12 +246,12 @@ async function main() {
     if (error.stack) {
       console.error('Chi tiết:', error.stack);
     }
-    
+
     // Đảm bảo đóng kết nối nếu có
     if (mongoose.connection.readyState === 1) {
       await mongoose.disconnect();
     }
-    
+
     rl.close();
     process.exit(1);
   }
