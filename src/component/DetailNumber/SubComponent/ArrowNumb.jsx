@@ -8,7 +8,8 @@ const ArrowNumb = ({ wRightPanel, arr, typeArrow, stroke }) => {
   // Improved responsive calculation consistent with DrawCellDateName
   const stageWidth = useMemo(() => {
     if (widthWindow < 576) {
-      return Math.min(wRightPanel * 0.95, 340); // Increased width usage on mobile
+      // Mobile: Ensure it fits within screen width minus padding (approx 32-40px)
+      return Math.min(wRightPanel * 0.95, widthWindow - 40, 340);
     } else if (widthWindow < 768) {
       return Math.min(wRightPanel * 0.9, 380);
     } else if (widthWindow < 992) {

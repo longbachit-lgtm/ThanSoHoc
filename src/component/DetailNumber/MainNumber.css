@@ -255,16 +255,30 @@
   }
 
   .main-number__container {
-    padding: 0 1rem;
-    gap: 1.5rem;
+    padding: 0 !important;
+    /* Remove inner padding to maximize width */
+    gap: 1rem;
+  }
+
+  .main-number__cards,
+  .main-number__details {
+    grid-template-columns: 1fr !important;
+    /* Force single column full width */
+    width: 100%;
+    margin-bottom: 1.5rem;
   }
 
   .main-number__hero {
-    padding: 2rem 1.5rem;
+    padding: 2rem 1rem;
     min-height: auto;
-    border-radius: 24px;
+    border-radius: 20px;
     flex-direction: column;
     text-align: center;
+    width: 100%;
+    /* Ensure full width */
+    align-items: center;
+    /* Center children horizontally */
+    justify-content: center;
   }
 
   .main-number__value-shadow {

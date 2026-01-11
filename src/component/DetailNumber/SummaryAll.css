@@ -210,7 +210,12 @@
 
 @media (max-width: 767.98px) {
   .summary-all {
-    padding: 2.5rem 0;
+    padding: 2rem 0;
+  }
+
+  .summary-all__container {
+    padding: 0 !important;
+    /* Remove inner padding */
   }
 
   .summary-all__career-grid {
@@ -504,4 +509,12 @@
     padding: 1rem;
     /* Reduce padding on mobile */
   }
+
+  .career-card,
+  .development-content {
+    position: relative;
+    left: -15px;
+    margin: 20px 0
+  }
+
 }

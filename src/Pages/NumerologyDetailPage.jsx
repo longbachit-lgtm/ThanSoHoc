@@ -617,6 +617,7 @@ export default function NumerologyDetailPage() {
             {/* Detail Numbers - Chi tiết từng số */}
             <div
               className="mb-5"
+              id="main-detail"
               style={{
                 background: "rgba(255, 255, 255, 0.4)",
                 border: "1px solid rgba(232, 199, 140, 0.5)",

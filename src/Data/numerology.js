@@ -946,14 +946,14 @@ export const ARROW = {
 
   258: {
     1: {
-      TEN: "Cân bằng cảm xúc",
+      TEN: "Cân bằng",
       Y_NGHIA:
         "Điềm tĩnh, kiểm soát cảm xúc tốt, trực giác mạnh và biết suy xét trước sau.",
       KET_LUAN:
         "<p><strong class='text-primary'>Bạn giữ được sự ổn định cảm xúc</strong>, dễ tạo niềm tin trong các mối quan hệ.</p>",
     },
     0: {
-      TEN: "Mất cân bằng cảm xúc",
+      TEN: "Nhạy cảm",
       Y_NGHIA:
         "Nhạy cảm quá mức, dễ bị cảm xúc chi phối, dễ tổn thương.",
       KET_LUAN:
@@ -997,7 +997,7 @@ export const ARROW = {
 
   357: {
     1: {
-      TEN: "Trực giác tâm linh",
+      TEN: "Trực giác",
       Y_NGHIA:
         "Khả năng tự học cao, tư duy phản biện tốt, trực giác và niềm tin dựa trên hiểu biết.",
       KET_LUAN:

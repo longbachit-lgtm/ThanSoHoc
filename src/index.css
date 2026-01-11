@@ -32,15 +32,48 @@ body {
   body {
     font-size: 15px;
   }
-  
-  h1 { font-size: 2rem !important; }
-  h2 { font-size: 1.75rem !important; }
-  h3 { font-size: 1.5rem !important; }
-  h4 { font-size: 1.25rem !important; }
-  h5 { font-size: 1.1rem !important; }
 
-  .container, .container-fluid {
+  h1 {
+    font-size: 2rem !important;
+  }
+
+  h2 {
+    font-size: 1.75rem !important;
+  }
+
+  h3 {
+    font-size: 1.5rem !important;
+  }
+
+  h4 {
+    font-size: 1.25rem !important;
+  }
+
+  h5 {
+    font-size: 1.1rem !important;
+  }
+
+  .container,
+  .container-fluid {
     padding-left: 16px !important;
     padding-right: 16px !important;
+  }
+
+  /* User optimization: Remove excess padding for #main-detail on mobile */
+  #main-detail {
+    padding: 1rem 0.5rem !important;
+    width: 100% !important;
+  }
+
+  #main-detail .card-body {
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Ensure children consume maximum width */
+  #detail_number,
+  #summary_all {
+    width: 100% !important;
+    max-width: 100% !important;
   }
 }

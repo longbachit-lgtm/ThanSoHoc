@@ -158,11 +158,28 @@
 
 @media (max-width: 767.98px) {
   .four-peak {
-    padding: 2.5rem 0;
+    padding: 2rem 0;
+  }
+
+  .four-peak__container {
+    padding: 0 !important;
+    gap: 1.5rem;
   }
 
   .four-peak__peak-card {
-    padding: 1.5rem 1.25rem;
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .four-peak__header {
+    text-align: center;
+    width: 100%;
+  }
+
+  .four-peak__title {
+    font-size: 1.75rem;
   }
 }
 

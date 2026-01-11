@@ -37,24 +37,24 @@ function LifePeakCanvas({ peakData, numberBase }) {
 
               let newWidth;
               if (windowWidth < 576) {
-                // Mobile: tăng kích thước để nhìn rõ hơn - tối thiểu 420px, tối đa 95% available
-                newWidth = Math.max(420, Math.min(availableWidth * 0.98, 480));
+                // Mobile: Maximized width (~95% of container)
+                // Remove hard limits like 480px if container allows more
+                newWidth = Math.max(300, availableWidth * 0.98); 
               } else if (windowWidth < 768) {
-                // Tablet nhỏ: tăng kích thước - tối thiểu 500px, tối đa 95% available
-                newWidth = Math.max(500, Math.min(availableWidth * 0.95, 580));
+                // Tablet small: High usage
+                newWidth = Math.max(500, availableWidth * 0.95);
               } else if (windowWidth < 1000) {
-                // Tablet lớn/Desktop nhỏ: sử dụng 90% available, tối đa 615px
-                newWidth = Math.min(availableWidth * 0.92, 615);
+                // Tablet large
+                newWidth = Math.min(availableWidth * 0.95, 615);
               } else {
-                // Desktop lớn: giữ nguyên base width hoặc scale theo container
                 newWidth = Math.min(baseWidth, availableWidth);
               }
 
               const newHeight = (newWidth / baseWidth) * baseHeight;
 
               setCanvasSize({
-                width: Math.max(newWidth, 400), // Tăng minimum width
-                height: Math.max(newHeight, 230), // Tăng minimum height
+                width: newWidth,
+                height: Math.max(newHeight, 200),
               });
             }
           }
@@ -171,15 +171,16 @@ function LifePeakCanvas({ peakData, numberBase }) {
     muiten: {
       x: TAMGIACDINH1.x2 - 20 * scaleFactor,
       y: TAMGIACDINH1.y2 - 10 * scaleFactor,
-      x1: TAMGIACDINH1.x2 - 76 * scaleFactor,
+      x1: windowWidth < 768 
+        ? TAMGIACDINH1.x2 - 120 * scaleFactor // Longer line on mobile
+        : TAMGIACDINH1.x2 - 76 * scaleFactor,
       y1: TAMGIACDINH1.y2 - 40 * scaleFactor,
     },
   };
 
   TUOIDINH1.chisotuoi = {
-    x:
-      windowWidth < 768
-        ? TUOIDINH1.muiten.x1 - spaceShowNumPeak.x + 20 * scaleFactor
+    x: windowWidth < 768
+        ? TUOIDINH1.muiten.x1 - 20 * scaleFactor
         : TUOIDINH1.muiten.x1 - spaceShowNumPeak.x,
     y: TUOIDINH1.muiten.y1 - spaceShowNumPeak.y,
   };
@@ -198,18 +199,16 @@ function LifePeakCanvas({ peakData, numberBase }) {
     muiten: {
       x: TAMGIACDINH2.x2 + 20 * scaleFactor,
       y: TAMGIACDINH2.y2 - 10 * scaleFactor,
-      x1:
-        windowWidth < 768
-          ? TAMGIACDINH2.x2 + 65 * scaleFactor
+      x1: windowWidth < 768
+          ? TAMGIACDINH2.x2 + 120 * scaleFactor // Longer line on mobile
           : TAMGIACDINH2.x2 + 80 * scaleFactor,
       y1: TAMGIACDINH2.y2 - 40 * scaleFactor,
     },
   };
 
   TUOIDINH2.chisotuoi = {
-    x:
-      windowWidth < 768
-        ? TUOIDINH2.muiten.x1 - 20 * scaleFactor
+    x: windowWidth < 768
+        ? TUOIDINH2.muiten.x1 + 10 * scaleFactor 
         : TUOIDINH2.muiten.x1 + 5 * scaleFactor,
     y: TUOIDINH2.muiten.y1 - spaceShowNumPeak.y,
   };
@@ -228,15 +227,16 @@ function LifePeakCanvas({ peakData, numberBase }) {
     muiten: {
       x: TAMGIACDINH3.x2 - 20 * scaleFactor,
       y: TAMGIACDINH3.y2 - 10 * scaleFactor,
-      x1: TAMGIACDINH3.x2 - 80 * scaleFactor,
+      x1: windowWidth < 768
+        ? TAMGIACDINH3.x2 - 130 * scaleFactor // Longer line on mobile
+        : TAMGIACDINH3.x2 - 80 * scaleFactor,
       y1: TAMGIACDINH3.y2 - 40 * scaleFactor,
     },
   };
 
   TUOIDINH3.chisotuoi = {
-    x:
-      windowWidth < 768
-        ? TUOIDINH3.muiten.x1 - 80 * scaleFactor
+    x: windowWidth < 768
+        ? TUOIDINH3.muiten.x1 - 20 * scaleFactor
         : TUOIDINH3.muiten.x1 - spaceShowNumPeak.x,
     y: TUOIDINH3.muiten.y1 - spaceShowNumPeak.y,
   };
@@ -248,15 +248,16 @@ function LifePeakCanvas({ peakData, numberBase }) {
     muiten: {
       x: DINH4.x + 20 * scaleFactor,
       y: DINH4.y - 10 * scaleFactor,
-      x1: DINH4.x + 80 * scaleFactor,
+      x1: windowWidth < 768
+        ? DINH4.x + 130 * scaleFactor // Longer line on mobile
+        : DINH4.x + 80 * scaleFactor,
       y1: DINH4.y - 40 * scaleFactor,
     },
   };
 
   TUOIDINH4.chisotuoi = {
-    x:
-      windowWidth < 768
-        ? TUOIDINH4.muiten.x1 - 5 * scaleFactor
+    x: windowWidth < 768
+        ? TUOIDINH4.muiten.x1 + 10 * scaleFactor 
         : TUOIDINH4.muiten.x1 + 5 * scaleFactor,
     y: TUOIDINH4.muiten.y1 - spaceShowNumPeak.y,
   };
@@ -326,9 +327,14 @@ function LifePeakCanvas({ peakData, numberBase }) {
               strokeWidth={2 * scaleFactor}
               dash={[10 * scaleFactor, 10 * scaleFactor]}
             />
-            <Label x={TUOIDINH4.chisotuoi.x} y={TUOIDINH4.chisotuoi.y}>
+            <Label x={ windowWidth < 768 ? TUOIDINH4.chisotuoi.x -15 :TUOIDINH4.chisotuoi.x} y={ windowWidth < 768 ? TUOIDINH4.chisotuoi.y - 10 : TUOIDINH4.chisotuoi.y}>
               <Text
                 text={String(peakData.top04.age)}
+                 x={
+                  windowWidth < 768
+                    ? 29 * scaleFactor -28
+                    : '' 
+                }
                 fill="red"
                 fontSize={fontSizeAge}
                 align="left"
@@ -337,7 +343,7 @@ function LifePeakCanvas({ peakData, numberBase }) {
               <Text
                 x={
                   windowWidth < 768
-                    ? 28 * scaleFactor
+                    ? 28 * scaleFactor - 10
                     : windowWidth < 1000
                     ? 35 * scaleFactor - 3 // Tăng spacing cho màn hình 768-1000px
                     : 22 * scaleFactor
@@ -351,7 +357,7 @@ function LifePeakCanvas({ peakData, numberBase }) {
               <Text
                 x={
                   windowWidth < 768
-                    ? 68 * scaleFactor
+                    ? 60 * scaleFactor
                     : windowWidth < 1000
                     ? 70 * scaleFactor // Tăng spacing cho màn hình 768-1000px
                     : 50 * scaleFactor
@@ -415,8 +421,13 @@ function LifePeakCanvas({ peakData, numberBase }) {
               strokeWidth={2 * scaleFactor}
               dash={[10 * scaleFactor, 10 * scaleFactor]}
             />
-            <Label x={TUOIDINH3.chisotuoi.x} y={TUOIDINH3.chisotuoi.y}>
+            <Label x={windowWidth < 768 ?TUOIDINH3.chisotuoi.x -10 : TUOIDINH3.chisotuoi.x} y={ windowWidth < 768 ?TUOIDINH3.chisotuoi.y -10 :TUOIDINH3.chisotuoi.y }>
               <Text
+                 x={
+                  windowWidth < 768
+                    ? 28 * scaleFactor -30
+                    : '' 
+                }
                 text={String(peakData.top03.age)}
                 fill="red"
                 fontSize={fontSizeAge}
@@ -426,7 +437,7 @@ function LifePeakCanvas({ peakData, numberBase }) {
               <Text
                 x={
                   windowWidth < 768
-                    ? 28 * scaleFactor
+                    ? 28 * scaleFactor -11
                     : windowWidth < 1000
                     ? 35 * scaleFactor - 3 // Tăng spacing cho màn hình 768-1000px
                     : 22 * scaleFactor
@@ -440,7 +451,7 @@ function LifePeakCanvas({ peakData, numberBase }) {
               <Text
                 x={
                   windowWidth < 768
-                    ? 68 * scaleFactor
+                    ? 68 * scaleFactor - 5
                     : windowWidth < 1000
                     ? 70 * scaleFactor // Tăng spacing cho màn hình 768-1000px
                     : 50 * scaleFactor
@@ -503,18 +514,23 @@ function LifePeakCanvas({ peakData, numberBase }) {
               strokeWidth={2 * scaleFactor}
               dash={[10 * scaleFactor, 10 * scaleFactor]}
             />
-            <Label x={TUOIDINH2.chisotuoi.x} y={TUOIDINH2.chisotuoi.y}>
+            <Label x={ windowWidth < 768 ? TUOIDINH2.chisotuoi.x -25 :TUOIDINH2.chisotuoi.x} y={ windowWidth < 768 ?TUOIDINH2.chisotuoi.y  -10 :TUOIDINH2.chisotuoi.y }>
               <Text
                 text={String(peakData.top02.age)}
                 fill="red"
                 fontSize={fontSizeAge}
                 align="left"
                 verticalAlign="middle"
+                    x={
+                  windowWidth < 768
+                    ? 28 * scaleFactor - 35
+                    : ''
+                }
               />
               <Text
                 x={
                   windowWidth < 768
-                    ? 28 * scaleFactor
+                    ? 28 * scaleFactor -16
                     : windowWidth < 1000
                     ? 35 * scaleFactor - 3 // Tăng spacing cho màn hình 768-1000px
                     : 22 * scaleFactor
@@ -528,7 +544,7 @@ function LifePeakCanvas({ peakData, numberBase }) {
               <Text
                 x={
                   windowWidth < 768
-                    ? 68 * scaleFactor
+                    ? 68 * scaleFactor - 10
                     : windowWidth < 1000
                     ? 70 * scaleFactor // Tăng spacing cho màn hình 768-1000px
                     : 50 * scaleFactor
@@ -591,9 +607,10 @@ function LifePeakCanvas({ peakData, numberBase }) {
               strokeWidth={2 * scaleFactor}
               dash={[10 * scaleFactor, 10 * scaleFactor]}
             />
-            <Label x={TUOIDINH1.chisotuoi.x} y={TUOIDINH1.chisotuoi.y}>
+            <Label x={windowWidth < 768 ?TUOIDINH1.chisotuoi.x -20 :TUOIDINH1.chisotuoi.x} y={ windowWidth < 768 ?TUOIDINH1.chisotuoi.y -5 :TUOIDINH1.chisotuoi.y} >
               <Text
                 text={String(peakData.top01.age)}
+                x={windowWidth < 768 ? 28 * scaleFactor-20:""}
                 fill="red"
                 fontSize={fontSizeAge}
                 align="left"
@@ -602,7 +619,7 @@ function LifePeakCanvas({ peakData, numberBase }) {
               <Text
                 x={
                   windowWidth < 768
-                    ? 28 * scaleFactor
+                    ? 28 * scaleFactor -3
                     : windowWidth < 1000
                     ? 35 * scaleFactor - 3 // Tăng spacing cho màn hình 768-1000px
                     : 22 * scaleFactor
@@ -616,7 +633,7 @@ function LifePeakCanvas({ peakData, numberBase }) {
               <Text
                 x={
                   windowWidth < 768
-                    ? 68 * scaleFactor
+                    ? 68 * scaleFactor + 3
                     : windowWidth < 1000
                     ? 70 * scaleFactor // Tăng spacing cho màn hình 768-1000px
                     : 50 * scaleFactor

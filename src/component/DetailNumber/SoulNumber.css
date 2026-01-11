@@ -112,11 +112,28 @@
 
 @media (max-width: 767.98px) {
   .soul-number {
-    padding: 2.5rem 0;
+    padding: 2rem 0;
+  }
+
+  .soul-number__container {
+    padding: 0 !important;
+    gap: 1.5rem;
   }
 
   .soul-number__content {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .soul-number__header {
+    text-align: center;
+    width: 100%;
+  }
+
+  .soul-number__title {
+    font-size: 1.75rem;
   }
 }
 

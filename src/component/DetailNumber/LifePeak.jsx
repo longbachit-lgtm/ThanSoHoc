@@ -21,6 +21,11 @@ function LifePeak({ topFour, btn, show = true, id_link }) {
 
   const numberBase = topFour.numberbase ?? {};
 
+  const isChallenge =
+    id_link === "four_challenge" ||
+    (typeof btn?.noi_dung === "string" &&
+      btn.noi_dung.toLowerCase().includes("thử thách"));
+
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -40,9 +45,8 @@ function LifePeak({ topFour, btn, show = true, id_link }) {
           <div className="lifepeak-card__heading">
             <h4>
               {btn?.heading ||
-                (typeof btn?.noi_dung === "string" &&
-                btn.noi_dung.toLowerCase().includes("thử thách")
-                  ? "Theo dõi các thử thách chính"
+                (isChallenge
+                  ? "Các đỉnh thử thách"
                   : "Lộ trình những đỉnh cao quan trọng")}
             </h4>
             <p>
@@ -77,10 +81,10 @@ function LifePeak({ topFour, btn, show = true, id_link }) {
 
         <div className="lifepeak-card__timeline">
           {[
-            { key: "top01", label: "Đỉnh 1" },
-            { key: "top02", label: "Đỉnh 2" },
-            { key: "top03", label: "Đỉnh 3" },
-            { key: "top04", label: "Đỉnh 4" },
+            { key: "top01", label: isChallenge ? "Thử thách 1" : "Đỉnh 1" },
+            { key: "top02", label: isChallenge ? "Thử thách 2" : "Đỉnh 2" },
+            { key: "top03", label: isChallenge ? "Thử thách 3" : "Đỉnh 3" },
+            { key: "top04", label: isChallenge ? "Thử thách 4" : "Đỉnh 4" },
           ].map((item, index) => (
             <div className="lifepeak-card__timeline-item" key={item.key}>
               <div className="lifepeak-card__timeline-badge">

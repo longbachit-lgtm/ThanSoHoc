@@ -112,11 +112,28 @@
 
 @media (max-width: 767.98px) {
   .mature-number {
-    padding: 2.5rem 0;
+    padding: 2rem 0;
+  }
+
+  .mature-number__container {
+    padding: 0 !important;
+    gap: 1.5rem;
   }
 
   .mature-number__content {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .mature-number__header {
+    text-align: center;
+    width: 100%;
+  }
+
+  .mature-number__title {
+    font-size: 1.75rem;
   }
 }
 
